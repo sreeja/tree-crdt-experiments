@@ -1,0 +1,65 @@
+version: '3.4'
+
+services:
+
+  messenger:
+    image: rabbitmq
+    volumes:
+      - "./data/mongo:/data/db"
+
+  paris:
+    build:
+      context: ./application
+      dockerfile: Dockerfile
+    volumes:
+      - "./application:/usr/src/app"
+    environment:
+      - SESSION_SECRET=${ENV_VAYPA_SESSION_SECRET}
+      - FLASK_APP=app.py
+      - FLASK_DEBUG=1
+      - RABBIT_URL=mongodb://mongo:27017
+    depends_on:
+      - messenger
+    links:
+      - messenger
+    ports:
+      - 5000:5000
+    command: flask run --host=0.0.0.0 --port=5000
+
+  bangalore:
+    build:
+      context: ./application
+      dockerfile: Dockerfile
+    volumes:
+      - "./application:/usr/src/app"
+    environment:
+      - SESSION_SECRET=${ENV_VAYPA_SESSION_SECRET}
+      - FLASK_APP=app.py
+      - FLASK_DEBUG=1
+      - RABBIT_URL=mongodb://mongo:27017
+    depends_on:
+      - messenger
+    links:
+      - messenger
+    ports:
+      - 5001:5000
+    command: flask run --host=0.0.0.0 --port=5000
+
+  newyork:
+    build:
+      context: ./application
+      dockerfile: Dockerfile
+    volumes:
+      - "./application:/usr/src/app"
+    environment:
+      - SESSION_SECRET=${ENV_VAYPA_SESSION_SECRET}
+      - FLASK_APP=app.py
+      - FLASK_DEBUG=1
+      - RABBIT_URL=mongodb://mongo:27017
+    depends_on:
+      - messenger
+    links:
+      - messenger
+    ports:
+      - 5002:5000
+    command: flask run --host=0.0.0.0 --port=5000
