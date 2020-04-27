@@ -1,8 +1,8 @@
 run-dev:
-	docker-compose docker-compose.yml up
+	docker-compose up
 
 run-dev-build:
-	docker-compose docker-compose.yml --build
+	docker-compose up --build
 
 down:
 	docker-compose down -v --remove-orphans

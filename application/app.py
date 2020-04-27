@@ -16,4 +16,5 @@ app = create_app()
 
 @app.route('/')
 def hello_world():
-    return 'Hello world from tree experiment'
+    whoami = os.environ.get("WHOAMI")
+    return f'Hello world from {whoami}'
