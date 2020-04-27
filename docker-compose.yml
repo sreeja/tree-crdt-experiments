@@ -23,8 +23,8 @@ services:
     links:
       - messenger
     ports:
-      - 5000:5000
-    command: flask run --host=0.0.0.0 --port=5000
+      - 6001:6000
+    command: flask run --host=0.0.0.0 --port=6000
 
   bangalore:
     build:
@@ -42,8 +42,8 @@ services:
     links:
       - messenger
     ports:
-      - 5001:5000
-    command: flask run --host=0.0.0.0 --port=5000
+      - 6002:6000
+    command: flask run --host=0.0.0.0 --port=6000
 
   newyork:
     build:
@@ -61,5 +61,5 @@ services:
     links:
       - messenger
     ports:
-      - 5002:5000
-    command: flask run --host=0.0.0.0 --port=5000
+      - 6003:6000
+    command: flask run --host=0.0.0.0 --port=6000
