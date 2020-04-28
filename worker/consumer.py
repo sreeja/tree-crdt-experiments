@@ -3,7 +3,7 @@ import os
 import pika
 
 
-time.sleep(60)  # A hack for rabbitmq to start
+time.sleep(30)  # A hack for rabbitmq to start
 connection = pika.BlockingConnection(
     pika.ConnectionParameters(host='messenger'))
 channel = connection.channel()
@@ -14,6 +14,9 @@ channel.queue_declare(queue=queue_to_cosume)
 
 
 def callback(ch, method, properties, body):
+    f_to_write = os.path.join('/', 'usr', 'data', f'{queue_to_cosume}.txt')
+    with open(f_to_write, "a") as f:
+        f.write(f"f{body}\n")
     print(f"Read the message: {body}")
 
 channel.basic_consume(
