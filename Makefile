@@ -1,7 +1,7 @@
-run-dev:
+run:
 	docker-compose up
 
-run-dev-build:
+run-build:
 	docker-compose up --build
 
 down:
