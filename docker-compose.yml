@@ -31,6 +31,16 @@ services:
       - 6001:6000
     command: flask run --host=0.0.0.0 --port=6000
 
+  worker-paris:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    volumes:
+      - "./worker:/usr/src/app"
+    environment:
+      - WHOAMI=paris
+      - PYTHONUNBUFFERED=1
+
   bangalore:
     build:
       context: ./application
@@ -51,6 +61,16 @@ services:
       - 6002:6000
     command: flask run --host=0.0.0.0 --port=6000
 
+  worker-bangalore:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    volumes:
+      - "./worker:/usr/src/app"
+    environment:
+      - WHOAMI=bangalore
+      - PYTHONUNBUFFERED=1
+
   newyork:
     build:
       context: ./application
@@ -70,3 +90,13 @@ services:
     ports:
       - 6003:6000
     command: flask run --host=0.0.0.0 --port=6000
+
+  worker-newyork:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    volumes:
+      - "./worker:/usr/src/app"
+    environment:
+      - WHOAMI=newyork
+      - PYTHONUNBUFFERED=1

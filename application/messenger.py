@@ -1,4 +1,7 @@
 import time
+from contextlib import contextmanager
+
+import pika
 
 
 latency_config = {
@@ -16,6 +19,12 @@ latency_config = {
     }
 }
 
+@contextmanager
+def messenger_channel():
+    connection = pika.BlockingConnection(pika.ConnectionParameters('messenger'))
+    channel = connection.channel()
+    yield channel
+    connection.close()
 
 def get_config():
     whoami = os.environ.get("WHOAMI")
@@ -27,3 +36,8 @@ def write(message):
     queue_name = f"{whoami}-{to}"
     time.sleep(config.get(to, 0))
     # write to the queue
+    with messenger_channel() as chn:
+        channel.queue_declare(queue=queue_name)
+        channel.basic_publish(exchange='',
+                              routing_key='hello',
+                              body=payload)
