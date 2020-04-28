@@ -1,6 +1,7 @@
-from flask import Flask, request
 import os
 
+from flask import Flask, request
+from messenger import write_message
 
 def create_app():
     app = Flask(__name__)
@@ -22,9 +23,7 @@ def hello_world():
 
 @app.route('/write')
 def write():
-    from messenger import write_message
     to = request.args.get('to', '')
-    whoami = os.environ.get("WHOAMI")
-    message = {"to": to, "payload": "Hello"}
+    message = {"to": to, "msg": "Hello"}
     write_message(message)
-    return f'Hello world from {whoami}'
+    return "done"

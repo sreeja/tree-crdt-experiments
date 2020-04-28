@@ -1,6 +1,7 @@
 import time
 import os
 import pika
+import json
 
 
 time.sleep(30)  # A hack for rabbitmq to start
@@ -14,9 +15,12 @@ channel.queue_declare(queue=queue_to_cosume)
 
 
 def callback(ch, method, properties, body):
-    f_to_write = os.path.join('/', 'usr', 'data', f'{queue_to_cosume}.txt')
+    message = json.loads(body)
+    from_replica = message.get("from", "")
+    msg = message.get("msg", "")
+    f_to_write = os.path.join('/', 'usr', 'data', f'{from_replica}.txt')
     with open(f_to_write, "a") as f:
-        f.write(f"f{body}\n")
+        f.write(f"{msg}\n")
     print(f"Read the message: {body}")
 
 channel.basic_consume(

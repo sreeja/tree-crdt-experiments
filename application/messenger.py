@@ -1,4 +1,5 @@
 import os
+import json
 import time
 from contextlib import contextmanager
 
@@ -33,7 +34,11 @@ def get_config():
 
 def write_message(message):
     config = get_config()
-    payload = message.get("payload", "")
+    payload = json.dumps(
+        {
+            "msg": message.get("msg", ""),
+            "from": os.environ.get("WHOAMI")
+        })
     queue_name = message.get("to", "")
 
     time.sleep(config.get(queue_name, 0))
@@ -41,5 +46,5 @@ def write_message(message):
         channel.queue_declare(queue=queue_name)
         channel.basic_publish(exchange='',
                               routing_key=queue_name,
-                              body="Hello world")
+                              body=payload)
     print(f"wrote to {queue_name}", flush=True)
