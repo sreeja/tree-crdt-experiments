@@ -42,6 +42,10 @@ services:
     environment:
       - WHOAMI=paris
       - PYTHONUNBUFFERED=1
+    depends_on:
+      - messenger
+    links:
+      - messenger
     command: python consumer.py
 
   bangalore:
@@ -75,6 +79,10 @@ services:
     environment:
       - WHOAMI=bangalore
       - PYTHONUNBUFFERED=1
+    depends_on:
+      - messenger
+    links:
+      - messenger
     command: python consumer.py
 
   newyork:
@@ -108,4 +116,8 @@ services:
     environment:
       - WHOAMI=newyork
       - PYTHONUNBUFFERED=1
+    depends_on:
+      - messenger
+    links:
+      - messenger
     command: python consumer.py
