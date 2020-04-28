@@ -17,6 +17,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - "./application:/usr/src/app"
+      - "./data/paris:/usr/data"
     environment:
       - WHOAMI=paris
       - SESSION_SECRET=${ENV_VAYPA_SESSION_SECRET}
@@ -37,9 +38,11 @@ services:
       dockerfile: Dockerfile
     volumes:
       - "./worker:/usr/src/app"
+      - "./data/paris:/usr/data"
     environment:
       - WHOAMI=paris
       - PYTHONUNBUFFERED=1
+    command: python consumer.py
 
   bangalore:
     build:
@@ -47,6 +50,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - "./application:/usr/src/app"
+      - "./data/bangalore:/usr/data"
     environment:
       - WHOAMI=bangalore
       - SESSION_SECRET=${ENV_VAYPA_SESSION_SECRET}
@@ -67,9 +71,11 @@ services:
       dockerfile: Dockerfile
     volumes:
       - "./worker:/usr/src/app"
+      - "./data/bangalore:/usr/data"
     environment:
       - WHOAMI=bangalore
       - PYTHONUNBUFFERED=1
+    command: python consumer.py
 
   newyork:
     build:
@@ -77,6 +83,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - "./application:/usr/src/app"
+      - "./data/newyork:/usr/data"
     environment:
       - WHOAMI=newyork
       - SESSION_SECRET=${ENV_VAYPA_SESSION_SECRET}
@@ -97,6 +104,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - "./worker:/usr/src/app"
+      - "./data/newyork:/usr/data"
     environment:
       - WHOAMI=newyork
       - PYTHONUNBUFFERED=1
+    command: python consumer.py
