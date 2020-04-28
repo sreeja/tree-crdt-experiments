@@ -9,13 +9,12 @@ connection = pika.BlockingConnection(
 channel = connection.channel()
 
 queue_to_cosume = os.environ.get("WHOAMI")
+print(queue_to_cosume)
 channel.queue_declare(queue=queue_to_cosume)
 
 
 def callback(ch, method, properties, body):
-    print("Read the message", flush=True)
-    # with open("/usr/data/myfile", "w") as f:
-    #     f.write("Created")
+    print(f"Read the message: {body}")
 
 channel.basic_consume(
     queue=queue_to_cosume, on_message_callback=callback, auto_ack=True)

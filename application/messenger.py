@@ -36,22 +36,10 @@ def write_message(message):
     payload = message.get("payload", "")
     queue_name = message.get("to", "")
 
-    print(f"writing to {queue_name}", flush=True)
-
     time.sleep(config.get(queue_name, 0))
-    # write to the queue
-
-    connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='messenger'))
-    channel = connection.channel()
-
-    channel.queue_declare(queue=queue_name)
-    channel.basic_publish(exchange='', routing_key='hello', body='Hello World!')
-    print(f"Sent Hello World to {queue_name}", flush=True)
-    connection.close()
-
-    # with messenger_channel() as channel:
-    #     channel.queue_declare(queue=queue_name)
-    #     channel.basic_publish(exchange='',
-    #                           routing_key='hello',
-    #                           body=payload)
+    with messenger_channel() as channel:
+        channel.queue_declare(queue=queue_name)
+        channel.basic_publish(exchange='',
+                              routing_key=queue_name,
+                              body="Hello world")
+    print(f"wrote to {queue_name}", flush=True)
