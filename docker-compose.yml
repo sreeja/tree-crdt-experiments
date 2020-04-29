@@ -20,7 +20,7 @@ services:
       - "./data/paris:/usr/data"
     environment:
       - WHOAMI=paris
-      - SESSION_SECRET=${ENV_VAYPA_SESSION_SECRET}
+      - SESSION_SECRET=${ENV_SESSION_SECRET}
       - FLASK_APP=app.py
       - FLASK_DEBUG=1
       - RABBIT_URL=mongodb://mongo:27017
@@ -57,7 +57,7 @@ services:
       - "./data/bangalore:/usr/data"
     environment:
       - WHOAMI=bangalore
-      - SESSION_SECRET=${ENV_VAYPA_SESSION_SECRET}
+      - SESSION_SECRET=${ENV_SESSION_SECRET}
       - FLASK_APP=app.py
       - FLASK_DEBUG=1
       - RABBIT_URL=mongodb://mongo:27017
@@ -94,7 +94,7 @@ services:
       - "./data/newyork:/usr/data"
     environment:
       - WHOAMI=newyork
-      - SESSION_SECRET=${ENV_VAYPA_SESSION_SECRET}
+      - SESSION_SECRET=${ENV_SESSION_SECRET}
       - FLASK_APP=app.py
       - FLASK_DEBUG=1
       - RABBIT_URL=mongodb://mongo:27017
