@@ -20,6 +20,7 @@ def callback(ch, method, properties, body):
     msg = message.get("msg", "")
     f_to_write = os.path.join('/', 'usr', 'data', f'{from_replica}.txt')
     with open(f_to_write, "a") as f:
+        # update vector clock by merging
         f.write(f"{msg}\n")
     print(f"Read the message: {body}")
 
