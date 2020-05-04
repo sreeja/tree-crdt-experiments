@@ -79,10 +79,10 @@ class Tree:
     # self.nodes.add(node)
 
   def remove(self, parent, node, replica, ts):
-    self.log += ["remove", ts, [parent, node, replica], {}
+    self.log += ["remove", ts, [parent, node, replica], {}]
     # self.tombstones.add(node)
 
-  def move(self, parent, node, new_parent):
+  def move(self, parent, node, new_parent, replica, ts):
     if self.rank(node) > self.rank(new_parent):
       self.log += ["upmove", ts, [parent, node, new_parent, replica], {}]
     else:
