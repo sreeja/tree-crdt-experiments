@@ -39,21 +39,61 @@ def add():
     ts[replicaid] += 1
     n = request.args.get('n', '')
     p = request.args.get('p', '')
-    # ["downmove", ts, [parent, node, new_parent, replica], self.get_critical_ancestors(node, new_parent)]
-    message = {"to": to, "msg": {"op": "add", "ts":ts, "args": {"n": n, "p": p, "replica": whoami}, "ca":{}}}
+    # ["add", ts, [parent, node, replica], []]
+    message = {"to": to, "msg": {"op": "add", "ts":ts, "args": {"n": n, "p": p, "replica": whoami}, "ca":[]}}
     write_message(message)
     return "done"
 
-# @app.route('/remove')
-# def write():
-#     to = request.args.get('to', '')
-#     message = {"to": to, "msg": "Hello"}
-#     write_message(message)
-#     return "done"
+@app.route('/remove')
+def remove():
+    to = request.args.get('to', '')
+    whoami = os.environ.get("WHOAMI")
+    replicaid = 0
+    if whoami == "bangalore":
+        replicaid = 1
+    elif whoami == "newyork":
+        replicaid = 2
+    ts[replicaid] += 1
+    n = request.args.get('n', '')
+    p = request.args.get('p', '')
+    # ["remove", ts, [parent, node, replica], []]]
+    message = {"to": to, "msg": {"op": "remove", "ts":ts, "args": {"n": n, "p": p, "replica": whoami}, "ca":[]}}
+    write_message(message)
+    return "done"
 
-# @app.route('/move')
-# def write():
-#     to = request.args.get('to', '')
-#     message = {"to": to, "msg": "Hello"}
-#     write_message(message)
-#     return "done"
+@app.route('/downmove')
+def downmove():
+    to = request.args.get('to', '')
+    whoami = os.environ.get("WHOAMI")
+    replicaid = 0
+    if whoami == "bangalore":
+        replicaid = 1
+    elif whoami == "newyork":
+        replicaid = 2
+    ts[replicaid] += 1
+    n = request.args.get('n', '')
+    p = request.args.get('p', '')
+    np = request.args.get('np', '')
+    # ["downmove", ts, [parent, node, new_parent, replica], self.get_critical_ancestors(node, new_parent)]
+    message = {"to": to, "msg": {"op": "downmove", "ts":ts, "args": {"n": n, "p": p, "np": np, "replica": whoami}, "ca":["a", "aa"]}}
+    write_message(message)
+    return "done"
+
+@app.route('/upmove')
+def upmove():
+    to = request.args.get('to', '')
+    whoami = os.environ.get("WHOAMI")
+    replicaid = 0
+    if whoami == "bangalore":
+        replicaid = 1
+    elif whoami == "newyork":
+        replicaid = 2
+    ts[replicaid] += 1
+    n = request.args.get('n', '')
+    p = request.args.get('p', '')
+    np = request.args.get('np', '')
+    # ["downmove", ts, [parent, node, new_parent, replica], self.get_critical_ancestors(node, new_parent)]
+    message = {"to": to, "msg": {"op": "upmove", "ts":ts, "args": {"n": n, "p": p, "np": np, "replica": whoami}, "ca":["a", "aa"]}}
+    write_message(message)
+    return "done"
+
