@@ -4,6 +4,7 @@ from flask import Flask, request
 from messenger import write_message
 
 import json
+from multiprocessing import Process
 
 def create_app():
     app = Flask(__name__)
@@ -33,10 +34,10 @@ def update_ts():
                     last_line = lines[-1]
                     msg = json.loads(last_line)
                     log_ts = msg["ts"]
-                    print("log ts" + str(log_ts))
+                    # print("log ts" + str(log_ts))
                     replica = msg["args"]["replica"]
                     replicaid = get_id(each)
-                    print("replica id" + str(replicaid))
+                    # print("replica id" + str(replicaid))
                     ts[replicaid] = log_ts[replicaid]
                     print("log received until " + str(ts))
 
@@ -58,11 +59,18 @@ def add():
     ts[replicaid] += 1
     n = request.args.get('n', '')
     p = request.args.get('p', '')
+    procs = []
     for each in replicas:
         # to = request.args.get('to', '')
         # ["add", ts, [parent, node, replica], []]
         message = {"to": each, "msg": {"op": "add", "ts":ts, "args": {"n": n, "p": p, "replica": whoami}, "ca":[]}}
-        write_message(message)
+        proc = Process(target=write_message, args=(message,))
+        procs.append(proc)
+        proc.start()
+        # write_message(message)
+
+    # for proc in procs:
+    #     proc.join()
     return "done"
 
 @app.route('/remove')
@@ -75,7 +83,13 @@ def remove():
     # ["remove", ts, [parent, node, replica], []]]
     for each in replicas:
         message = {"to": each, "msg": {"op": "remove", "ts":ts, "args": {"n": n, "p": p, "replica": whoami}, "ca":[]}}
-        write_message(message)
+        proc = Process(target=write_message, args=(message,))
+        procs.append(proc)
+        proc.start()
+        # write_message(message)
+
+    # for proc in procs:
+    #     proc.join()
     return "done"
 
 @app.route('/downmove')
@@ -90,7 +104,13 @@ def downmove():
     # ["downmove", ts, [parent, node, new_parent, replica], self.get_critical_ancestors(node, new_parent)]
     for each in replicas:
         message = {"to": each, "msg": {"op": "downmove", "ts":ts, "args": {"n": n, "p": p, "np": np, "replica": whoami}, "ca":["a", "aa"]}}
-        write_message(message)
+        proc = Process(target=write_message, args=(message,))
+        procs.append(proc)
+        proc.start()
+        # write_message(message)
+
+    # for proc in procs:
+    #     proc.join()
     return "done"
 
 @app.route('/upmove')
@@ -106,6 +126,12 @@ def upmove():
     # ["downmove", ts, [parent, node, new_parent, replica], self.get_critical_ancestors(node, new_parent)]
     for each in replicas:
         message = {"to": each, "msg": {"op": "upmove", "ts":ts, "args": {"n": n, "p": p, "np": np, "replica": whoami}, "ca":["a", "aa"]}}
-        write_message(message)
+        proc = Process(target=write_message, args=(message,))
+        procs.append(proc)
+        proc.start()
+        # write_message(message)
+
+    # for proc in procs:
+    #     proc.join()
     return "done"
 

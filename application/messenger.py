@@ -8,16 +8,16 @@ import pika
 
 latency_config = {
     "paris": {
-        "bangalore": 2,
-        "newyork": 1
+        "bangalore": .144,
+        "newyork": .075
     },
     "bangalore": {
-        "paris": 2,
-        "newyork": 3,
+        "paris": .144,
+        "newyork": .215,
     },
     "newyork": {
-        "paris": 1,
-        "bangalore": 3,
+        "paris": .075,
+        "bangalore": .215,
     }
 }
 
