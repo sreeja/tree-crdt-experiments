@@ -1,18 +1,30 @@
 import random
 
+'''
+30 adds, mixed with 6 removes and then 14 moves
+'''
+
 def gen_ops(): 
   ops = []
   cmd = 'http://localhost:600'
   l = ['a','b','c'] 
-  for i in range(0,40): 
+  for i in range(0,30): 
     for r in range(1,4): 
       parent = random.choice(l) + random.choice(l+['']) + random.choice(l+['']) 
-      print(parent, parent + str(i) + str(r)) 
+      # print(parent, parent + str(i) + str(r)) 
       ops += [cmd+str(r)+'/add?n='+parent + str(i) + str(r)+'&p='+parent]
-      if not i%4: 
-        print('remove this') 
+      if not i%5: 
+        # print('remove this') 
         ops += [cmd+str(r)+'/remove?n='+parent + str(i) + str(r)+'&p='+parent]
+  n = ['a','b','c','d','e','f']
+  for i in range(0,7):
+    parent = random.choice(n)
+    child = parent+random.choice(n)
+    for r in range(1,4):
+      ops += [cmd+str(r)+'/upmove?n='+l[r-1]+child+'&p='+l[r-1]+parent+'&np='+l[r-1]]
+    for r in range(1,4):
+      ops += [cmd+str(r)+'/downmove?n='+l[r-1]+child+'&p='+l[r-1]+'&np='+l[r-1]+parent]
+  
   return ops
 
-for each in gen_ops():
-  print(each)
+# print(gen_ops())
