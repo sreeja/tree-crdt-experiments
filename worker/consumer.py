@@ -13,11 +13,11 @@ queue_to_cosume = os.environ.get("WHOAMI")
 print(queue_to_cosume)
 channel.queue_declare(queue=queue_to_cosume)
 
-
 def callback(ch, method, properties, body):
     message = json.loads(body)
     from_replica = message.get("from", "")
-    msg = message.get("msg", "")
+    msg = json.dumps(message.get("msg", ""))
+    # update_ts(msg)
     f_to_write = os.path.join('/', 'usr', 'data', f'{from_replica}.txt')
     with open(f_to_write, "a") as f:
         # update vector clock by merging
