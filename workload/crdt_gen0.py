@@ -1,8 +1,8 @@
-import random
-
 '''
 30 adds, mixed with 6 removes and then 14 moves
 '''
+import random
+
 
 def gen_ops(): 
   ops = []
