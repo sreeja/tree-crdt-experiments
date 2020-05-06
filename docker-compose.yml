@@ -32,7 +32,7 @@ services:
       - 6001:6000
     command: flask run --host=0.0.0.0 --port=6000
 
-  worker-paris:
+  worker-bangalore-paris:
     build:
       context: ./worker
       dockerfile: Dockerfile
@@ -40,7 +40,23 @@ services:
       - "./worker:/usr/src/app"
       - "./data/paris:/usr/data"
     environment:
-      - WHOAMI=paris
+      - WHOAMI=bangalore-paris
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - messenger
+    links:
+      - messenger
+    command: python consumer.py
+
+  worker-newyork-paris:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    volumes:
+      - "./worker:/usr/src/app"
+      - "./data/paris:/usr/data"
+    environment:
+      - WHOAMI=newyork-paris
       - PYTHONUNBUFFERED=1
     depends_on:
       - messenger
@@ -69,7 +85,7 @@ services:
       - 6002:6000
     command: flask run --host=0.0.0.0 --port=6000
 
-  worker-bangalore:
+  worker-paris-bangalore:
     build:
       context: ./worker
       dockerfile: Dockerfile
@@ -77,7 +93,23 @@ services:
       - "./worker:/usr/src/app"
       - "./data/bangalore:/usr/data"
     environment:
-      - WHOAMI=bangalore
+      - WHOAMI=paris-bangalore
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - messenger
+    links:
+      - messenger
+    command: python consumer.py
+
+  worker-newyork-bangalore:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    volumes:
+      - "./worker:/usr/src/app"
+      - "./data/bangalore:/usr/data"
+    environment:
+      - WHOAMI=newyork-bangalore
       - PYTHONUNBUFFERED=1
     depends_on:
       - messenger
@@ -106,7 +138,7 @@ services:
       - 6003:6000
     command: flask run --host=0.0.0.0 --port=6000
 
-  worker-newyork:
+  worker-paris-newyork:
     build:
       context: ./worker
       dockerfile: Dockerfile
@@ -114,7 +146,23 @@ services:
       - "./worker:/usr/src/app"
       - "./data/newyork:/usr/data"
     environment:
-      - WHOAMI=newyork
+      - WHOAMI=paris-newyork
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - messenger
+    links:
+      - messenger
+    command: python consumer.py
+
+  worker-bangalore-newyork:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    volumes:
+      - "./worker:/usr/src/app"
+      - "./data/newyork:/usr/data"
+    environment:
+      - WHOAMI=bangalore-newyork
       - PYTHONUNBUFFERED=1
     depends_on:
       - messenger

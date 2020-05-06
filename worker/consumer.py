@@ -3,6 +3,24 @@ import os
 import pika
 import json
 
+latency_config = {
+    "paris-bangalore": .144,
+    "paris-newyork": .075,
+    "bangalore-paris": .144,
+    "bangalore-newyork": .215,
+    "newyork-paris": .075,
+    "newyork-bangalore": .215,
+}
+
+# latency_config = {
+#     "paris-bangalore": 1,
+#     "paris-newyork": .075,
+#     "bangalore-paris": .144,
+#     "bangalore-newyork": .215,
+#     "newyork-paris": .075,
+#     "newyork-bangalore": .215,
+# }
+
 
 time.sleep(30)  # A hack for rabbitmq to start
 connection = pika.BlockingConnection(
@@ -14,6 +32,7 @@ print(queue_to_cosume)
 channel.queue_declare(queue=queue_to_cosume)
 
 def callback(ch, method, properties, body):
+    time.sleep(latency_config[queue_to_cosume])
     message = json.loads(body)
     from_replica = message.get("from", "")
     msg = json.dumps(message.get("msg", ""))
