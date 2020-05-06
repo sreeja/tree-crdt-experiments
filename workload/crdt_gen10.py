@@ -9,7 +9,7 @@ def gen_ops():
   ops = [[],[],[]]
   cmd = 'http://localhost:600'
   l = ['a','b','c'] 
-  n = ['a','b','c','d','e','f']
+  n = ['a','b','c','d','e','f','g']
   for i in range(0,30): 
     for r in range(1,4): 
       parent = random.choice(l) + random.choice(l+['']) + random.choice(l+['']) 
@@ -33,5 +33,5 @@ def gen_ops():
   return ops
 
 # print(gen_ops())
-# for each in gen_ops():
-#   print(each, len(each))
+for each in gen_ops():
+  print(each, len(each))

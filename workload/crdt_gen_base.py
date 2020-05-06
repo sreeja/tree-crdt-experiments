@@ -1,6 +1,6 @@
 
 def gen_ops():
-  l = ['a','b','c','d','e','f']
+  l = ['a','b','c','d','e','f','g']
   ops = [] 
   cmd = 'http://localhost:6001/add?n='
   ops += [cmd+'a&p=root', cmd+'b&p=root', cmd+'c&p=root']
@@ -12,4 +12,4 @@ def gen_ops():
         ops += [cmd+p+n+'&p='+p]
   return ops
 
-# print(gen_ops())
+print(gen_ops())

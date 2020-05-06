@@ -16,7 +16,7 @@ def gen_ops():
       if not i%5: 
         # print('remove this') 
         ops[r-1] += [cmd+str(r)+'/remove?n='+parent + str(i) + str(r)+'&p='+parent]
-  n = ['a','b','c','d','e','f']
+  n = ['a','b','c','d','e','f','g']
   for i in range(0,7):
     parent = random.choice(n)
     child = parent+random.choice(n)
@@ -26,4 +26,6 @@ def gen_ops():
   
   return ops
 
-print(gen_ops())
+# print(gen_ops())
+for each in gen_ops():
+  print(each, len(each))
