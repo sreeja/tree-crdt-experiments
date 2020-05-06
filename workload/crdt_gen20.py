@@ -34,5 +34,11 @@ def gen_ops():
   return ops
 
 # print(gen_ops())
-for each in gen_ops():
-  print(each, len(each))
+# for each in gen_ops():
+#   print(each, len(each))
+
+ops = gen_ops()
+for i, each in enumerate(ops):
+  file_name = "crdt_20_load"+str(i)+".sh"
+  with open(file_name, "w") as f:
+    f.writelines(['curl "' + x + '"\n' for x in ops[i]])
