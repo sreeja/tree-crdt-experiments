@@ -22,7 +22,6 @@ def gen_ops():
     child = parent+random.choice(n)
     for r in range(1,4):
       ops[r-1] += [cmd+str(r)+'/upmove?n='+l[r-1]+child+'&p='+l[r-1]+parent+'&np='+l[r-1]]
-    for r in range(1,4):
       ops[r-1] += [cmd+str(r)+'/downmove?n='+l[r-1]+child+'&p='+l[r-1]+'&np='+l[r-1]+parent]
   
   return ops
