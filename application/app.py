@@ -41,6 +41,12 @@ def update_ts():
                     ts[replicaid] = log_ts[replicaid]
                     print("log received until " + str(ts))
 
+def log_message(message):
+    msg = json.dumps(message.get("msg", ""))
+    f_to_write = os.path.join('/', 'usr', 'data', f'{whoami}.txt')
+    with open(f_to_write, "a") as f:
+        f.write(f"{msg}\n")
+
 @app.route('/')
 def hello_world():
     return f'Hello world from {whoami}'
@@ -60,12 +66,13 @@ def add():
     n = request.args.get('n', '')
     p = request.args.get('p', '')
     message = {"to": whoami, "msg": {"op": "add", "ts":ts, "args": {"n": n, "p": p, "replica": whoami}, "ca":[]}}
-    write_message(message)
+    log_message(message)
     for each in [r for r in replicas if r != whoami]:
         # ["add", ts, [parent, node, replica], []]
         message = {"to": each, "msg": {"op": "add", "ts":ts, "args": {"n": n, "p": p, "replica": whoami}, "ca":[]}}
-        proc = Process(target=write_message, args=(message,))
-        proc.start()
+        # proc = Process(target=write_message, args=(message,))
+        # proc.start()
+        write_message(message)
     return "done"
 
 @app.route('/remove')
@@ -77,11 +84,12 @@ def remove():
     p = request.args.get('p', '')
     # ["remove", ts, [parent, node, replica], []]]
     message = {"to": whoami, "msg": {"op": "remove", "ts":ts, "args": {"n": n, "p": p, "replica": whoami}, "ca":[]}}
-    write_message(message)
+    log_message(message)
     for each in replicas:
         message = {"to": each, "msg": {"op": "remove", "ts":ts, "args": {"n": n, "p": p, "replica": whoami}, "ca":[]}}
-        proc = Process(target=write_message, args=(message,))
-        proc.start()
+        # proc = Process(target=write_message, args=(message,))
+        # proc.start()
+        write_message(message)
     return "done"
 
 @app.route('/downmove')
@@ -94,11 +102,12 @@ def downmove():
     np = request.args.get('np', '')
     # ["downmove", ts, [parent, node, new_parent, replica], self.get_critical_ancestors(node, new_parent)]
     message = {"to": whoami, "msg": {"op": "downmove", "ts":ts, "args": {"n": n, "p": p, "np": np, "replica": whoami}, "ca":["a", "aa"]}}
-    write_message(message)
+    log_message(message)
     for each in replicas:
         message = {"to": each, "msg": {"op": "downmove", "ts":ts, "args": {"n": n, "p": p, "np": np, "replica": whoami}, "ca":["a", "aa"]}}
-        proc = Process(target=write_message, args=(message,))
-        proc.start()
+        # proc = Process(target=write_message, args=(message,))
+        # proc.start()
+        write_message(message)
     return "done"
 
 @app.route('/upmove')
@@ -113,10 +122,11 @@ def upmove():
     np = request.args.get('np', '')
     # ["downmove", ts, [parent, node, new_parent, replica], self.get_critical_ancestors(node, new_parent)]
     message = {"to": whoami, "msg": {"op": "upmove", "ts":ts, "args": {"n": n, "p": p, "np": np, "replica": whoami}, "ca":["a", "aa"]}}
-    write_message(message)
+    log_message(message)
     for each in replicas:
         message = {"to": each, "msg": {"op": "upmove", "ts":ts, "args": {"n": n, "p": p, "np": np, "replica": whoami}, "ca":["a", "aa"]}}
-        proc = Process(target=write_message, args=(message,))
-        proc.start()
+        # proc = Process(target=write_message, args=(message,))
+        # proc.start()
+        write_message(message)
     return "done"
 
