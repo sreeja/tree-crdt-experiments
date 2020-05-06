@@ -1,5 +1,5 @@
 
-def populate():
+def gen_ops():
   l = ['a','b','c','d','e','f']
   ops = [] 
   cmd = 'http://localhost:6001/add?n='
@@ -12,4 +12,4 @@ def populate():
         ops += [cmd+p+n+'&p='+p]
   return ops
 
-# print(populate())
+# print(gen_ops())
