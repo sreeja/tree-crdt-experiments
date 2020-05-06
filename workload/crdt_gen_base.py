@@ -12,4 +12,8 @@ def gen_ops():
         ops += [cmd+p+n+'&p='+p]
   return ops
 
-print(gen_ops())
+# print(gen_ops())
+
+ops = gen_ops()
+with open("base.sh", "w") as f:
+  f.writelines(['curl "' + x + '"\n' for x in ops])
