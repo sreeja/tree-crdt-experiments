@@ -1,3 +1,6 @@
+# base load
+sh crdt_base.sh
+
 # running 0% conflict workload
 sh crdt_0_load0.sh & sh crdt_0_load1.sh & sh crdt_0_load2.sh 
 
