@@ -6,12 +6,12 @@ from messenger import write_message
 import json
 from multiprocessing import Process
 
+
 def create_app():
     app = Flask(__name__)
     app.secret_key = os.environ.get("SESSION_SECRET")
     app.config["RABBIT_URI"] = "%s/vaypa" % os.environ.get(
         "MONGO_URL", "mongodb://localhost:27017")
-    # app.register_blueprint(vaypa_apis, url_prefix="/api")
     return app
 
 app = create_app()
@@ -34,12 +34,13 @@ def update_ts():
                     last_line = lines[-1]
                     msg = json.loads(last_line)
                     log_ts = msg["ts"]
-                    # print("log ts" + str(log_ts))
-                    replica = msg["args"]["replica"]
+                    replica = msg["replica"]
                     replicaid = get_id(each)
-                    # print("replica id" + str(replicaid))
                     ts[replicaid] = log_ts[replicaid]
                     print("log received until " + str(ts))
+
+def prepare_message(op, ts, args, replica, ca = []):
+    return {"op": op, "ts":ts, "args": args, "replica": replica, "ca":ca}
 
 def log_message(message):
     msg = json.dumps(message.get("msg", ""))
@@ -65,13 +66,11 @@ def add():
     ts[replicaid] += 1
     n = request.args.get('n', '')
     p = request.args.get('p', '')
-    message = {"to": whoami, "msg": {"op": "add", "ts":ts, "args": {"n": n, "p": p, "replica": whoami}, "ca":[]}}
+    msg = prepare_message("add", ts, {"n": n, "p": p}, whoami)
+    message = {"to": whoami, "msg": msg}
     log_message(message)
     for each in [r for r in replicas if r != whoami]:
-        # ["add", ts, [parent, node, replica], []]
-        message = {"to": each, "msg": {"op": "add", "ts":ts, "args": {"n": n, "p": p, "replica": whoami}, "ca":[]}}
-        # proc = Process(target=write_message, args=(message,))
-        # proc.start()
+        message = {"to": each, "msg": msg}
         write_message(message)
     return "done"
 
@@ -82,13 +81,11 @@ def remove():
     ts[replicaid] += 1
     n = request.args.get('n', '')
     p = request.args.get('p', '')
-    # ["remove", ts, [parent, node, replica], []]]
-    message = {"to": whoami, "msg": {"op": "remove", "ts":ts, "args": {"n": n, "p": p, "replica": whoami}, "ca":[]}}
+    msg = prepare_message("remove", ts, {"n": n, "p": p}, whoami)
+    message = {"to": whoami, "msg": msg}
     log_message(message)
     for each in replicas:
-        message = {"to": each, "msg": {"op": "remove", "ts":ts, "args": {"n": n, "p": p, "replica": whoami}, "ca":[]}}
-        # proc = Process(target=write_message, args=(message,))
-        # proc.start()
+        message = {"to": each, "msg": msg}
         write_message(message)
     return "done"
 
@@ -100,33 +97,30 @@ def downmove():
     n = request.args.get('n', '')
     p = request.args.get('p', '')
     np = request.args.get('np', '')
-    # ["downmove", ts, [parent, node, new_parent, replica], self.get_critical_ancestors(node, new_parent)]
-    message = {"to": whoami, "msg": {"op": "downmove", "ts":ts, "args": {"n": n, "p": p, "np": np, "replica": whoami}, "ca":["a", "aa"]}}
+    ca = request.args.get('ca', '').split(',')
+    msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
+    message = {"to": whoami, "msg": msg}
     log_message(message)
     for each in replicas:
-        message = {"to": each, "msg": {"op": "downmove", "ts":ts, "args": {"n": n, "p": p, "np": np, "replica": whoami}, "ca":["a", "aa"]}}
-        # proc = Process(target=write_message, args=(message,))
-        # proc.start()
+        message = {"to": each, "msg": msg}
         write_message(message)
     return "done"
 
 @app.route('/upmove')
 def upmove():
     update_ts()
-    # to = request.args.get('to', '')
     whoami = os.environ.get("WHOAMI")
     replicaid = get_id(whoami)
     ts[replicaid] += 1
     n = request.args.get('n', '')
     p = request.args.get('p', '')
     np = request.args.get('np', '')
-    # ["downmove", ts, [parent, node, new_parent, replica], self.get_critical_ancestors(node, new_parent)]
-    message = {"to": whoami, "msg": {"op": "upmove", "ts":ts, "args": {"n": n, "p": p, "np": np, "replica": whoami}, "ca":["a", "aa"]}}
+    ca = request.args.get('ca', '').split(',')
+    msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
+    message = {"to": whoami, "msg": msg}
     log_message(message)
     for each in replicas:
-        message = {"to": each, "msg": {"op": "upmove", "ts":ts, "args": {"n": n, "p": p, "np": np, "replica": whoami}, "ca":["a", "aa"]}}
-        # proc = Process(target=write_message, args=(message,))
-        # proc.start()
+        message = {"to": each, "msg": msg}
         write_message(message)
     return "done"
 
