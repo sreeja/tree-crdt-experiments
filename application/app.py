@@ -6,6 +6,8 @@ from messenger import write_message
 import json
 from multiprocessing import Process
 
+# 0 for crdt, 1 for opsets, 2 for global lock, 3 for rw lock
+exp = 0
 
 def create_app():
     app = Flask(__name__)
@@ -47,6 +49,34 @@ def log_message(message):
     f_to_write = os.path.join('/', 'usr', 'data', f'{whoami}.txt')
     with open(f_to_write, "a") as f:
         f.write(f"{msg}\n")
+
+def acquire_locks():
+    if exp == 0:
+        # crdt
+        pass
+    elif exp == 1:
+        # opsets
+        pass
+    elif exp == 2:
+        # global lock
+        pass
+    else:
+        # rw lock
+        pass
+
+def release_locks():
+    if exp == 0:
+        # crdt
+        pass
+    elif exp == 1:
+        # opsets
+        pass
+    elif exp == 2:
+        # global lock
+        pass
+    else:
+        # rw lock
+        pass
 
 @app.route('/')
 def hello_world():
@@ -98,12 +128,16 @@ def downmove():
     p = request.args.get('p', '')
     np = request.args.get('np', '')
     ca = request.args.get('ca', '').split(',')
+    # acquire lock if needed
+    acquire_locks()
     msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
     message = {"to": whoami, "msg": msg}
     log_message(message)
     for each in replicas:
         message = {"to": each, "msg": msg}
         write_message(message)
+    # release lock if acquired
+    release_locks()
     return "done"
 
 @app.route('/upmove')
@@ -116,11 +150,15 @@ def upmove():
     p = request.args.get('p', '')
     np = request.args.get('np', '')
     ca = request.args.get('ca', '').split(',')
+    # acquire lock if needed
+    acquire_locks()
     msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
     message = {"to": whoami, "msg": msg}
     log_message(message)
     for each in replicas:
         message = {"to": each, "msg": msg}
         write_message(message)
+    # release lock if acquired
+    release_locks()
     return "done"
 
