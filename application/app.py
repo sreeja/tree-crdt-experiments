@@ -6,6 +6,8 @@ from messenger import write_message
 import json
 from multiprocessing import Process
 
+from datetime import datetime
+
 # 0 for crdt, 1 for opsets, 2 for global lock, 3 for rw lock
 exp = 0
 
@@ -46,6 +48,12 @@ def prepare_message(op, ts, args, replica, ca = []):
 
 def log_message(message):
     msg = json.dumps(message.get("msg", ""))
+    msg_ts = message.get("msg", "").get("ts","")
+    logging = json.dumps({"ts":msg_ts, "time":str(datetime.now())})
+    # print(logging)
+    log_file = os.path.join('/', 'usr', 'data', f'time{whoami}.txt')
+    with open(log_file, "a") as l:
+        l.write(f"{logging}\n")
     f_to_write = os.path.join('/', 'usr', 'data', f'{whoami}.txt')
     with open(f_to_write, "a") as f:
         f.write(f"{msg}\n")

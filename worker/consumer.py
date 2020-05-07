@@ -2,6 +2,7 @@ import time
 import os
 import pika
 import json
+from datetime import datetime
 
 latency_config = {
     "paris-bangalore": .144,
@@ -36,10 +37,13 @@ def callback(ch, method, properties, body):
     message = json.loads(body)
     from_replica = message.get("from", "")
     msg = json.dumps(message.get("msg", ""))
-    # update_ts(msg)
+    msg_ts = message.get("msg", "").get("ts","")
+    logging = json.dumps({"ts":msg_ts, "time":str(datetime.now())})
+    log_file = os.path.join('/', 'usr', 'data', f'time{from_replica}.txt')
+    with open(log_file, "a") as l:
+        l.write(f"{logging}\n")
     f_to_write = os.path.join('/', 'usr', 'data', f'{from_replica}.txt')
     with open(f_to_write, "a") as f:
-        # update vector clock by merging
         f.write(f"{msg}\n")
     print(f"Read the message: {body}")
 
