@@ -1,5 +1,6 @@
 '''
 30 adds, mixed with 6 removes and then 14 moves
+critical ancestors to be given manually now
 '''
 import random
 
