@@ -64,6 +64,12 @@ def log_message(message):
     with open(f_to_write, "a") as f:
         f.write(f"{msg}\n")
 
+def acknowledge():
+    reg = json.dumps({"ts":ts, "time":str(datetime.now())})
+    log_file = os.path.join('/', 'usr', 'data', 'done.txt')
+    with open(log_file, "a") as l:
+        l.write(f"{reg}\n")
+
 def acquire_locks():
     if exp == 0:
         # crdt
@@ -117,6 +123,7 @@ def add():
     for each in [r for r in replicas if r != whoami]:
         message = {"to": each, "msg": msg}
         write_message(message)
+    acknowledge()
     return "done"
 
 @app.route('/remove')
@@ -133,6 +140,7 @@ def remove():
     for each in replicas:
         message = {"to": each, "msg": msg}
         write_message(message)
+    acknowledge()
     return "done"
 
 @app.route('/downmove')
@@ -155,6 +163,7 @@ def downmove():
         write_message(message)
     # release lock if acquired
     release_locks()
+    acknowledge()
     return "done"
 
 @app.route('/upmove')
@@ -177,5 +186,6 @@ def upmove():
         write_message(message)
     # release lock if acquired
     release_locks()
+    acknowledge()
     return "done"
 
