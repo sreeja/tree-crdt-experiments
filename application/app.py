@@ -43,17 +43,23 @@ def update_ts():
                     ts[replicaid] = log_ts[replicaid]
                     print("log received until " + str(ts))
 
+def register_op():
+    reg = json.dumps({"ts":ts, "time":str(datetime.now())})
+    log_file = os.path.join('/', 'usr', 'data', f'time{whoami}.txt')
+    with open(log_file, "a") as l:
+        l.write(f"{reg}\n")
+
 def prepare_message(op, ts, args, replica, ca = []):
     return {"op": op, "ts":ts, "args": args, "replica": replica, "ca":ca}
 
 def log_message(message):
     msg = json.dumps(message.get("msg", ""))
-    msg_ts = message.get("msg", "").get("ts","")
-    logging = json.dumps({"ts":msg_ts, "time":str(datetime.now())})
-    # print(logging)
-    log_file = os.path.join('/', 'usr', 'data', f'time{whoami}.txt')
-    with open(log_file, "a") as l:
-        l.write(f"{logging}\n")
+    # msg_ts = message.get("msg", "").get("ts","")
+    # logging = json.dumps({"ts":msg_ts, "time":str(datetime.now())})
+    # # print(logging)
+    # log_file = os.path.join('/', 'usr', 'data', f'time{whoami}.txt')
+    # with open(log_file, "a") as l:
+    #     l.write(f"{logging}\n")
     f_to_write = os.path.join('/', 'usr', 'data', f'{whoami}.txt')
     with open(f_to_write, "a") as f:
         f.write(f"{msg}\n")
@@ -90,18 +96,19 @@ def release_locks():
 def hello_world():
     return f'Hello world from {whoami}'
 
-@app.route('/write')
-def write():
-    to = request.args.get('to', '')
-    message = {"to": to, "msg": "Hello"}
-    write_message(message)
-    return "done"
+# @app.route('/write')
+# def write():
+#     to = request.args.get('to', '')
+#     message = {"to": to, "msg": "Hello"}
+#     write_message(message)
+#     return "done"
 
 @app.route('/add')
 def add():
     update_ts()
     replicaid = get_id(whoami)
     ts[replicaid] += 1
+    register_op()
     n = request.args.get('n', '')
     p = request.args.get('p', '')
     msg = prepare_message("add", ts, {"n": n, "p": p}, whoami)
@@ -117,6 +124,7 @@ def remove():
     update_ts()
     replicaid = get_id(whoami)
     ts[replicaid] += 1
+    register_op()
     n = request.args.get('n', '')
     p = request.args.get('p', '')
     msg = prepare_message("remove", ts, {"n": n, "p": p}, whoami)
@@ -132,6 +140,7 @@ def downmove():
     update_ts()
     replicaid = get_id(whoami)
     ts[replicaid] += 1
+    register_op()
     n = request.args.get('n', '')
     p = request.args.get('p', '')
     np = request.args.get('np', '')
@@ -151,9 +160,9 @@ def downmove():
 @app.route('/upmove')
 def upmove():
     update_ts()
-    whoami = os.environ.get("WHOAMI")
     replicaid = get_id(whoami)
     ts[replicaid] += 1
+    register_op()
     n = request.args.get('n', '')
     p = request.args.get('p', '')
     np = request.args.get('np', '')
