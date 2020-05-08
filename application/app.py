@@ -45,7 +45,7 @@ def update_ts():
 
 def register_op():
     reg = json.dumps({"ts":ts, "time":str(datetime.now())})
-    log_file = os.path.join('/', 'usr', 'data', f'time{whoami}.txt')
+    log_file = os.path.join('/', 'usr', 'data', 'register.txt')
     with open(log_file, "a") as l:
         l.write(f"{reg}\n")
 
@@ -54,12 +54,12 @@ def prepare_message(op, ts, args, replica, ca = []):
 
 def log_message(message):
     msg = json.dumps(message.get("msg", ""))
-    # msg_ts = message.get("msg", "").get("ts","")
-    # logging = json.dumps({"ts":msg_ts, "time":str(datetime.now())})
-    # # print(logging)
-    # log_file = os.path.join('/', 'usr', 'data', f'time{whoami}.txt')
-    # with open(log_file, "a") as l:
-    #     l.write(f"{logging}\n")
+    msg_ts = message.get("msg", "").get("ts","")
+    logging = json.dumps({"ts":msg_ts, "time":str(datetime.now())})
+    # print(logging)
+    log_file = os.path.join('/', 'usr', 'data', f'time{whoami}.txt')
+    with open(log_file, "a") as l:
+        l.write(f"{logging}\n")
     f_to_write = os.path.join('/', 'usr', 'data', f'{whoami}.txt')
     with open(f_to_write, "a") as f:
         f.write(f"{msg}\n")
