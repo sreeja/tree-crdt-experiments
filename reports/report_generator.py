@@ -16,8 +16,6 @@ from datetime import datetime, timedelta
 replicas = ['paris','bangalore','newyork']
 
 def parse_client_logs(exp, conflict):
-  # for one experiment, populate the following data
-  # data = {ts : [requested_time, response time]}
   data = {}
   directory = 'data'+str(conflict)+'_'+str(exp)
   for r in replicas:
@@ -46,34 +44,106 @@ def parse_client_logs(exp, conflict):
 
 
 def response_time(data):
-  # responses = {}
   total = 0
   responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys()]
   assert len(responses) == 150
   average_response_time = sum(responses, timedelta(0)) / len(responses)
   return responses, average_response_time
 
-# def parse_replica_logs(exp, conflict):
-#   pass
+def parse_replica_logs(exp, conflict):
+  data = {}
+  directory = 'data'+str(conflict)+'_'+str(exp)
+  for r in replicas:
+    for r1 in replicas:
+      file_name = 'time'+r1+'.txt'
+      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', directory, r, file_name)
+      with open(reg_file, 'r') as l:
+        lines = l.readlines()
+        for each in lines:
+          j = json.loads(each)
+          if j["ts"][0] > 395 or (j["ts"][0] == 395 and (j["ts"][1] > 0 or j["ts"][2] > 0)): # filter out initial warm up load
+            key = str(j["ts"])
+            if not key in data:
+              data[key] = {} 
+            data[key][r] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
+            data[key]["ts"] = j["ts"]
+  for r in replicas:
+    file_name = r+'.txt'
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', directory, 'paris', file_name)
+    with open(reg_file, 'r') as l:
+      lines = l.readlines()
+      for each in lines:
+        j = json.loads(each)
+        if j["ts"][0] > 395 or (j["ts"][0] == 395 and (j["ts"][1] > 0 or j["ts"][2] > 0)): # filter out initial warm up load
+          key = str(j["ts"])
+          data[key]["op"] = {"name":j["op"], "n":j["args"]["n"], "ca":j["ca"]}
+          data[key]["origin"] = j["replica"]
+  return data
 
-# def stabilization_time():
-#   stabilizations = {}
-#   total = 0
-#   for ts, time in data:
-#     if ts[0] > 395: # filter out initial warm up load
-#       stabilized_time = get_next_causally_stable_time(ts)
+def is_concurrent(ts1, ts2):
+  if ts1[0] >= ts2[0] and ts1[1] >= ts2[1] and ts1[2] >= ts2[2]:
+    return False
+  if ts1[0] <= ts2[0] and ts1[1] <= ts2[1] and ts1[2] <= ts2[2]:
+    return False
+  return True
+
+def is_conflicting(exp, op1, op2):
+  if exp ==0: #crdt, only concurrent moves on critical ancestors conflict
+    if op1["name"] == "downmove": #possible conflict
+      if op2["name"] in ["upmove", "downmove"]:
+        if op1["n"] in op2["ca"] or op2["n"] in op1["ca"]:
+          return True
+    elif op2["name"] == "downmove": #possible conflict
+      if op1["name"] in ["upmove", "downmove"]:
+        if op1["n"] in op2["ca"] or op2["n"] in op1["ca"]:
+          return True
+    return False
+  else: # opsets, all concurrent moves
+    return True
+
+def get_conflicting_conc_ops(entry, data, exp):
+  conflicts = {}
+  for each in data:
+    if is_concurrent(entry["ts"], data[each]["ts"]) and is_conflicting(exp, entry["op"], data[each]["op"]):
+      conflicts[each] = data[each]
+  return conflicts
+
+def stabilization_time(exp, data):
+  stabilizations = []
+  total = 0
+  for each in data:
+    stabilized_time = 0
+    origin = data[each]["origin"]
+    conflicts = get_conflicting_conc_ops(data[each], data, exp)
+    if conflicts:
+      last_conflict_time = max([conflicts[x][origin] for x in conflicts])
+      stabilizations += [last_conflict_time - data[each][origin]]
+    else:
+      stabilizations += [timedelta(0)]
+  average_stabilization_time = sum(stabilizations, timedelta(0)) / len(stabilizations)
+  return stabilizations, average_stabilization_time
 
 
 def result():
   # return average response time, per experiment
-  for i in range(0,1):
+  print("Response time")
+  print("=============")
+  for i in range(0,2):
+    print("Experiment " + str(i))
     for j in range(0,30, 10):
+      print("Conflict %: " + str(j))
       data = parse_client_logs(i, j)
       print(response_time(data)[1])
+  print("=============")
   # return  average stabilization time per experiment
-  # for i in range(0,1):
-  #   for j in range(0,30, 10):
-  #     data = parse_replica_logs(i, j)
-  #     print(stabilization_time(data)[1])
+  print("Stabilization time")
+  print("=============")
+  for i in range(0,2):
+    print("Experiment " + str(i))
+    for j in range(0,30, 10):
+      print("Conflict %: " + str(j))
+      data = parse_replica_logs(i, j)
+      print(stabilization_time(i, data)[1])
+  print("=============")
 
 result()
