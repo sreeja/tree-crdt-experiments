@@ -137,7 +137,7 @@ def remove():
     msg = prepare_message("remove", ts, {"n": n, "p": p}, whoami)
     message = {"to": whoami, "msg": msg}
     log_message(message)
-    for each in replicas:
+    for each in [r for r in replicas if r != whoami]:
         message = {"to": each, "msg": msg}
         write_message(message)
     acknowledge()
@@ -158,7 +158,7 @@ def downmove():
     msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
     message = {"to": whoami, "msg": msg}
     log_message(message)
-    for each in replicas:
+    for each in [r for r in replicas if r != whoami]:
         message = {"to": each, "msg": msg}
         write_message(message)
     # release lock if acquired
@@ -181,7 +181,7 @@ def upmove():
     msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
     message = {"to": whoami, "msg": msg}
     log_message(message)
-    for each in replicas:
+    for each in [r for r in replicas if r != whoami]:
         message = {"to": each, "msg": msg}
         write_message(message)
     # release lock if acquired
