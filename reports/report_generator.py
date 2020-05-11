@@ -98,8 +98,10 @@ def is_conflicting(exp, op1, op2):
         if op1["n"] in op2["ca"] or op2["n"] in op1["ca"]:
           return True
     return False
-  else: # opsets, all concurrent moves
+  elif exp ==1: # opsets, all concurrent moves
     return True
+  else: # 
+    return False
 
 def get_conflicting_conc_ops(entry, data, exp):
   conflicts = {}
@@ -138,7 +140,7 @@ def result():
   # return  average stabilization time per experiment
   print("Stabilization time")
   print("=============")
-  for i in range(0,2):
+  for i in range(0,3):
     print("Experiment " + str(i))
     for j in range(0,30, 10):
       print("Conflict %: " + str(j))
