@@ -128,7 +128,7 @@ def result():
   # return average response time, per experiment
   print("Response time")
   print("=============")
-  for i in range(0,2):
+  for i in range(0,3):
     print("Experiment " + str(i))
     for j in range(0,30, 10):
       print("Conflict %: " + str(j))

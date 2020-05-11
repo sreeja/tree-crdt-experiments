@@ -4,15 +4,7 @@ import time
 from contextlib import contextmanager
 
 import pika
-
-latency_config = {
-    "paris-bangalore": .144,
-    "paris-newyork": .075,
-    "bangalore-paris": .144,
-    "bangalore-newyork": .215,
-    "newyork-paris": .075,
-    "newyork-bangalore": .215,
-}
+from flask import current_app
 
 # @contextmanager
 # def messenger_connection():
@@ -25,6 +17,7 @@ latency_config = {
 #     return latency_config.get(whoami, {})
 
 def write_message(message):
+    latency_config = current_app.config["latency_config"]
     whoami = os.environ.get("WHOAMI")
     payload = json.dumps(
         {

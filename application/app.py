@@ -1,4 +1,5 @@
 import os
+import time
 
 from flask import Flask, request
 from messenger import write_message
@@ -9,13 +10,19 @@ from multiprocessing import Process
 from datetime import datetime
 
 # 0 for crdt, 1 for opsets, 2 for global lock, 3 for rw lock
-exp = 0
+exp = 2
 
 def create_app():
     app = Flask(__name__)
     app.secret_key = os.environ.get("SESSION_SECRET")
-    app.config["RABBIT_URI"] = "%s/vaypa" % os.environ.get(
-        "MONGO_URL", "mongodb://localhost:27017")
+    app.config["latency_config"] = {
+        "paris-bangalore": .144,
+        "paris-newyork": .075,
+        "bangalore-paris": .144,
+        "bangalore-newyork": .215,
+        "newyork-paris": .075,
+        "newyork-bangalore": .215,
+    }
     return app
 
 app = create_app()
@@ -70,7 +77,30 @@ def acknowledge():
     with open(log_file, "a") as l:
         l.write(f"{reg}\n")
 
+# the cost of lock acquisition is as per https://www.nuodb.com/techblog/distributed-transactional-locks
+# exclusive mode - 
+# -- requestor -> chairman (paris)
+# -- chairman(paris) -> all other nodes
+# -- all other nodes -> requestor
+# shared mode - 0
+def simulate_lock_time(latency_config):
+    chairman = "paris"
+    # -- requestor -> chairman (paris)
+    if whoami != chairman:
+        time.sleep(latency_config[whoami+'-'+chairman])
+    # -- chairman(paris) -> all other nodes
+    max_time = 0
+    for each in [r for r in replicas if r != chairman]:
+        max_time = max(max_time, latency_config[chairman+'-'+each])
+    time.sleep(max_time)
+    # -- all other nodes -> requestor
+    max_time = 0
+    for each in [r for r in replicas if r != whoami]:
+        max_time = max(max_time, latency_config[each+'-'+whoami])
+    time.sleep(max_time)
+
 def acquire_locks():
+    latency_config = app.config["latency_config"]
     if exp == 0:
         # crdt
         pass
@@ -79,10 +109,10 @@ def acquire_locks():
         pass
     elif exp == 2:
         # global lock
-        pass
+        simulate_lock_time(latency_config)
     else:
         # rw lock
-        pass
+        simulate_lock_time()
 
 def release_locks():
     if exp == 0:
