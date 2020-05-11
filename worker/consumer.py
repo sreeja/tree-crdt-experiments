@@ -5,14 +5,14 @@ import json
 from datetime import datetime, timedelta
 import sched
 
-latency_config = {
-    "paris-bangalore": .144,
-    "paris-newyork": .075,
-    "bangalore-paris": .144,
-    "bangalore-newyork": .215,
-    "newyork-paris": .075,
-    "newyork-bangalore": .215,
-}
+# latency_config = {
+#     "paris-bangalore": .144,
+#     "paris-newyork": .075,
+#     "bangalore-paris": .144,
+#     "bangalore-newyork": .215,
+#     "newyork-paris": .075,
+#     "newyork-bangalore": .215,
+# }
 
 # latency_config = {
 #     "paris-bangalore": 1,
@@ -37,20 +37,20 @@ time_log = {}
 op_log = {}
 from_log={}
 
-def flush():
-    print("calling flush")
-    print(time_log, datetime.now())
-    for each in time_log:
-        if each <= datetime.now():
-            entry = json.loads(time_log[each])
-            time_stamp = str(entry["ts"])
-            log_file = os.path.join('/', 'usr', 'data', f'time{from_log[time_stamp]}.txt')
-            with open(log_file, "a") as l:
-                l.write(f"{time_log[each]}\n")
-            f_to_write = os.path.join('/', 'usr', 'data', f'{from_log[time_stamp]}.txt')
-            with open(f_to_write, "a") as f:
-                f.write(f"{op_log[time_stamp]}\n")
-            print(f"Read the message: {op_log[time_stamp]}")
+# def flush():
+#     print("calling flush")
+#     print(time_log, datetime.now())
+#     for each in time_log:
+#         if each <= datetime.now():
+#             entry = json.loads(time_log[each])
+#             time_stamp = str(entry["ts"])
+#             log_file = os.path.join('/', 'usr', 'data', f'time{from_log[time_stamp]}.txt')
+#             with open(log_file, "a") as l:
+#                 l.write(f"{time_log[each]}\n")
+#             f_to_write = os.path.join('/', 'usr', 'data', f'{from_log[time_stamp]}.txt')
+#             with open(f_to_write, "a") as f:
+#                 f.write(f"{op_log[time_stamp]}\n")
+#             print(f"Read the message: {op_log[time_stamp]}")
 
 
 
