@@ -9,7 +9,7 @@ for each data structure[0:crdt, 1:opsets, 2:global lock, 3:rwlock]:
   stop app
 
 ## clear logs
-> data/paris/paris.txt & > data/paris/bangalore.txt & > data/paris/newyork.txt & > data/paris/register.txt & > data/paris/done.txt & > data/paris/timeparis.txt & > data/paris/timebangalore.txt & > data/paris/timenewyork.txt & > data/bangalore/paris.txt & > data/bangalore/bangalore.txt & > data/bangalore/newyork.txt & > data/bangalore/register.txt & > data/bangalore/done.txt & > data/bangalore/timeparis.txt & > data/bangalore/timebangalore.txt & > data/bangalore/timenewyork.txt & > data/newyork/paris.txt & > data/newyork/bangalore.txt & > data/newyork/newyork.txt & > data/newyork/register.txt & > data/newyork/done.txt & > data/newyork/timeparis.txt & > data/newyork/timebangalore.txt & > data/newyork/timenewyork.txt
+for f in $(find data); do > $f; done
 
 ## base load
 sh workload/base.sh
