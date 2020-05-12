@@ -13,6 +13,7 @@ import os
 import json
 from datetime import datetime, timedelta
 
+
 replicas = ['paris','bangalore','newyork']
 
 def parse_client_logs(lc_config, exp, conflict):
@@ -148,5 +149,6 @@ def result(lc_config):
       print("Conflict %: " + str(j) + " : " + str(stabilization_time(i, data)[1]))
   print("=============")
 
-for i in range(1,2):
+for i in range(1,4):
+  print("LATENCY CONFIG " + str(i) + " \n")
   result(i)

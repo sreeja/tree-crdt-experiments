@@ -12,7 +12,7 @@ from datetime import datetime
 from kazoo.client import KazooClient
 
 # 0 for crdt, 1 for opsets, 2 for global lock, 3 for rw lock
-exp = 3
+exp = 0
 
 def create_app():
     app = Flask(__name__)
@@ -25,6 +25,22 @@ def create_app():
         "newyork-paris": .075,
         "newyork-bangalore": .215,
     }
+    # app.config["latency_config"] = {
+    #     "paris-bangalore": 1.44,
+    #     "paris-newyork": 0.75,
+    #     "bangalore-paris": 1.44,
+    #     "bangalore-newyork": 2.15,
+    #     "newyork-paris": 0.75,
+    #     "newyork-bangalore": 2.15,
+    # }
+    # app.config["latency_config"] = {
+    #     "paris-bangalore": 0,
+    #     "paris-newyork": 0,
+    #     "bangalore-paris": 0,
+    #     "bangalore-newyork": 0,
+    #     "newyork-paris": 0,
+    #     "newyork-bangalore": 0,
+    # }
     return app
 
 app = create_app()
