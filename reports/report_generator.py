@@ -130,7 +130,7 @@ def result():
   # return average response time, per experiment
   print("Response time")
   print("=============")
-  for i in range(0,3):
+  for i in range(0,4):
     print("Experiment " + str(i))
     for j in range(0,30, 10):
       print("Conflict %: " + str(j))
@@ -140,7 +140,7 @@ def result():
   # return  average stabilization time per experiment
   print("Stabilization time")
   print("=============")
-  for i in range(0,3):
+  for i in range(0,4):
     print("Experiment " + str(i))
     for j in range(0,30, 10):
       print("Conflict %: " + str(j))

@@ -9,8 +9,10 @@ from multiprocessing import Process
 
 from datetime import datetime
 
+from kazoo.client import KazooClient
+
 # 0 for crdt, 1 for opsets, 2 for global lock, 3 for rw lock
-exp = 2
+exp = 3
 
 def create_app():
     app = Flask(__name__)
@@ -31,6 +33,10 @@ whoami = os.environ.get("WHOAMI")
 
 ts = [0, 0, 0]
 replicas = ['paris', 'bangalore','newyork']
+
+zk = KazooClient(hosts='zookeeper:2181')
+zk.start()
+chairman = "paris"
 
 def get_id(replica):
     return replicas.index(replica)
@@ -77,27 +83,27 @@ def acknowledge():
     with open(log_file, "a") as l:
         l.write(f"{reg}\n")
 
-# the cost of lock acquisition is as per https://www.nuodb.com/techblog/distributed-transactional-locks
-# exclusive mode - 
-# -- requestor -> chairman (paris)
-# -- chairman(paris) -> all other nodes
-# -- all other nodes -> requestor
-# shared mode - 0
-def simulate_lock_time(latency_config):
-    chairman = "paris"
-    # -- requestor -> chairman (paris)
-    if whoami != chairman:
-        time.sleep(latency_config[whoami+'-'+chairman])
-    # -- chairman(paris) -> all other nodes
-    max_time = 0
-    for each in [r for r in replicas if r != chairman]:
-        max_time = max(max_time, latency_config[chairman+'-'+each])
-    time.sleep(max_time)
-    # -- all other nodes -> requestor
-    max_time = 0
-    for each in [r for r in replicas if r != whoami]:
-        max_time = max(max_time, latency_config[each+'-'+whoami])
-    time.sleep(max_time)
+# # the cost of lock acquisition is as per https://www.nuodb.com/techblog/distributed-transactional-locks
+# # exclusive mode - 
+# # -- requestor -> chairman (paris)
+# # -- chairman(paris) -> all other nodes
+# # -- all other nodes -> requestor
+# # shared mode - 0
+# def simulate_lock_time(latency_config):
+#     chairman = "paris"
+#     # -- requestor -> chairman (paris)
+#     if whoami != chairman:
+#         time.sleep(latency_config[whoami+'-'+chairman])
+#     # -- chairman(paris) -> all other nodes
+#     max_time = 0
+#     for each in [r for r in replicas if r != chairman]:
+#         max_time = max(max_time, latency_config[chairman+'-'+each])
+#     time.sleep(max_time)
+#     # -- all other nodes -> requestor
+#     max_time = 0
+#     for each in [r for r in replicas if r != whoami]:
+#         max_time = max(max_time, latency_config[each+'-'+whoami])
+#     time.sleep(max_time)
 
 def acquire_locks():
     latency_config = app.config["latency_config"]
@@ -184,15 +190,55 @@ def downmove():
     np = request.args.get('np', '')
     ca = request.args.get('ca', '').split(',')
     # acquire lock if needed
-    acquire_locks()
-    msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
-    message = {"to": whoami, "msg": msg}
-    log_message(message)
-    for each in [r for r in replicas if r != whoami]:
-        message = {"to": each, "msg": msg}
-        write_message(message)
+    # acquire_locks()
+    latency_config = app.config["latency_config"]
+    if exp == 2:
+        # global lock
+        if whoami != chairman:
+            time.sleep(latency_config[whoami+'-'+chairman])
+        lock = zk.Lock('/lockpath', 'global')
+        with lock:
+            # print("with lock from "+whoami)
+            msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
+            message = {"to": whoami, "msg": msg}
+            log_message(message)
+            if whoami != chairman:
+                time.sleep(latency_config[whoami+'-'+chairman]*2)
+            for each in [r for r in replicas if r != whoami]:
+                message = {"to": each, "msg": msg}
+                write_message(message)
+            # print("lock released from " + whoami)
+
+    elif exp == 3:
+        # rw lock
+        if whoami != chairman:
+            time.sleep(latency_config[whoami+'-'+chairman])
+        wlock = zk.WriteLock('/lockpath', n)
+        rlocks = [zk.ReadLock('/lockpath', a) for a in ca]
+        from contextlib import ExitStack
+        with rlocks and wlock: # ExitStack() as es:
+            # print("got locks " +whoami, flush=True)
+            msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
+            message = {"to": whoami, "msg": msg}
+            log_message(message)
+            if whoami != chairman:
+                time.sleep(latency_config[whoami+'-'+chairman]*2)
+            for each in [r for r in replicas if r != whoami]:
+                message = {"to": each, "msg": msg}
+                write_message(message)
+            # print("lock released from " + whoami, flush=True)
+
+    else:
+        # crdt/opsets
+        msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
+        message = {"to": whoami, "msg": msg}
+        log_message(message)
+        for each in [r for r in replicas if r != whoami]:
+            message = {"to": each, "msg": msg}
+            write_message(message)
+
     # release lock if acquired
-    release_locks()
+    # release_locks()
     acknowledge()
     return "done"
 
@@ -207,15 +253,53 @@ def upmove():
     np = request.args.get('np', '')
     ca = request.args.get('ca', '').split(',')
     # acquire lock if needed
-    acquire_locks()
-    msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
-    message = {"to": whoami, "msg": msg}
-    log_message(message)
-    for each in [r for r in replicas if r != whoami]:
-        message = {"to": each, "msg": msg}
-        write_message(message)
+    # acquire_locks()
+    latency_config = app.config["latency_config"]
+    if exp == 2:
+        # global lock
+        if whoami != chairman:
+            time.sleep(latency_config[whoami+'-'+chairman])
+        lock = zk.Lock('/lockpath', 'global')
+        with lock:
+            # print("with lock from "+whoami)
+            msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
+            message = {"to": whoami, "msg": msg}
+            log_message(message)
+            if whoami != chairman:
+                time.sleep(latency_config[whoami+'-'+chairman]*2)
+            for each in [r for r in replicas if r != whoami]:
+                message = {"to": each, "msg": msg}
+                write_message(message)
+
+    elif exp == 3:
+        # rw lock
+        if whoami != chairman:
+            time.sleep(latency_config[whoami+'-'+chairman])
+        wlock = zk.WriteLock('/lockpath', n)
+        rlocks = [zk.ReadLock('/lockpath', a) for a in ca]
+        from contextlib import ExitStack
+        with rlocks and wlock: # ExitStack() as es:
+            # print("got locks " +whoami, flush=True)
+            msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
+            message = {"to": whoami, "msg": msg}
+            log_message(message)
+            if whoami != chairman:
+                time.sleep(latency_config[whoami+'-'+chairman]*2)
+            for each in [r for r in replicas if r != whoami]:
+                message = {"to": each, "msg": msg}
+                write_message(message)
+
+    else:
+        # crdt/opsets
+        msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
+        message = {"to": whoami, "msg": msg}
+        log_message(message)
+        for each in [r for r in replicas if r != whoami]:
+            message = {"to": each, "msg": msg}
+            write_message(message)
+
     # release lock if acquired
-    release_locks()
+    # release_locks()
     acknowledge()
     return "done"
 
