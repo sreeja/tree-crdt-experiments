@@ -15,11 +15,11 @@ from datetime import datetime, timedelta
 
 replicas = ['paris','bangalore','newyork']
 
-def parse_client_logs(exp, conflict):
+def parse_client_logs(lc_config, exp, conflict):
   data = {}
   directory = 'data'+str(conflict)+'_'+str(exp)
   for r in replicas:
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', directory, r, 'register.txt')
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, r, 'register.txt')
     with open(reg_file, 'r') as l:
       lines = l.readlines()
       for each in lines:
@@ -29,7 +29,7 @@ def parse_client_logs(exp, conflict):
           if not key in data:
             data[key] = {} 
           data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', directory, r, 'done.txt')
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, r, 'done.txt')
     with open(reg_file) as l:
       lines = l.readlines()
       for each in lines:
@@ -50,13 +50,13 @@ def response_time(data):
   average_response_time = sum(responses, timedelta(0)) / len(responses)
   return responses, average_response_time
 
-def parse_replica_logs(exp, conflict):
+def parse_replica_logs(lc_config, exp, conflict):
   data = {}
   directory = 'data'+str(conflict)+'_'+str(exp)
   for r in replicas:
     for r1 in replicas:
       file_name = 'time'+r1+'.txt'
-      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', directory, r, file_name)
+      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, r, file_name)
       with open(reg_file, 'r') as l:
         lines = l.readlines()
         for each in lines:
@@ -69,7 +69,7 @@ def parse_replica_logs(exp, conflict):
             data[key]["ts"] = j["ts"]
   for r in replicas:
     file_name = r+'.txt'
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', directory, 'paris', file_name)
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, 'paris', file_name)
     with open(reg_file, 'r') as l:
       lines = l.readlines()
       for each in lines:
@@ -126,16 +126,16 @@ def stabilization_time(exp, data):
   return stabilizations, average_stabilization_time
 
 
-def result():
+def result(lc_config):
   # return average response time, per experiment
   print("Response time")
   print("=============")
   for i in range(0,4):
     print("Experiment " + str(i))
     for j in range(0,30, 10):
-      print("Conflict %: " + str(j))
-      data = parse_client_logs(i, j)
-      print(response_time(data)[1])
+      # print("Conflict %: " + str(j))
+      data = parse_client_logs(lc_config, i, j)
+      print("Conflict %: " + str(j) + " : " + str(response_time(data)[1]))
   print("=============")
   # return  average stabilization time per experiment
   print("Stabilization time")
@@ -143,9 +143,10 @@ def result():
   for i in range(0,4):
     print("Experiment " + str(i))
     for j in range(0,30, 10):
-      print("Conflict %: " + str(j))
-      data = parse_replica_logs(i, j)
-      print(stabilization_time(i, data)[1])
+      # print("Conflict %: " + str(j))
+      data = parse_replica_logs(lc_config, i, j)
+      print("Conflict %: " + str(j) + " : " + str(stabilization_time(i, data)[1]))
   print("=============")
 
-result()
+for i in range(1,2):
+  result(i)
