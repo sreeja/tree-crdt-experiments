@@ -190,18 +190,19 @@ def result(lc_config):
   print("Response time")
   print("=============")
   rl = []
-  for i in range(0,4):
-    print("Experiment " + str(i))
+  for j in range(0,30, 10):
     row = []
-    for j in range(0,30, 10):
+    for i in range(0,4):
+      print("Experiment " + str(i))
       # print("Conflict %: " + str(j))
       data = parse_logs(lc_config, i, j)
       print("Conflict %: " + str(j) + " : ")
-      print("All: " + str(response_time(data)[1]) + " :: Conflicts: " + str(response_time(data)[2]) + " :: Nonconflicts: " + str(response_time(data)[3]))
-      row += [str(response_time(data)[1]) + ' & ' +str(response_time(data)[2]) + ' & ' + str(response_time(data)[3])]
-    rl += [" & ".join(row)]
-  with open("response.tex", "w") as f:
-    f.write("\\\\ \n".join(rl) + "\\\\")
+      print("All: " + str(response_time(data)[1].total_seconds()) + " :: Conflicts: " + str(response_time(data)[2].total_seconds()) + " :: Nonconflicts: " + str(response_time(data)[3].total_seconds()))
+      row += ["Experiment " + str(i+1) + ' & ' +str(response_time(data)[1].total_seconds()) + ' & ' +str(response_time(data)[2].total_seconds()) + ' & ' + str(response_time(data)[3].total_seconds()) + '\\\\']
+    # rl += [row]
+    file_name = "response"+str(lc_config)+"con"+str(j)+".tex"
+    with open(file_name, "w") as f:
+      f.write("\n".join(row))
   print("=============")
   # return  average stabilization time per experiment
   print("Stabilization time")
@@ -215,8 +216,9 @@ def result(lc_config):
       data = parse_replica_logs(lc_config, i, j)
       print("Conflict %: " + str(j) + " : " + str(stabilization_time(i, data)[1]))
       row += [str(stabilization_time(i, data)[1])]
-    sl += [" & ".join(row)]
-  with open("stabilization.tex", "w") as f:
+    sl += ["Experiment " + str(i) + " & " + " & ".join(row)]
+  file_name = "stabilization"+str(lc_config)+".tex"
+  with open(file_name, "w") as f:
     f.write("\\\\ \n".join(sl) + "\\\\")
   print("=============")
 
