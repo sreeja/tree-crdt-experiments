@@ -16,6 +16,58 @@ from datetime import datetime, timedelta
 
 replicas = ['paris','bangalore','newyork']
 
+def parse_logs(lc_config, exp, conflict):
+  data = {}
+  directory = 'data'+str(conflict)+'_'+str(exp)
+  for r in replicas:
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, r, 'register.txt')
+    with open(reg_file, 'r') as l:
+      lines = l.readlines()
+      for each in lines:
+        j = json.loads(each)
+        if j["ts"][0] > 395 or (j["ts"][0] == 395 and (j["ts"][1] > 0 or j["ts"][2] > 0)): # filter out initial warm up load
+          key = str(j["ts"])
+          if not key in data:
+            data[key] = {} 
+          data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, r, 'done.txt')
+    with open(reg_file) as l:
+      lines = l.readlines()
+      for each in lines:
+        j = json.loads(each)
+        if j["ts"][0] > 395 or (j["ts"][0] == 395 and (j["ts"][1] > 0 or j["ts"][2] > 0)): # filter out initial warm up load
+          key = str(j["ts"])
+          if not key in data:
+            data[key] = {} 
+          data[key]["acknowledged"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
+    for r1 in replicas:
+      file_name = 'time'+r1+'.txt'
+      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, r, file_name)
+      with open(reg_file, 'r') as l:
+        lines = l.readlines()
+        for each in lines:
+          j = json.loads(each)
+          if j["ts"][0] > 395 or (j["ts"][0] == 395 and (j["ts"][1] > 0 or j["ts"][2] > 0)): # filter out initial warm up load
+            key = str(j["ts"])
+            if not key in data:
+              data[key] = {} 
+            data[key][r] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
+            data[key]["ts"] = j["ts"]
+  for r in replicas:
+    file_name = r+'.txt'
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, 'paris', file_name)
+    with open(reg_file, 'r') as l:
+      lines = l.readlines()
+      for each in lines:
+        j = json.loads(each)
+        if j["ts"][0] > 395 or (j["ts"][0] == 395 and (j["ts"][1] > 0 or j["ts"][2] > 0)): # filter out initial warm up load
+          key = str(j["ts"])
+          data[key]["op"] = {"name":j["op"], "n":j["args"]["n"], "ca":j["ca"]}
+          data[key]["origin"] = j["replica"]
+  assert len(data) == 150
+  return data
+
+
 def parse_client_logs(lc_config, exp, conflict):
   data = {}
   directory = 'data'+str(conflict)+'_'+str(exp)
@@ -42,14 +94,6 @@ def parse_client_logs(lc_config, exp, conflict):
           data[key]["acknowledged"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
   assert len(data) == 150
   return data
-
-
-def response_time(data):
-  total = 0
-  responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys()]
-  assert len(responses) == 150
-  average_response_time = sum(responses, timedelta(0)) / len(responses)
-  return responses, average_response_time
 
 def parse_replica_logs(lc_config, exp, conflict):
   data = {}
@@ -80,6 +124,19 @@ def parse_replica_logs(lc_config, exp, conflict):
           data[key]["op"] = {"name":j["op"], "n":j["args"]["n"], "ca":j["ca"]}
           data[key]["origin"] = j["replica"]
   return data
+
+
+def response_time(data):
+  total = 0
+  responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys()]
+  assert len(responses) == 150
+  average_response_time = sum(responses, timedelta(0)) / len(responses)
+  # print([data[ts]["op"]["name"] for ts in data.keys()])
+  conflict_responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys() if data[ts]["op"]["name"] in ["upmove", "downmove"]]
+  average_conflict_response_time = sum(conflict_responses, timedelta(0)) / len(conflict_responses)
+  nonconflict_responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys() if not(data[ts]["op"]["name"] in ["upmove", "downmove"])]
+  average_nonconflict_response_time = sum(nonconflict_responses, timedelta(0)) / len(nonconflict_responses)
+  return responses, average_response_time, average_conflict_response_time, average_nonconflict_response_time
 
 def is_concurrent(ts1, ts2):
   if ts1[0] >= ts2[0] and ts1[1] >= ts2[1] and ts1[2] >= ts2[2]:
@@ -128,25 +185,39 @@ def stabilization_time(exp, data):
 
 
 def result(lc_config):
+  # latex output
   # return average response time, per experiment
   print("Response time")
   print("=============")
+  rl = []
   for i in range(0,4):
     print("Experiment " + str(i))
+    row = []
     for j in range(0,30, 10):
       # print("Conflict %: " + str(j))
-      data = parse_client_logs(lc_config, i, j)
-      print("Conflict %: " + str(j) + " : " + str(response_time(data)[1]))
+      data = parse_logs(lc_config, i, j)
+      print("Conflict %: " + str(j) + " : ")
+      print("All: " + str(response_time(data)[1]) + " :: Conflicts: " + str(response_time(data)[2]) + " :: Nonconflicts: " + str(response_time(data)[3]))
+      row += [str(response_time(data)[1]) + ' & ' +str(response_time(data)[2]) + ' & ' + str(response_time(data)[3])]
+    rl += [" & ".join(row)]
+  with open("response.tex", "w") as f:
+    f.write("\\\\ \n".join(rl) + "\\\\")
   print("=============")
   # return  average stabilization time per experiment
   print("Stabilization time")
   print("=============")
+  sl = []
   for i in range(0,4):
     print("Experiment " + str(i))
+    row = []
     for j in range(0,30, 10):
       # print("Conflict %: " + str(j))
       data = parse_replica_logs(lc_config, i, j)
       print("Conflict %: " + str(j) + " : " + str(stabilization_time(i, data)[1]))
+      row += [str(stabilization_time(i, data)[1])]
+    sl += [" & ".join(row)]
+  with open("stabilization.tex", "w") as f:
+    f.write("\\\\ \n".join(sl) + "\\\\")
   print("=============")
 
 for i in range(1,4):
