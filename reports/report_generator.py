@@ -148,13 +148,13 @@ def is_concurrent(ts1, ts2):
 def is_conflicting(exp, op1, op2):
   if exp ==0: #crdt, only concurrent moves on critical ancestors conflict
     if op1["name"] == "downmove": #possible conflict
-      if op2["name"] in ["upmove", "downmove"]:
-        if op1["n"] in op2["ca"] or op2["n"] in op1["ca"]:
-          return True
-    elif op2["name"] == "downmove": #possible conflict
-      if op1["name"] in ["upmove", "downmove"]:
-        if op1["n"] in op2["ca"] or op2["n"] in op1["ca"]:
-          return True
+      # if op2["name"] in ["upmove", "downmove"]:
+      #   if op1["n"] in op2["ca"] or op2["n"] in op1["ca"]:
+      return True
+    # elif op2["name"] == "downmove": #possible conflict
+    #   if op1["name"] in ["upmove", "downmove"]:
+    #     if op1["n"] in op2["ca"] or op2["n"] in op1["ca"]:
+    #       return True
     return False
   elif exp ==1: # opsets, all concurrent moves
     return True
