@@ -13,6 +13,8 @@ queue_to_cosume = os.environ.get("WHOAMI")
 print(queue_to_cosume)
 channel.queue_declare(queue=queue_to_cosume, durable=True)
 
+replicas = ['paris', 'bangalore','newyork']
+
 def callback(ch, method, properties, body):
     message = json.loads(body)
     from_replica = message.get("from", "")
@@ -20,12 +22,19 @@ def callback(ch, method, properties, body):
     msg_ts = message.get("msg", "").get("ts","")
     logging = json.dumps({"ts":msg_ts, "time":str(datetime.now())})
 
+    # got message
     log_file = os.path.join('/', 'usr', 'data', f'time{from_replica}.txt')
     with open(log_file, "a") as l:
         l.write(f"{logging}\n")
+
+    # logging
     f_to_write = os.path.join('/', 'usr', 'data', f'{from_replica}.txt')
     with open(f_to_write, "a") as f:
         f.write(f"{msg}\n")
+    # updating ts
+    file_ts = os.path.join('/', 'usr', 'data', f'ts{from_replica}.txt')
+    with open(file_ts, 'w') as f:
+        f.write(str(msg_ts[replicas.index(from_replica)]))
     print(f"Read the message: {body}")
 
 channel.basic_consume(

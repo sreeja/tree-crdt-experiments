@@ -64,6 +64,12 @@ def parse_logs(lc_config, exp, conflict):
           key = str(j["ts"])
           data[key]["op"] = {"name":j["op"], "n":j["args"]["n"], "ca":j["ca"]}
           data[key]["origin"] = j["replica"]
+  # print([data[x]["ts"][0] for x in data.keys()])
+  for each in range(1,51):
+    assert(each+395 in [data[x]["ts"][0] for x in data.keys()])
+    assert(each in [data[x]["ts"][1] for x in data.keys()])
+    assert(each in [data[x]["ts"][2] for x in data.keys()])
+  # print(data.keys(), len(data))
   assert len(data) == 150
   return data
 

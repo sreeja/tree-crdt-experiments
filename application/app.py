@@ -11,36 +11,40 @@ from datetime import datetime
 
 from kazoo.client import KazooClient
 
+# latency configuration, 1,2,3
+lc = 1
 # 0 for crdt, 1 for opsets, 2 for global lock, 3 for rw lock
 exp = 0
 
 def create_app():
     app = Flask(__name__)
-    app.secret_key = os.environ.get("SESSION_SECRET")
-    app.config["latency_config"] = {
+    # app.secret_key = os.environ.get("SESSION_SECRET")
+    LC = {1:{
+        "paris-bangalore": 0,
+        "paris-newyork": 0,
+        "bangalore-paris": 0,
+        "bangalore-newyork": 0,
+        "newyork-paris": 0,
+        "newyork-bangalore": 0,
+    },
+    2: {
         "paris-bangalore": .144,
         "paris-newyork": .075,
         "bangalore-paris": .144,
         "bangalore-newyork": .215,
         "newyork-paris": .075,
         "newyork-bangalore": .215,
+    }, 
+    3: {
+        "paris-bangalore": 1.44,
+        "paris-newyork": 0.75,
+        "bangalore-paris": 1.44,
+        "bangalore-newyork": 2.15,
+        "newyork-paris": 0.75,
+        "newyork-bangalore": 2.15,
+    },
     }
-    # app.config["latency_config"] = {
-    #     "paris-bangalore": 1.44,
-    #     "paris-newyork": 0.75,
-    #     "bangalore-paris": 1.44,
-    #     "bangalore-newyork": 2.15,
-    #     "newyork-paris": 0.75,
-    #     "newyork-bangalore": 2.15,
-    # }
-    # app.config["latency_config"] = {
-    #     "paris-bangalore": 0,
-    #     "paris-newyork": 0,
-    #     "bangalore-paris": 0,
-    #     "bangalore-newyork": 0,
-    #     "newyork-paris": 0,
-    #     "newyork-bangalore": 0,
-    # }
+    app.config["latency_config"] = LC[lc]
     return app
 
 app = create_app()
@@ -57,23 +61,32 @@ chairman = "paris"
 def get_id(replica):
     return replicas.index(replica)
 
-def update_ts():
+def get_latest_ts():
+    ts = [0, 0, 0]
     for each in replicas:
-        if each != whoami:
-            f_to_read = os.path.join('/', 'usr', 'data', f'{each}.txt')
-            with open(f_to_read, 'r') as f:
-                lines = f.read().splitlines()
-                if lines:
-                    last_line = lines[-1]
-                    msg = json.loads(last_line)
-                    log_ts = msg["ts"]
-                    replica = msg["replica"]
-                    replicaid = get_id(each)
-                    ts[replicaid] = log_ts[replicaid]
-                    print("log received until " + str(ts))
+        f_to_read = os.path.join('/', 'usr', 'data', f'ts{each}.txt')
+        with open(f_to_read, 'r') as f:
+            val = f.read()
+        if val:
+            ts[replicas.index(each)] = int(val)
+            # lines = f.read().splitlines()
+            # if lines:
+            #     last_line = lines[-1]
+            #     msg = json.loads(last_line)
+            #     log_ts = msg["ts"]
+            #     replica = msg["replica"]
+            #     replicaid = get_id(each)
+            #     ts[replicaid] = log_ts[replicaid]
+                # print("log received until " + str(ts))
+    return ts
 
-def register_op():
-    reg = json.dumps({"ts":ts, "time":str(datetime.now())})
+def update_ts_self(t):
+    file_ts = os.path.join('/', 'usr', 'data', f'ts{whoami}.txt')
+    with open(file_ts, 'w') as f:
+        f.write(str(t))
+
+def register_op(ts, timestamp):
+    reg = json.dumps({"ts":ts, "time":str(timestamp)})
     log_file = os.path.join('/', 'usr', 'data', 'register.txt')
     with open(log_file, "a") as l:
         l.write(f"{reg}\n")
@@ -83,18 +96,18 @@ def prepare_message(op, ts, args, replica, ca = []):
 
 def log_message(message):
     msg = json.dumps(message.get("msg", ""))
-    msg_ts = message.get("msg", "").get("ts","")
-    logging = json.dumps({"ts":msg_ts, "time":str(datetime.now())})
-    # print(logging)
-    log_file = os.path.join('/', 'usr', 'data', f'time{whoami}.txt')
-    with open(log_file, "a") as l:
-        l.write(f"{logging}\n")
     f_to_write = os.path.join('/', 'usr', 'data', f'{whoami}.txt')
     with open(f_to_write, "a") as f:
         f.write(f"{msg}\n")
 
-def acknowledge():
-    reg = json.dumps({"ts":ts, "time":str(datetime.now())})
+def log_logtime(ts, timestamp):
+    logging = json.dumps({"ts":ts, "time":str(timestamp)})
+    log_file = os.path.join('/', 'usr', 'data', f'time{whoami}.txt')
+    with open(log_file, "a") as l:
+        l.write(f"{logging}\n")
+
+def acknowledge(ts, timestamp):
+    reg = json.dumps({"ts":ts, "time":str(timestamp)})
     log_file = os.path.join('/', 'usr', 'data', 'done.txt')
     with open(log_file, "a") as l:
         l.write(f"{reg}\n")
@@ -163,46 +176,54 @@ def hello_world():
 
 @app.route('/add')
 def add():
-    update_ts()
+    start_time = datetime.now()
+    ts = get_latest_ts()
     replicaid = get_id(whoami)
     ts[replicaid] += 1
-    register_op()
-    s = datetime.now()
     n = request.args.get('n', '')
     p = request.args.get('p', '')
     msg = prepare_message("add", ts, {"n": n, "p": p}, whoami)
     message = {"to": whoami, "msg": msg}
     log_message(message)
-    e = datetime.now()
+    log_time = datetime.now()
+    update_ts_self(ts[replicaid])
+    end_time = datetime.now()
     for each in [r for r in replicas if r != whoami]:
         message = {"to": each, "msg": msg}
         write_message(message)
-    acknowledge()
-    return str(e - s) #"done"
+    register_op(ts, start_time)
+    log_logtime(ts, log_time)
+    acknowledge(ts, end_time)
+    return "done"
 
 @app.route('/remove')
 def remove():
-    update_ts()
+    start_time = datetime.now()
+    ts = get_latest_ts()
     replicaid = get_id(whoami)
     ts[replicaid] += 1
-    register_op()
     n = request.args.get('n', '')
     p = request.args.get('p', '')
     msg = prepare_message("remove", ts, {"n": n, "p": p}, whoami)
     message = {"to": whoami, "msg": msg}
     log_message(message)
+    log_time = datetime.now()
+    update_ts_self(ts[replicaid])
+    end_time = datetime.now()
     for each in [r for r in replicas if r != whoami]:
         message = {"to": each, "msg": msg}
         write_message(message)
-    acknowledge()
+    register_op(ts, start_time)
+    log_logtime(ts, end_time)
+    acknowledge(ts, end_time)
     return "done"
 
 @app.route('/downmove')
 def downmove():
-    update_ts()
+    start_time = datetime.now()
+    ts = get_latest_ts()
     replicaid = get_id(whoami)
     ts[replicaid] += 1
-    register_op()
     n = request.args.get('n', '')
     p = request.args.get('p', '')
     np = request.args.get('np', '')
@@ -220,11 +241,14 @@ def downmove():
             msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
             message = {"to": whoami, "msg": msg}
             log_message(message)
+            log_time = datetime.now()
+            update_ts_self(ts[replicaid])
+            end_time = datetime.now()
             if whoami != chairman:
                 time.sleep(latency_config[whoami+'-'+chairman]*2)
-            for each in [r for r in replicas if r != whoami]:
-                message = {"to": each, "msg": msg}
-                write_message(message)
+        for each in [r for r in replicas if r != whoami]:
+            message = {"to": each, "msg": msg}
+            write_message(message)
             # print("lock released from " + whoami)
 
     elif exp == 3:
@@ -239,11 +263,14 @@ def downmove():
             msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
             message = {"to": whoami, "msg": msg}
             log_message(message)
+            log_time = datetime.now()
+            update_ts_self(ts[replicaid])
+            end_time = datetime.now()
             if whoami != chairman:
                 time.sleep(latency_config[whoami+'-'+chairman]*2)
-            for each in [r for r in replicas if r != whoami]:
-                message = {"to": each, "msg": msg}
-                write_message(message)
+        for each in [r for r in replicas if r != whoami]:
+            message = {"to": each, "msg": msg}
+            write_message(message)
             # print("lock released from " + whoami, flush=True)
 
     else:
@@ -251,21 +278,26 @@ def downmove():
         msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
         message = {"to": whoami, "msg": msg}
         log_message(message)
+        log_time = datetime.now()
+        update_ts_self(ts[replicaid])
+        end_time = datetime.now()
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
             write_message(message)
 
     # release lock if acquired
     # release_locks()
-    acknowledge()
+    register_op(ts, start_time)
+    log_logtime(ts, log_time)
+    acknowledge(ts, end_time)
     return "done"
 
 @app.route('/upmove')
 def upmove():
-    update_ts()
+    start_time = datetime.now()
+    ts = get_latest_ts()
     replicaid = get_id(whoami)
     ts[replicaid] += 1
-    register_op()
     n = request.args.get('n', '')
     p = request.args.get('p', '')
     np = request.args.get('np', '')
@@ -283,11 +315,14 @@ def upmove():
             msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
             message = {"to": whoami, "msg": msg}
             log_message(message)
+            log_time = datetime.now()
+            update_ts_self(ts[replicaid])
+            end_time = datetime.now()
             if whoami != chairman:
                 time.sleep(latency_config[whoami+'-'+chairman]*2)
-            for each in [r for r in replicas if r != whoami]:
-                message = {"to": each, "msg": msg}
-                write_message(message)
+        for each in [r for r in replicas if r != whoami]:
+            message = {"to": each, "msg": msg}
+            write_message(message)
 
     elif exp == 3:
         # rw lock
@@ -301,23 +336,31 @@ def upmove():
             msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
             message = {"to": whoami, "msg": msg}
             log_message(message)
+            log_time = datetime.now()
+            update_ts_self(ts[replicaid])
+            end_time = datetime.now()
             if whoami != chairman:
                 time.sleep(latency_config[whoami+'-'+chairman]*2)
-            for each in [r for r in replicas if r != whoami]:
-                message = {"to": each, "msg": msg}
-                write_message(message)
+        for each in [r for r in replicas if r != whoami]:
+            message = {"to": each, "msg": msg}
+            write_message(message)
 
     else:
         # crdt/opsets
         msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
         message = {"to": whoami, "msg": msg}
         log_message(message)
+        log_time = datetime.now()
+        update_ts_self(ts[replicaid])
+        end_time = datetime.now()
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
             write_message(message)
 
     # release lock if acquired
     # release_locks()
-    acknowledge()
+    register_op(ts, start_time)
+    log_logtime(ts, end_time)
+    acknowledge(ts, end_time)
     return "done"
 
