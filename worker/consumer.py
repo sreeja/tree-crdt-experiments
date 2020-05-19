@@ -3,6 +3,7 @@ import os
 import pika
 import json
 from datetime import datetime
+from pymemcache.client.base import Client
 
 time.sleep(30)  # A hack for rabbitmq to start
 connection = pika.BlockingConnection(
@@ -14,6 +15,7 @@ print(queue_to_cosume)
 channel.queue_declare(queue=queue_to_cosume, durable=True)
 
 replicas = ['paris', 'bangalore','newyork']
+cache_client = Client(('cache', 11211))
 
 def callback(ch, method, properties, body):
     message = json.loads(body)
@@ -32,9 +34,11 @@ def callback(ch, method, properties, body):
     with open(f_to_write, "a") as f:
         f.write(f"{msg}\n")
     # updating ts
-    file_ts = os.path.join('/', 'usr', 'data', f'ts{from_replica}.txt')
-    with open(file_ts, 'w') as f:
-        f.write(str(msg_ts[replicas.index(from_replica)]))
+    cache_client.set(from_replica, msg_ts[replicas.index(from_replica)])
+    # file_ts = os.path.join('/', 'usr', 'data', f'ts{from_replica}.txt')
+    # with open(file_ts, 'w') as f:
+    #     f.write(str(msg_ts[replicas.index(from_replica)]))
+
     print(f"Read the message: {body}")
 
 channel.basic_consume(

@@ -11,6 +11,9 @@ services:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
 
+  cache:
+    image: memcached
+
   zookeeper:
     image: zookeeper
     restart: always
@@ -36,9 +39,11 @@ services:
     depends_on:
       - messenger
       - zookeeper
+      - cache
     links:
       - messenger
       - zookeeper
+      - cache
     ports:
       - 6001:6000
     command: flask run --host=0.0.0.0 --port=6000
@@ -55,8 +60,10 @@ services:
       - PYTHONUNBUFFERED=1
     depends_on:
       - messenger
+      - cache
     links:
       - messenger
+      - cache
     command: python consumer.py
 
   worker-newyork-paris:
@@ -71,8 +78,10 @@ services:
       - PYTHONUNBUFFERED=1
     depends_on:
       - messenger
+      - cache
     links:
       - messenger
+      - cache
     command: python consumer.py
 
   bangalore:
@@ -91,9 +100,11 @@ services:
     depends_on:
       - messenger
       - zookeeper
+      - cache
     links:
       - messenger
       - zookeeper
+      - cache
     ports:
       - 6002:6000
     command: flask run --host=0.0.0.0 --port=6000
@@ -110,8 +121,10 @@ services:
       - PYTHONUNBUFFERED=1
     depends_on:
       - messenger
+      - cache
     links:
       - messenger
+      - cache
     command: python consumer.py
 
   worker-newyork-bangalore:
@@ -126,8 +139,10 @@ services:
       - PYTHONUNBUFFERED=1
     depends_on:
       - messenger
+      - cache
     links:
       - messenger
+      - cache
     command: python consumer.py
 
   newyork:
@@ -146,9 +161,11 @@ services:
     depends_on:
       - messenger
       - zookeeper
+      - cache
     links:
       - messenger
       - zookeeper
+      - cache
     ports:
       - 6003:6000
     command: flask run --host=0.0.0.0 --port=6000
@@ -165,8 +182,10 @@ services:
       - PYTHONUNBUFFERED=1
     depends_on:
       - messenger
+      - cache
     links:
       - messenger
+      - cache
     command: python consumer.py
 
   worker-bangalore-newyork:
@@ -181,7 +200,9 @@ services:
       - PYTHONUNBUFFERED=1
     depends_on:
       - messenger
+      - cache
     links:
       - messenger
+      - cache
     command: python consumer.py
 

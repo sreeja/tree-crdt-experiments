@@ -10,11 +10,14 @@ from multiprocessing import Process
 from datetime import datetime
 
 from kazoo.client import KazooClient
+from flask_pymemcache import FlaskPyMemcache
 
 # latency configuration, 1,2,3
 lc = 1
 # 0 for crdt, 1 for opsets, 2 for global lock, 3 for rw lock
 exp = 0
+
+memcache = FlaskPyMemcache()
 
 def create_app():
     app = Flask(__name__)
@@ -45,6 +48,10 @@ def create_app():
     },
     }
     app.config["latency_config"] = LC[lc]
+    app.config["PYMEMCACHE"] = {
+        'server': ('cache', 11211),
+    }
+    memcache.init_app(app)
     return app
 
 app = create_app()
@@ -64,26 +71,13 @@ def get_id(replica):
 def get_latest_ts():
     ts = [0, 0, 0]
     for each in replicas:
-        f_to_read = os.path.join('/', 'usr', 'data', f'ts{each}.txt')
-        with open(f_to_read, 'r') as f:
-            val = f.read()
+        val = memcache.client.get(each)
         if val:
             ts[replicas.index(each)] = int(val)
-            # lines = f.read().splitlines()
-            # if lines:
-            #     last_line = lines[-1]
-            #     msg = json.loads(last_line)
-            #     log_ts = msg["ts"]
-            #     replica = msg["replica"]
-            #     replicaid = get_id(each)
-            #     ts[replicaid] = log_ts[replicaid]
-                # print("log received until " + str(ts))
     return ts
 
 def update_ts_self(t):
-    file_ts = os.path.join('/', 'usr', 'data', f'ts{whoami}.txt')
-    with open(file_ts, 'w') as f:
-        f.write(str(t))
+    memcache.client.set(whoami, t)
 
 def register_op(ts, timestamp):
     reg = json.dumps({"ts":ts, "time":str(timestamp)})
