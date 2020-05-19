@@ -167,16 +167,18 @@ def add():
     replicaid = get_id(whoami)
     ts[replicaid] += 1
     register_op()
+    s = datetime.now()
     n = request.args.get('n', '')
     p = request.args.get('p', '')
     msg = prepare_message("add", ts, {"n": n, "p": p}, whoami)
     message = {"to": whoami, "msg": msg}
     log_message(message)
+    e = datetime.now()
     for each in [r for r in replicas if r != whoami]:
         message = {"to": each, "msg": msg}
         write_message(message)
     acknowledge()
-    return "done"
+    return str(e - s) #"done"
 
 @app.route('/remove')
 def remove():
