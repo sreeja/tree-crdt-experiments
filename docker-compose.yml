@@ -36,6 +36,8 @@ services:
       - FLASK_APP=app.py
       - FLASK_DEBUG=1
       - RABBIT_URL=mongodb://mongo:27017
+      - LC=${LC_ENV}
+      - EXP=${EXP_ENV}
     depends_on:
       - messenger
       - zookeeper
@@ -96,7 +98,9 @@ services:
       - SESSION_SECRET=${ENV_SESSION_SECRET}
       - FLASK_APP=app.py
       - FLASK_DEBUG=1
-      - RABBIT_URL=mongodb://mongo:27017
+      - RABBIT_URL=mongodb://mongo:27017     
+      - LC=${LC_ENV}
+      - EXP=${EXP_ENV}
     depends_on:
       - messenger
       - zookeeper
@@ -158,6 +162,8 @@ services:
       - FLASK_APP=app.py
       - FLASK_DEBUG=1
       - RABBIT_URL=mongodb://mongo:27017
+      - LC=${LC_ENV}
+      - EXP=${EXP_ENV}
     depends_on:
       - messenger
       - zookeeper

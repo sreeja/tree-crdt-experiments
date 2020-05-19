@@ -1,7 +1,7 @@
 # Experiment
     for each latency config  
         for each data structure[0:crdt, 1:opsets, 2:global lock, 3:rwlock]:  
-            set exp variable in app.py  
+            set lc, exp variable in app.py  
             clear logs  
             run app  
             base load  

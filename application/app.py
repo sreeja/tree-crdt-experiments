@@ -13,9 +13,9 @@ from kazoo.client import KazooClient
 from flask_pymemcache import FlaskPyMemcache
 
 # latency configuration, 1,2,3
-lc = 1
+lc = int(os.environ.get("LC"))
 # 0 for crdt, 1 for opsets, 2 for global lock, 3 for rw lock
-exp = 0
+exp = int(os.environ.get("EXP"))
 
 memcache = FlaskPyMemcache()
 
