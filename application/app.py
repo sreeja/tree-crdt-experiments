@@ -232,6 +232,8 @@ def downmove():
         lock = zk.Lock('/lockpath', 'global')
         with lock:
             # print("with lock from "+whoami)
+            if whoami != chairman:
+                time.sleep(latency_config[whoami+'-'+chairman])
             msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
             message = {"to": whoami, "msg": msg}
             log_message(message)
@@ -239,7 +241,7 @@ def downmove():
             update_ts_self(ts[replicaid])
             end_time = datetime.now()
             if whoami != chairman:
-                time.sleep(latency_config[whoami+'-'+chairman]*2)
+                time.sleep(latency_config[whoami+'-'+chairman])
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
             write_message(message)
@@ -254,6 +256,8 @@ def downmove():
         from contextlib import ExitStack
         with rlocks and wlock: # ExitStack() as es:
             # print("got locks " +whoami, flush=True)
+            if whoami != chairman:
+                time.sleep(latency_config[whoami+'-'+chairman])
             msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
             message = {"to": whoami, "msg": msg}
             log_message(message)
@@ -261,7 +265,7 @@ def downmove():
             update_ts_self(ts[replicaid])
             end_time = datetime.now()
             if whoami != chairman:
-                time.sleep(latency_config[whoami+'-'+chairman]*2)
+                time.sleep(latency_config[whoami+'-'+chairman])
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
             write_message(message)
@@ -306,6 +310,8 @@ def upmove():
         lock = zk.Lock('/lockpath', 'global')
         with lock:
             # print("with lock from "+whoami)
+            if whoami != chairman:
+                time.sleep(latency_config[whoami+'-'+chairman])
             msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
             message = {"to": whoami, "msg": msg}
             log_message(message)
@@ -313,7 +319,7 @@ def upmove():
             update_ts_self(ts[replicaid])
             end_time = datetime.now()
             if whoami != chairman:
-                time.sleep(latency_config[whoami+'-'+chairman]*2)
+                time.sleep(latency_config[whoami+'-'+chairman])
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
             write_message(message)
@@ -327,6 +333,8 @@ def upmove():
         from contextlib import ExitStack
         with rlocks and wlock: # ExitStack() as es:
             # print("got locks " +whoami, flush=True)
+            if whoami != chairman:
+                time.sleep(latency_config[whoami+'-'+chairman])
             msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
             message = {"to": whoami, "msg": msg}
             log_message(message)
@@ -334,7 +342,7 @@ def upmove():
             update_ts_self(ts[replicaid])
             end_time = datetime.now()
             if whoami != chairman:
-                time.sleep(latency_config[whoami+'-'+chairman]*2)
+                time.sleep(latency_config[whoami+'-'+chairman])
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
             write_message(message)
