@@ -1,7 +1,8 @@
 #!/bin/bash
-for LC in 2
+for LC in 1 2 3
 do
   export LC_ENV=$LC
+  t=$(expr 30 \* $LC_ENV \* $LC_ENV)
   for EXP in 0 1 2 3
     do
       export EXP_ENV=$EXP
@@ -11,12 +12,12 @@ do
       P_PID=$!
       sleep 60
       sh workload/base.sh
-      sleep 40
+      sleep $t
       sh workload/conflict0_load0.sh & sh workload/conflict0_load1.sh & sh workload/conflict0_load2.sh 
-      sleep 40
+      sleep $t
       cp -r data/ lc$LC_ENV/data0_$EXP_ENV
       kill $P_PID
-      sleep 30
+      sleep 60
 
       for f in $(find data); do > $f; done
       make down
@@ -24,12 +25,12 @@ do
       P_PID=$!
       sleep 60
       sh workload/base.sh
-      sleep 40
+      sleep $t
       sh workload/conflict10_load0.sh & sh workload/conflict10_load1.sh & sh workload/conflict10_load2.sh 
-      sleep 40
+      sleep $t
       cp -r data/ lc$LC_ENV/data10_$EXP_ENV
       kill $P_PID
-      sleep 30
+      sleep 60
 
       for f in $(find data); do > $f; done
       make down
@@ -37,11 +38,11 @@ do
       P_PID=$!
       sleep 60
       sh workload/base.sh
-      sleep 40
+      sleep $t
       sh workload/conflict20_load0.sh & sh workload/conflict20_load1.sh & sh workload/conflict20_load2.sh 
-      sleep 40
+      sleep $t
       cp -r data/ lc$LC_ENV/data20_$EXP_ENV
       kill $P_PID
-      sleep 30
+      sleep 60
     done
 done
