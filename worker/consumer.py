@@ -34,7 +34,7 @@ def callback(ch, method, properties, body):
     with open(f_to_write, "a") as f:
         f.write(f"{msg}\n")
     # updating ts
-    cache_client.set(from_replica, msg_ts[replicas.index(from_replica)])
+    cache_client.set(queue_to_cosume, msg_ts[replicas.index(from_replica)])
     # file_ts = os.path.join('/', 'usr', 'data', f'ts{from_replica}.txt')
     # with open(file_ts, 'w') as f:
     #     f.write(str(msg_ts[replicas.index(from_replica)]))

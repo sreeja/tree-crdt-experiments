@@ -71,13 +71,13 @@ def get_id(replica):
 def get_latest_ts():
     ts = [0, 0, 0]
     for each in replicas:
-        val = memcache.client.get(each)
+        val = memcache.client.get(each+'-'+whoami)
         if val:
             ts[replicas.index(each)] = int(val)
     return ts
 
 def update_ts_self(t):
-    memcache.client.set(whoami, t)
+    memcache.client.set(whoami+'-'+whoami, t)
 
 def register_op(ts, timestamp):
     reg = json.dumps({"ts":ts, "time":str(timestamp)})
