@@ -129,9 +129,13 @@ dmypy.json
 .pyre/
 
 # experiment results
-# lc*/*
+lc*/*
 # data0_*/*
 # data10_*/*
 # data20_*/*
 
 *.tex
+
+.DS_Store
+
+*.zip
