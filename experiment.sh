@@ -17,6 +17,14 @@ do
       sleep $t
       sh workload/conflict0_load0.sh & sh workload/conflict0_load1.sh & sh workload/conflict0_load2.sh 
       sleep $t
+      sh workload/conflict0_load0.sh & sh workload/conflict0_load1.sh & sh workload/conflict0_load2.sh 
+      sleep $t
+      sh workload/conflict0_load0.sh & sh workload/conflict0_load1.sh & sh workload/conflict0_load2.sh 
+      sleep $t
+      sh workload/conflict0_load0.sh & sh workload/conflict0_load1.sh & sh workload/conflict0_load2.sh 
+      sleep $t
+      sh workload/conflict0_load0.sh & sh workload/conflict0_load1.sh & sh workload/conflict0_load2.sh 
+      sleep $t
       cp -r data/ lc$LC_ENV/data0_$EXP_ENV
       kill $P_PID
       sleep 45
@@ -29,6 +37,14 @@ do
       P_PID=$!
       sleep 60
       sh workload/base.sh
+      sleep $t
+      sh workload/conflict2_load0.sh & sh workload/conflict2_load1.sh & sh workload/conflict2_load2.sh 
+      sleep $t
+      sh workload/conflict2_load0.sh & sh workload/conflict2_load1.sh & sh workload/conflict2_load2.sh 
+      sleep $t
+      sh workload/conflict2_load0.sh & sh workload/conflict2_load1.sh & sh workload/conflict2_load2.sh 
+      sleep $t
+      sh workload/conflict2_load0.sh & sh workload/conflict2_load1.sh & sh workload/conflict2_load2.sh 
       sleep $t
       sh workload/conflict2_load0.sh & sh workload/conflict2_load1.sh & sh workload/conflict2_load2.sh 
       sleep $t
@@ -47,6 +63,14 @@ do
       sleep $t
       sh workload/conflict10_load0.sh & sh workload/conflict10_load1.sh & sh workload/conflict10_load2.sh 
       sleep $t
+      sh workload/conflict10_load0.sh & sh workload/conflict10_load1.sh & sh workload/conflict10_load2.sh 
+      sleep $t
+      sh workload/conflict10_load0.sh & sh workload/conflict10_load1.sh & sh workload/conflict10_load2.sh 
+      sleep $t
+      sh workload/conflict10_load0.sh & sh workload/conflict10_load1.sh & sh workload/conflict10_load2.sh 
+      sleep $t
+      sh workload/conflict10_load0.sh & sh workload/conflict10_load1.sh & sh workload/conflict10_load2.sh 
+      sleep $t
       cp -r data/ lc$LC_ENV/data10_$EXP_ENV
       kill $P_PID
       sleep 45
@@ -59,6 +83,14 @@ do
       P_PID=$!
       sleep 60
       sh workload/base.sh
+      sleep $t
+      sh workload/conflict20_load0.sh & sh workload/conflict20_load1.sh & sh workload/conflict20_load2.sh 
+      sleep $t
+      sh workload/conflict20_load0.sh & sh workload/conflict20_load1.sh & sh workload/conflict20_load2.sh 
+      sleep $t
+      sh workload/conflict20_load0.sh & sh workload/conflict20_load1.sh & sh workload/conflict20_load2.sh 
+      sleep $t
+      sh workload/conflict20_load0.sh & sh workload/conflict20_load1.sh & sh workload/conflict20_load2.sh 
       sleep $t
       sh workload/conflict20_load0.sh & sh workload/conflict20_load1.sh & sh workload/conflict20_load2.sh 
       sleep $t
