@@ -17,7 +17,7 @@ do
       sleep $t
       cp -r data/ lc$LC_ENV/data0_$EXP_ENV
       kill $P_PID
-      sleep 60
+      sleep 30
 
       for f in $(find data); do > $f; done
       make down
@@ -30,7 +30,7 @@ do
       sleep $t
       cp -r data/ lc$LC_ENV/data10_$EXP_ENV
       kill $P_PID
-      sleep 60
+      sleep 30
 
       for f in $(find data); do > $f; done
       make down
@@ -43,6 +43,8 @@ do
       sleep $t
       cp -r data/ lc$LC_ENV/data20_$EXP_ENV
       kill $P_PID
-      sleep 60
+      sleep 30
     done
 done
+
+python reports/report_generator.py

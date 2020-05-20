@@ -45,7 +45,7 @@ def write_message(message):
     # This is where we declare the delay, and routing for our delay channel.
     # print(latency_config[queue_name]*1000*100)
     delay_channel.queue_declare(queue=queue_name+'_delay', durable=True,  arguments={
-    'x-message-ttl' : int(latency_config[queue_name]*1000*100), # Delay until the message is transferred in milliseconds.
+    'x-message-ttl' : int(latency_config[queue_name]*1000), # Delay until the message is transferred in milliseconds.
     'x-dead-letter-exchange' : 'amq.direct', # Exchange used to transfer the message from A to B.
     'x-dead-letter-routing-key' : queue_name # Name of the queue we want the message transferred to.
     })
