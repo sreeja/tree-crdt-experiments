@@ -2,10 +2,11 @@
 for LC in 1 2 3
 do
   export LC_ENV=$LC
-  t=$(expr 30 \* $LC_ENV \* $LC_ENV)
+  t=$(expr 30 \* $LC_ENV)
   for EXP in 0 1 2 3
     do
       export EXP_ENV=$EXP
+
       for f in $(find data); do > $f; done
       make down
       make run &
@@ -17,7 +18,9 @@ do
       sleep $t
       cp -r data/ lc$LC_ENV/data0_$EXP_ENV
       kill $P_PID
-      sleep 30
+      sleep 45
+
+      echo "Done lc" $LC_ENV " exp "$EXP_ENV " con " 0 >> log.txt
 
       for f in $(find data); do > $f; done
       make down
@@ -30,7 +33,9 @@ do
       sleep $t
       cp -r data/ lc$LC_ENV/data10_$EXP_ENV
       kill $P_PID
-      sleep 30
+      sleep 45
+
+      echo "Done lc" $LC_ENV " exp "$EXP_ENV " con " 0 >> log.txt
 
       for f in $(find data); do > $f; done
       make down
@@ -43,8 +48,13 @@ do
       sleep $t
       cp -r data/ lc$LC_ENV/data20_$EXP_ENV
       kill $P_PID
-      sleep 30
+      sleep 45
+
+      echo "Done lc" $LC_ENV " exp "$EXP_ENV " con " 0 >> log.txt
     done
 done
+
+for f in $(find data); do > $f; done
+make down
 
 python reports/report_generator.py
