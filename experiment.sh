@@ -29,13 +29,28 @@ do
       sleep 60
       sh workload/base.sh
       sleep $t
+      sh workload/conflict2_load0.sh & sh workload/conflict2_load1.sh & sh workload/conflict2_load2.sh 
+      sleep $t
+      cp -r data/ lc$LC_ENV/data2_$EXP_ENV
+      kill $P_PID
+      sleep 45
+
+      echo "Done lc" $LC_ENV " exp "$EXP_ENV " con " 2 >> log.txt
+
+      for f in $(find data); do > $f; done
+      make down
+      make run &
+      P_PID=$!
+      sleep 60
+      sh workload/base.sh
+      sleep $t
       sh workload/conflict10_load0.sh & sh workload/conflict10_load1.sh & sh workload/conflict10_load2.sh 
       sleep $t
       cp -r data/ lc$LC_ENV/data10_$EXP_ENV
       kill $P_PID
       sleep 45
 
-      echo "Done lc" $LC_ENV " exp "$EXP_ENV " con " 0 >> log.txt
+      echo "Done lc" $LC_ENV " exp "$EXP_ENV " con " 10 >> log.txt
 
       for f in $(find data); do > $f; done
       make down
@@ -50,7 +65,7 @@ do
       kill $P_PID
       sleep 45
 
-      echo "Done lc" $LC_ENV " exp "$EXP_ENV " con " 0 >> log.txt
+      echo "Done lc" $LC_ENV " exp "$EXP_ENV " con " 20 >> log.txt
     done
 done
 
