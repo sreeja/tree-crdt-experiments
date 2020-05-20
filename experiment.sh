@@ -1,4 +1,5 @@
 #!/bin/bash
+> log.txt
 for LC in 1 2 3
 do
   export LC_ENV=$LC

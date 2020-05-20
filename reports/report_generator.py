@@ -203,8 +203,8 @@ def result(lc_config):
       # print("Conflict %: " + str(j))
       data = parse_logs(lc_config, i, j)
       print("Conflict %: " + str(j) + " : ")
-      print("All: " + str(response_time(data)[1].total_seconds()) + " :: Conflicts: " + str(response_time(data)[2].total_seconds()) + " :: Nonconflicts: " + str(response_time(data)[3].total_seconds()))
-      row += ["Experiment " + str(i+1) + ' & ' +str(response_time(data)[1].total_seconds()) + ' & ' +str(response_time(data)[2].total_seconds()) + ' & ' + str(response_time(data)[3].total_seconds()) + '\\\\']
+      print("All: " + str(response_time(data)[1].total_seconds()*1000) + " :: Conflicts: " + str(response_time(data)[2].total_seconds()*1000) + " :: Nonconflicts: " + str(response_time(data)[3].total_seconds()*1000))
+      row += ["Experiment " + str(i+1) + ' & ' +str(response_time(data)[1].total_seconds()*1000) + ' & ' +str(response_time(data)[2].total_seconds()*1000) + ' & ' + str(response_time(data)[3].total_seconds()*1000) + '\\\\']
     # rl += [row]
     file_name = "response"+str(lc_config)+"con"+str(j)+".tex"
     with open(file_name, "w") as f:
@@ -220,8 +220,8 @@ def result(lc_config):
     for j in [0, 2, 10, 20]:
       # print("Conflict %: " + str(j))
       data = parse_replica_logs(lc_config, i, j)
-      print("Conflict %: " + str(j) + " : " + str(stabilization_time(i, data)[1]))
-      row += [str(stabilization_time(i, data)[1])]
+      print("Conflict %: " + str(j) + " : " + str(stabilization_time(i, data)[1].total_seconds()*1000))
+      row += [str(stabilization_time(i, data)[1].total_seconds()*1000)]
     sl += ["Experiment " + str(i) + " & " + " & ".join(row)]
   file_name = "stabilization"+str(lc_config)+".tex"
   with open(file_name, "w") as f:
