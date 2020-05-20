@@ -196,7 +196,7 @@ def result(lc_config):
   print("Response time")
   print("=============")
   rl = []
-  for j in range(0,30, 10):
+  for j in [0, 2, 10, 20]:
     row = []
     for i in range(0,4):
       print("Experiment " + str(i))
@@ -217,7 +217,7 @@ def result(lc_config):
   for i in range(0,4):
     print("Experiment " + str(i))
     row = []
-    for j in range(0,30, 10):
+    for j in [0, 2, 10, 20]:
       # print("Conflict %: " + str(j))
       data = parse_replica_logs(lc_config, i, j)
       print("Conflict %: " + str(j) + " : " + str(stabilization_time(i, data)[1]))
