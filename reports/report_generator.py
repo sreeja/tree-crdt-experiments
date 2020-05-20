@@ -29,7 +29,10 @@ def parse_logs(lc_config, exp, conflict):
           key = str(j["ts"])
           if not key in data:
             data[key] = {} 
-          data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
+          try:
+            data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
+          except:
+            data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
     reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, r, 'done.txt')
     with open(reg_file) as l:
       lines = l.readlines()
@@ -39,7 +42,10 @@ def parse_logs(lc_config, exp, conflict):
           key = str(j["ts"])
           if not key in data:
             data[key] = {} 
-          data[key]["acknowledged"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
+          try:
+            data[key]["acknowledged"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
+          except:
+            data[key]["acknowledged"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
     for r1 in replicas:
       file_name = 'time'+r1+'.txt'
       reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, r, file_name)
@@ -51,7 +57,10 @@ def parse_logs(lc_config, exp, conflict):
             key = str(j["ts"])
             if not key in data:
               data[key] = {} 
-            data[key][r] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
+            try:
+              data[key][r] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
+            except:
+              data[key][r] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
             data[key]["ts"] = j["ts"]
   for r in replicas:
     file_name = r+'.txt'
@@ -65,12 +74,12 @@ def parse_logs(lc_config, exp, conflict):
           data[key]["op"] = {"name":j["op"], "n":j["args"]["n"], "ca":j["ca"]}
           data[key]["origin"] = j["replica"]
   # print([data[x]["ts"][0] for x in data.keys()])
-  for each in range(1,51):
+  for each in range(1,251):
     assert(each+395 in [data[x]["ts"][0] for x in data.keys()])
     assert(each in [data[x]["ts"][1] for x in data.keys()])
     assert(each in [data[x]["ts"][2] for x in data.keys()])
   # print(data.keys(), len(data))
-  assert len(data) == 150
+  assert len(data) == 750
   return data
 
 
@@ -87,7 +96,10 @@ def parse_client_logs(lc_config, exp, conflict):
           key = str(j["ts"])
           if not key in data:
             data[key] = {} 
-          data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
+          try:
+            data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
+          except:
+            data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
     reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, r, 'done.txt')
     with open(reg_file) as l:
       lines = l.readlines()
@@ -97,7 +109,10 @@ def parse_client_logs(lc_config, exp, conflict):
           key = str(j["ts"])
           if not key in data:
             data[key] = {} 
-          data[key]["acknowledged"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
+          try:
+            data[key]["acknowledged"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
+          except:
+            data[key]["acknowledged"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
   assert len(data) == 150
   return data
 
@@ -116,7 +131,10 @@ def parse_replica_logs(lc_config, exp, conflict):
             key = str(j["ts"])
             if not key in data:
               data[key] = {} 
-            data[key][r] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
+            try:
+              data[key][r] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
+            except:
+              data[key][r] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
             data[key]["ts"] = j["ts"]
   for r in replicas:
     file_name = r+'.txt'
@@ -135,7 +153,7 @@ def parse_replica_logs(lc_config, exp, conflict):
 def response_time(data):
   total = 0
   responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys()]
-  assert len(responses) == 150
+  assert len(responses) == 750
   average_response_time = sum(responses, timedelta(0)) / len(responses)
   # print([data[ts]["op"]["name"] for ts in data.keys()])
   conflict_responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys() if data[ts]["op"]["name"] in ["upmove", "downmove"]]
