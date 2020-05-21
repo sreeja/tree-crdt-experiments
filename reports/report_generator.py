@@ -215,12 +215,12 @@ def result(lc_config):
   print("=============")
   rl = []
   for j in [0, 2, 10, 20]:
+    print("Conflict %: " + str(j) + " : ")
     row = []
     for i in range(0,4):
       print("Experiment " + str(i))
       # print("Conflict %: " + str(j))
       data = parse_logs(lc_config, i, j)
-      print("Conflict %: " + str(j) + " : ")
       print("All: " + str(response_time(data)[1].total_seconds()*1000) + " :: Conflicts: " + str(response_time(data)[2].total_seconds()*1000) + " :: Nonconflicts: " + str(response_time(data)[3].total_seconds()*1000))
       row += ["Experiment " + str(i+1) + ' & ' +str(response_time(data)[1].total_seconds()*1000) + ' & ' +str(response_time(data)[2].total_seconds()*1000) + ' & ' + str(response_time(data)[3].total_seconds()*1000) + '\\\\']
     # rl += [row]

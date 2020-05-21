@@ -12,6 +12,8 @@ from datetime import datetime
 from kazoo.client import KazooClient
 from flask_pymemcache import FlaskPyMemcache
 
+from contextlib import ExitStack
+
 # latency configuration, 1,2,3
 lc = int(os.environ.get("LC"))
 # 0 for crdt, 1 for opsets, 2 for global lock, 3 for rw lock
@@ -105,6 +107,10 @@ def acknowledge(ts, timestamp):
     log_file = os.path.join('/', 'usr', 'data', 'done.txt')
     with open(log_file, "a") as l:
         l.write(f"{reg}\n")
+
+def simulate_latency(n=1):
+    if whoami != chairman:
+        time.sleep(latency_config[whoami+'-'+chairman] * n)
 
 # # the cost of lock acquisition is as per https://www.nuodb.com/techblog/distributed-transactional-locks
 # # exclusive mode - 
@@ -227,8 +233,7 @@ def downmove():
     latency_config = app.config["latency_config"]
     if exp == 2:
         # global lock
-        if whoami != chairman:
-            time.sleep(latency_config[whoami+'-'+chairman])
+        simulate_latency()
         lock = zk.Lock('/lockpath', 'global')
         with lock:
             # print("with lock from "+whoami)
@@ -240,8 +245,7 @@ def downmove():
             log_time = datetime.now()
             update_ts_self(ts[replicaid])
             end_time = datetime.now()
-            if whoami != chairman:
-                time.sleep(latency_config[whoami+'-'+chairman])
+            simulate_latency()
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
             write_message(message)
@@ -249,23 +253,27 @@ def downmove():
 
     elif exp == 3:
         # rw lock
-        if whoami != chairman:
-            time.sleep(latency_config[whoami+'-'+chairman])
-        wlock = zk.WriteLock('/lockpath', n)
-        rlocks = [zk.ReadLock('/lockpath', a) for a in ca]
-        from contextlib import ExitStack
-        with rlocks and wlock: # ExitStack() as es:
+        wlock = zk.WriteLock('/'+n)
+        rlocks = [zk.ReadLock('/'+a) for a in ca]
+        locks = [wlock] + rlocks
+        # ideally it should happen with a single readlock and write lock, efficiently managed by the application
+        # for sake of simplicity, we just consider all read locks acquired in a single go
+        if len(locks) > 1:
+            simulate_latency(2)
+        with ExitStack() as stack:
+            l = [stack.enter_context(lock) for lock in locks]
+            # with rlocks and wlock: 
             # print("got locks " +whoami, flush=True)
-            if whoami != chairman:
-                time.sleep(latency_config[whoami+'-'+chairman])
+            if len(locks) > 1:
+                simulate_latency(2)
             msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
             message = {"to": whoami, "msg": msg}
             log_message(message)
             log_time = datetime.now()
             update_ts_self(ts[replicaid])
             end_time = datetime.now()
-            if whoami != chairman:
-                time.sleep(latency_config[whoami+'-'+chairman])
+            if len(locks) > 1:
+                simulate_latency(2)
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
             write_message(message)
@@ -305,44 +313,43 @@ def upmove():
     latency_config = app.config["latency_config"]
     if exp == 2:
         # global lock
-        if whoami != chairman:
-            time.sleep(latency_config[whoami+'-'+chairman])
+        simulate_latency()
         lock = zk.Lock('/lockpath', 'global')
         with lock:
             # print("with lock from "+whoami)
-            if whoami != chairman:
-                time.sleep(latency_config[whoami+'-'+chairman])
+            simulate_latency()
             msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
             message = {"to": whoami, "msg": msg}
             log_message(message)
             log_time = datetime.now()
             update_ts_self(ts[replicaid])
             end_time = datetime.now()
-            if whoami != chairman:
-                time.sleep(latency_config[whoami+'-'+chairman])
+            simulate_latency()
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
             write_message(message)
 
     elif exp == 3:
         # rw lock
-        if whoami != chairman:
-            time.sleep(latency_config[whoami+'-'+chairman])
-        wlock = zk.WriteLock('/lockpath', n)
-        rlocks = [zk.ReadLock('/lockpath', a) for a in ca]
-        from contextlib import ExitStack
-        with rlocks and wlock: # ExitStack() as es:
+        wlock = zk.WriteLock('/'+n)
+        rlocks = [zk.ReadLock('/'+a) for a in ca]
+        locks = [wlock] + rlocks
+        if len(locks) > 1:
+            simulate_latency(2)
+        with ExitStack() as stack:
+            l = [stack.enter_context(lock) for lock in locks]
+            # with rlocks and wlock: 
             # print("got locks " +whoami, flush=True)
-            if whoami != chairman:
-                time.sleep(latency_config[whoami+'-'+chairman])
+            if len(locks) > 1:
+                simulate_latency(2)
             msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
             message = {"to": whoami, "msg": msg}
             log_message(message)
             log_time = datetime.now()
             update_ts_self(ts[replicaid])
             end_time = datetime.now()
-            if whoami != chairman:
-                time.sleep(latency_config[whoami+'-'+chairman])
+            if len(locks) > 1:
+                simulate_latency(2)
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
             write_message(message)
