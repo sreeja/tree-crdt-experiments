@@ -109,8 +109,9 @@ def acknowledge(ts, timestamp):
         l.write(f"{reg}\n")
 
 def simulate_latency(n=1):
-    time.sleep(.144 * n)
-    # latency_config = app.config["latency_config"]
+    latency_config = app.config["latency_config"]
+    avg = sum(latency_config.values()) / len(latency_config.values())
+    time.sleep(avg * n)
     # if whoami != chairman:
     #     # for now simulating only 1x latency, assuming some lock service can process list of locks
     #     time.sleep(latency_config[whoami+'-'+chairman] * n)
