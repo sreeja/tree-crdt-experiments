@@ -20,8 +20,6 @@ services:
     hostname: zoo1
     ports:
       - 2181:2181
-    environment:
-      ZOO_MY_ID: 1
 
   paris:
     build:
