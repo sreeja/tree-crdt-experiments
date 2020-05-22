@@ -6,3 +6,6 @@ run-build:
 
 down:
 	docker-compose down -v --remove-orphans
+
+experiment:
+	sh experiment.sh
