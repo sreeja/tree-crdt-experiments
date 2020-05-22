@@ -149,34 +149,34 @@ def get_locks(n, ca):
 #         max_time = max(max_time, latency_config[each+'-'+whoami])
 #     time.sleep(max_time)
 
-def acquire_locks():
-    latency_config = app.config["latency_config"]
-    if exp == 0:
-        # crdt
-        pass
-    elif exp == 1:
-        # opsets
-        pass
-    elif exp == 2:
-        # global lock
-        simulate_lock_time(latency_config)
-    else:
-        # rw lock
-        simulate_lock_time()
+# def acquire_locks():
+#     latency_config = app.config["latency_config"]
+#     if exp == 0:
+#         # crdt
+#         pass
+#     elif exp == 1:
+#         # opsets
+#         pass
+#     elif exp == 2:
+#         # global lock
+#         simulate_lock_time(latency_config)
+#     else:
+#         # rw lock
+#         simulate_lock_time()
 
-def release_locks():
-    if exp == 0:
-        # crdt
-        pass
-    elif exp == 1:
-        # opsets
-        pass
-    elif exp == 2:
-        # global lock
-        pass
-    else:
-        # rw lock
-        pass
+# def release_locks():
+#     if exp == 0:
+#         # crdt
+#         pass
+#     elif exp == 1:
+#         # opsets
+#         pass
+#     elif exp == 2:
+#         # global lock
+#         pass
+#     else:
+#         # rw lock
+#         pass
 
 @app.route('/')
 def hello_world():
