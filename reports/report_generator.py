@@ -18,9 +18,8 @@ replicas = ['paris','bangalore','newyork']
 
 def parse_logs(lc_config, exp, conflict):
   data = {}
-  directory = 'data'+str(conflict)+'_'+str(exp)
   for r in replicas:
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, r, 'register.txt')
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, 'register.txt')
     with open(reg_file, 'r') as l:
       lines = l.readlines()
       for each in lines:
@@ -33,7 +32,7 @@ def parse_logs(lc_config, exp, conflict):
             data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
           except:
             data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, r, 'done.txt')
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, 'done.txt')
     with open(reg_file) as l:
       lines = l.readlines()
       for each in lines:
@@ -48,7 +47,7 @@ def parse_logs(lc_config, exp, conflict):
             data[key]["acknowledged"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
     for r1 in replicas:
       file_name = 'time'+r1+'.txt'
-      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, r, file_name)
+      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, file_name)
       with open(reg_file, 'r') as l:
         lines = l.readlines()
         for each in lines:
@@ -64,7 +63,7 @@ def parse_logs(lc_config, exp, conflict):
             data[key]["ts"] = j["ts"]
   for r in replicas:
     file_name = r+'.txt'
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, 'paris', file_name)
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), 'paris', file_name)
     with open(reg_file, 'r') as l:
       lines = l.readlines()
       for each in lines:
@@ -85,9 +84,8 @@ def parse_logs(lc_config, exp, conflict):
 
 def parse_client_logs(lc_config, exp, conflict):
   data = {}
-  directory = 'data'+str(conflict)+'_'+str(exp)
   for r in replicas:
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, r, 'register.txt')
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, 'register.txt')
     with open(reg_file, 'r') as l:
       lines = l.readlines()
       for each in lines:
@@ -100,7 +98,7 @@ def parse_client_logs(lc_config, exp, conflict):
             data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
           except:
             data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, r, 'done.txt')
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, 'done.txt')
     with open(reg_file) as l:
       lines = l.readlines()
       for each in lines:
@@ -118,11 +116,10 @@ def parse_client_logs(lc_config, exp, conflict):
 
 def parse_replica_logs(lc_config, exp, conflict):
   data = {}
-  directory = 'data'+str(conflict)+'_'+str(exp)
   for r in replicas:
     for r1 in replicas:
       file_name = 'time'+r1+'.txt'
-      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, r, file_name)
+      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, file_name)
       with open(reg_file, 'r') as l:
         lines = l.readlines()
         for each in lines:
@@ -138,7 +135,7 @@ def parse_replica_logs(lc_config, exp, conflict):
             data[key]["ts"] = j["ts"]
   for r in replicas:
     file_name = r+'.txt'
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), directory, 'paris', file_name)
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), 'paris', file_name)
     with open(reg_file, 'r') as l:
       lines = l.readlines()
       for each in lines:
