@@ -109,10 +109,11 @@ def acknowledge(ts, timestamp):
         l.write(f"{reg}\n")
 
 def simulate_latency(n=1):
-    latency_config = app.config["latency_config"]
-    if whoami != chairman:
-        # for now simulating only 1x latency, assuming some lock service can process list of locks
-        time.sleep(latency_config[whoami+'-'+chairman] * n)
+    time.sleep(.144 * n)
+    # latency_config = app.config["latency_config"]
+    # if whoami != chairman:
+    #     # for now simulating only 1x latency, assuming some lock service can process list of locks
+    #     time.sleep(latency_config[whoami+'-'+chairman] * n)
 
 # # the cost of lock acquisition is as per https://www.nuodb.com/techblog/distributed-transactional-locks
 # # exclusive mode - 
