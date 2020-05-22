@@ -116,6 +116,17 @@ def simulate_latency(n=1):
     #     # for now simulating only 1x latency, assuming some lock service can process list of locks
     #     time.sleep(latency_config[whoami+'-'+chairman] * n)
 
+def get_locks(n, ca):
+    w = n
+    l = sorted([n] + ca)
+    locks = []
+    for each in l:
+        if each == w:
+            locks += [zk.WriteLock('/'+each)]
+        else:
+            locks += [zk.ReadLock('/'+each)]
+    return locks
+
 # # the cost of lock acquisition is as per https://www.nuodb.com/techblog/distributed-transactional-locks
 # # exclusive mode - 
 # # -- requestor -> chairman (paris)
@@ -255,9 +266,7 @@ def downmove():
 
     elif exp == 3:
         # rw lock
-        wlock = zk.WriteLock('/'+n)
-        rlocks = [zk.ReadLock('/'+a) for a in ca]
-        locks = [wlock] + rlocks
+        locks = get_locks(n, ca)
         # ideally it should happen with a single readlock and write lock, efficiently managed by the application
         # for sake of simplicity, we just consider all read locks acquired in a single go
         simulate_latency(len(locks))
@@ -329,9 +338,7 @@ def upmove():
 
     elif exp == 3:
         # rw lock
-        wlock = zk.WriteLock('/'+n)
-        rlocks = [zk.ReadLock('/'+a) for a in ca]
-        locks = [wlock] + rlocks
+        locks = get_locks(n, ca)
         simulate_latency(len(locks))
         with ExitStack() as stack:
             l = [stack.enter_context(lock) for lock in locks]
