@@ -1,0 +1,250 @@
+{"op": "upmove", "ts": [395, 1, 0], "args": {"n": "bea", "p": "be", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [396, 2, 0], "args": {"n": "bea", "p": "b", "np": "be"}, "replica": "bangalore", "ca": ["be"]}
+{"op": "upmove", "ts": [397, 3, 1], "args": {"n": "bff", "p": "bf", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [397, 4, 3], "args": {"n": "bff", "p": "b", "np": "bf"}, "replica": "bangalore", "ca": ["bf"]}
+{"op": "upmove", "ts": [398, 5, 4], "args": {"n": "bgc", "p": "bg", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [400, 6, 5], "args": {"n": "bgc", "p": "b", "np": "bg"}, "replica": "bangalore", "ca": ["bg"]}
+{"op": "upmove", "ts": [401, 7, 6], "args": {"n": "bcg", "p": "bc", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [402, 8, 7], "args": {"n": "bcg", "p": "b", "np": "bc"}, "replica": "bangalore", "ca": ["bc"]}
+{"op": "upmove", "ts": [402, 9, 8], "args": {"n": "bac", "p": "ba", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [404, 10, 8], "args": {"n": "bac", "p": "b", "np": "ba"}, "replica": "bangalore", "ca": ["ba"]}
+{"op": "upmove", "ts": [405, 11, 10], "args": {"n": "bbe", "p": "bb", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [405, 12, 11], "args": {"n": "bbe", "p": "b", "np": "bb"}, "replica": "bangalore", "ca": ["bb"]}
+{"op": "upmove", "ts": [407, 13, 12], "args": {"n": "bbc", "p": "bb", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [408, 14, 12], "args": {"n": "bbc", "p": "b", "np": "bb"}, "replica": "bangalore", "ca": ["bb"]}
+{"op": "add", "ts": [408, 15, 14], "args": {"n": "cbb02", "p": "cbb"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [408, 16, 14], "args": {"n": "cbb02", "p": "cbb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [408, 17, 14], "args": {"n": "c12", "p": "c"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [408, 18, 14], "args": {"n": "ca22", "p": "ca"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [408, 19, 14], "args": {"n": "ab32", "p": "ab"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [408, 20, 14], "args": {"n": "bbb42", "p": "bbb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [408, 21, 14], "args": {"n": "ca52", "p": "ca"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [408, 22, 14], "args": {"n": "ca52", "p": "ca"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [408, 23, 14], "args": {"n": "bb62", "p": "bb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [408, 24, 14], "args": {"n": "bb72", "p": "bb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [408, 25, 14], "args": {"n": "cba82", "p": "cba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [408, 26, 14], "args": {"n": "aab92", "p": "aab"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [409, 27, 14], "args": {"n": "abc102", "p": "abc"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [410, 28, 14], "args": {"n": "abc102", "p": "abc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [411, 29, 14], "args": {"n": "aab112", "p": "aab"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [412, 30, 14], "args": {"n": "abc122", "p": "abc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [413, 31, 14], "args": {"n": "bcc132", "p": "bcc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [414, 32, 14], "args": {"n": "cc142", "p": "cc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [415, 33, 14], "args": {"n": "bc152", "p": "bc"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [416, 34, 15], "args": {"n": "bc152", "p": "bc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [417, 35, 16], "args": {"n": "aa162", "p": "aa"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [419, 36, 17], "args": {"n": "bbb172", "p": "bbb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [420, 37, 18], "args": {"n": "cbc182", "p": "cbc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [421, 38, 19], "args": {"n": "aa192", "p": "aa"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [422, 39, 20], "args": {"n": "aba202", "p": "aba"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [423, 40, 22], "args": {"n": "aba202", "p": "aba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [424, 41, 23], "args": {"n": "c212", "p": "c"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [425, 42, 24], "args": {"n": "bba222", "p": "bba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [426, 43, 25], "args": {"n": "bcc232", "p": "bcc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [427, 44, 26], "args": {"n": "cba242", "p": "cba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [428, 45, 27], "args": {"n": "cbc252", "p": "cbc"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [429, 46, 28], "args": {"n": "cbc252", "p": "cbc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [430, 47, 30], "args": {"n": "bbc262", "p": "bbc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [432, 48, 31], "args": {"n": "cc272", "p": "cc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [433, 49, 32], "args": {"n": "cb282", "p": "cb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [434, 50, 33], "args": {"n": "bb292", "p": "bb"}, "replica": "bangalore", "ca": []}
+{"op": "upmove", "ts": [435, 51, 34], "args": {"n": "bea", "p": "be", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [445, 52, 51], "args": {"n": "bea", "p": "b", "np": "be"}, "replica": "bangalore", "ca": ["be"]}
+{"op": "upmove", "ts": [447, 53, 52], "args": {"n": "bff", "p": "bf", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [448, 54, 53], "args": {"n": "bff", "p": "b", "np": "bf"}, "replica": "bangalore", "ca": ["bf"]}
+{"op": "upmove", "ts": [448, 55, 54], "args": {"n": "bgc", "p": "bg", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [449, 56, 55], "args": {"n": "bgc", "p": "b", "np": "bg"}, "replica": "bangalore", "ca": ["bg"]}
+{"op": "upmove", "ts": [450, 57, 56], "args": {"n": "bcg", "p": "bc", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [452, 58, 56], "args": {"n": "bcg", "p": "b", "np": "bc"}, "replica": "bangalore", "ca": ["bc"]}
+{"op": "upmove", "ts": [452, 59, 58], "args": {"n": "bac", "p": "ba", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [454, 60, 59], "args": {"n": "bac", "p": "b", "np": "ba"}, "replica": "bangalore", "ca": ["ba"]}
+{"op": "upmove", "ts": [455, 61, 60], "args": {"n": "bbe", "p": "bb", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [456, 62, 61], "args": {"n": "bbe", "p": "b", "np": "bb"}, "replica": "bangalore", "ca": ["bb"]}
+{"op": "upmove", "ts": [456, 63, 62], "args": {"n": "bbc", "p": "bb", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [458, 64, 62], "args": {"n": "bbc", "p": "b", "np": "bb"}, "replica": "bangalore", "ca": ["bb"]}
+{"op": "add", "ts": [459, 65, 64], "args": {"n": "cbb02", "p": "cbb"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [459, 66, 64], "args": {"n": "cbb02", "p": "cbb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [459, 67, 64], "args": {"n": "c12", "p": "c"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [459, 68, 64], "args": {"n": "ca22", "p": "ca"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [459, 69, 64], "args": {"n": "ab32", "p": "ab"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [459, 70, 64], "args": {"n": "bbb42", "p": "bbb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [459, 71, 64], "args": {"n": "ca52", "p": "ca"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [459, 72, 64], "args": {"n": "ca52", "p": "ca"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [459, 73, 64], "args": {"n": "bb62", "p": "bb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [459, 74, 64], "args": {"n": "bb72", "p": "bb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [459, 75, 64], "args": {"n": "cba82", "p": "cba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [459, 76, 64], "args": {"n": "aab92", "p": "aab"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [459, 77, 64], "args": {"n": "abc102", "p": "abc"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [460, 78, 64], "args": {"n": "abc102", "p": "abc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [462, 79, 64], "args": {"n": "aab112", "p": "aab"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [462, 80, 64], "args": {"n": "abc122", "p": "abc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [463, 81, 64], "args": {"n": "bcc132", "p": "bcc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [464, 82, 64], "args": {"n": "cc142", "p": "cc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [466, 83, 64], "args": {"n": "bc152", "p": "bc"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [467, 84, 66], "args": {"n": "bc152", "p": "bc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [468, 85, 67], "args": {"n": "aa162", "p": "aa"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [469, 86, 68], "args": {"n": "bbb172", "p": "bbb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [470, 87, 69], "args": {"n": "cbc182", "p": "cbc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [471, 88, 70], "args": {"n": "aa192", "p": "aa"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [472, 89, 71], "args": {"n": "aba202", "p": "aba"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [473, 90, 72], "args": {"n": "aba202", "p": "aba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [474, 91, 73], "args": {"n": "c212", "p": "c"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [475, 92, 74], "args": {"n": "bba222", "p": "bba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [476, 93, 76], "args": {"n": "bcc232", "p": "bcc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [477, 94, 77], "args": {"n": "cba242", "p": "cba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [478, 95, 77], "args": {"n": "cbc252", "p": "cbc"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [480, 96, 79], "args": {"n": "cbc252", "p": "cbc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [480, 97, 80], "args": {"n": "bbc262", "p": "bbc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [482, 98, 81], "args": {"n": "cc272", "p": "cc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [483, 99, 82], "args": {"n": "cb282", "p": "cb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [484, 100, 83], "args": {"n": "bb292", "p": "bb"}, "replica": "bangalore", "ca": []}
+{"op": "upmove", "ts": [485, 101, 84], "args": {"n": "bea", "p": "be", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [495, 102, 101], "args": {"n": "bea", "p": "b", "np": "be"}, "replica": "bangalore", "ca": ["be"]}
+{"op": "upmove", "ts": [497, 103, 101], "args": {"n": "bff", "p": "bf", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [497, 104, 103], "args": {"n": "bff", "p": "b", "np": "bf"}, "replica": "bangalore", "ca": ["bf"]}
+{"op": "upmove", "ts": [499, 105, 104], "args": {"n": "bgc", "p": "bg", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [499, 106, 105], "args": {"n": "bgc", "p": "b", "np": "bg"}, "replica": "bangalore", "ca": ["bg"]}
+{"op": "upmove", "ts": [500, 107, 106], "args": {"n": "bcg", "p": "bc", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [501, 108, 107], "args": {"n": "bcg", "p": "b", "np": "bc"}, "replica": "bangalore", "ca": ["bc"]}
+{"op": "upmove", "ts": [503, 109, 107], "args": {"n": "bac", "p": "ba", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [504, 110, 109], "args": {"n": "bac", "p": "b", "np": "ba"}, "replica": "bangalore", "ca": ["ba"]}
+{"op": "upmove", "ts": [505, 111, 109], "args": {"n": "bbe", "p": "bb", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [506, 112, 110], "args": {"n": "bbe", "p": "b", "np": "bb"}, "replica": "bangalore", "ca": ["bb"]}
+{"op": "upmove", "ts": [507, 113, 111], "args": {"n": "bbc", "p": "bb", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [507, 114, 113], "args": {"n": "bbc", "p": "b", "np": "bb"}, "replica": "bangalore", "ca": ["bb"]}
+{"op": "add", "ts": [509, 115, 114], "args": {"n": "cbb02", "p": "cbb"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [509, 116, 114], "args": {"n": "cbb02", "p": "cbb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [509, 117, 114], "args": {"n": "c12", "p": "c"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [509, 118, 114], "args": {"n": "ca22", "p": "ca"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [509, 119, 114], "args": {"n": "ab32", "p": "ab"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [509, 120, 114], "args": {"n": "bbb42", "p": "bbb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [509, 121, 114], "args": {"n": "ca52", "p": "ca"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [509, 122, 114], "args": {"n": "ca52", "p": "ca"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [509, 123, 114], "args": {"n": "bb62", "p": "bb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [509, 124, 114], "args": {"n": "bb72", "p": "bb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [509, 125, 114], "args": {"n": "cba82", "p": "cba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [509, 126, 114], "args": {"n": "aab92", "p": "aab"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [509, 127, 114], "args": {"n": "abc102", "p": "abc"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [510, 128, 114], "args": {"n": "abc102", "p": "abc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [511, 129, 114], "args": {"n": "aab112", "p": "aab"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [512, 130, 114], "args": {"n": "abc122", "p": "abc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [513, 131, 114], "args": {"n": "bcc132", "p": "bcc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [514, 132, 114], "args": {"n": "cc142", "p": "cc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [516, 133, 114], "args": {"n": "bc152", "p": "bc"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [516, 134, 115], "args": {"n": "bc152", "p": "bc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [518, 135, 116], "args": {"n": "aa162", "p": "aa"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [519, 136, 118], "args": {"n": "bbb172", "p": "bbb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [520, 137, 119], "args": {"n": "cbc182", "p": "cbc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [522, 138, 121], "args": {"n": "aa192", "p": "aa"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [523, 139, 122], "args": {"n": "aba202", "p": "aba"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [524, 140, 123], "args": {"n": "aba202", "p": "aba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [525, 141, 124], "args": {"n": "c212", "p": "c"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [526, 142, 125], "args": {"n": "bba222", "p": "bba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [527, 143, 126], "args": {"n": "bcc232", "p": "bcc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [528, 144, 127], "args": {"n": "cba242", "p": "cba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [529, 145, 129], "args": {"n": "cbc252", "p": "cbc"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [530, 146, 130], "args": {"n": "cbc252", "p": "cbc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [531, 147, 131], "args": {"n": "bbc262", "p": "bbc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [532, 148, 132], "args": {"n": "cc272", "p": "cc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [533, 149, 133], "args": {"n": "cb282", "p": "cb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [534, 150, 134], "args": {"n": "bb292", "p": "bb"}, "replica": "bangalore", "ca": []}
+{"op": "upmove", "ts": [535, 151, 134], "args": {"n": "bea", "p": "be", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [546, 152, 151], "args": {"n": "bea", "p": "b", "np": "be"}, "replica": "bangalore", "ca": ["be"]}
+{"op": "upmove", "ts": [546, 153, 152], "args": {"n": "bff", "p": "bf", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [548, 154, 153], "args": {"n": "bff", "p": "b", "np": "bf"}, "replica": "bangalore", "ca": ["bf"]}
+{"op": "upmove", "ts": [548, 155, 154], "args": {"n": "bgc", "p": "bg", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [550, 156, 154], "args": {"n": "bgc", "p": "b", "np": "bg"}, "replica": "bangalore", "ca": ["bg"]}
+{"op": "upmove", "ts": [551, 157, 155], "args": {"n": "bcg", "p": "bc", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [552, 158, 157], "args": {"n": "bcg", "p": "b", "np": "bc"}, "replica": "bangalore", "ca": ["bc"]}
+{"op": "upmove", "ts": [553, 159, 158], "args": {"n": "bac", "p": "ba", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [554, 160, 159], "args": {"n": "bac", "p": "b", "np": "ba"}, "replica": "bangalore", "ca": ["ba"]}
+{"op": "upmove", "ts": [554, 161, 160], "args": {"n": "bbe", "p": "bb", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [556, 162, 161], "args": {"n": "bbe", "p": "b", "np": "bb"}, "replica": "bangalore", "ca": ["bb"]}
+{"op": "upmove", "ts": [556, 163, 162], "args": {"n": "bbc", "p": "bb", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [557, 164, 163], "args": {"n": "bbc", "p": "b", "np": "bb"}, "replica": "bangalore", "ca": ["bb"]}
+{"op": "add", "ts": [558, 165, 164], "args": {"n": "cbb02", "p": "cbb"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [558, 166, 164], "args": {"n": "cbb02", "p": "cbb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [558, 167, 164], "args": {"n": "c12", "p": "c"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [558, 168, 164], "args": {"n": "ca22", "p": "ca"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [558, 169, 164], "args": {"n": "ab32", "p": "ab"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [558, 170, 164], "args": {"n": "bbb42", "p": "bbb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [558, 171, 164], "args": {"n": "ca52", "p": "ca"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [558, 172, 164], "args": {"n": "ca52", "p": "ca"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [558, 173, 164], "args": {"n": "bb62", "p": "bb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [558, 174, 164], "args": {"n": "bb72", "p": "bb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [558, 175, 164], "args": {"n": "cba82", "p": "cba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [558, 176, 164], "args": {"n": "aab92", "p": "aab"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [559, 177, 164], "args": {"n": "abc102", "p": "abc"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [560, 178, 164], "args": {"n": "abc102", "p": "abc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [561, 179, 164], "args": {"n": "aab112", "p": "aab"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [562, 180, 164], "args": {"n": "abc122", "p": "abc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [563, 181, 164], "args": {"n": "bcc132", "p": "bcc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [565, 182, 164], "args": {"n": "cc142", "p": "cc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [566, 183, 164], "args": {"n": "bc152", "p": "bc"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [567, 184, 166], "args": {"n": "bc152", "p": "bc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [568, 185, 167], "args": {"n": "aa162", "p": "aa"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [569, 186, 168], "args": {"n": "bbb172", "p": "bbb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [570, 187, 169], "args": {"n": "cbc182", "p": "cbc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [571, 188, 170], "args": {"n": "aa192", "p": "aa"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [573, 189, 171], "args": {"n": "aba202", "p": "aba"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [574, 190, 173], "args": {"n": "aba202", "p": "aba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [575, 191, 174], "args": {"n": "c212", "p": "c"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [576, 192, 175], "args": {"n": "bba222", "p": "bba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [577, 193, 177], "args": {"n": "bcc232", "p": "bcc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [578, 194, 178], "args": {"n": "cba242", "p": "cba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [580, 195, 179], "args": {"n": "cbc252", "p": "cbc"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [580, 196, 180], "args": {"n": "cbc252", "p": "cbc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [582, 197, 181], "args": {"n": "bbc262", "p": "bbc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [583, 198, 182], "args": {"n": "cc272", "p": "cc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [584, 199, 184], "args": {"n": "cb282", "p": "cb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [585, 200, 184], "args": {"n": "bb292", "p": "bb"}, "replica": "bangalore", "ca": []}
+{"op": "upmove", "ts": [585, 201, 185], "args": {"n": "bea", "p": "be", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [596, 202, 200], "args": {"n": "bea", "p": "b", "np": "be"}, "replica": "bangalore", "ca": ["be"]}
+{"op": "upmove", "ts": [597, 203, 202], "args": {"n": "bff", "p": "bf", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [598, 204, 203], "args": {"n": "bff", "p": "b", "np": "bf"}, "replica": "bangalore", "ca": ["bf"]}
+{"op": "upmove", "ts": [599, 205, 204], "args": {"n": "bgc", "p": "bg", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [600, 206, 204], "args": {"n": "bgc", "p": "b", "np": "bg"}, "replica": "bangalore", "ca": ["bg"]}
+{"op": "upmove", "ts": [601, 207, 205], "args": {"n": "bcg", "p": "bc", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [602, 208, 206], "args": {"n": "bcg", "p": "b", "np": "bc"}, "replica": "bangalore", "ca": ["bc"]}
+{"op": "upmove", "ts": [603, 209, 208], "args": {"n": "bac", "p": "ba", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [604, 210, 208], "args": {"n": "bac", "p": "b", "np": "ba"}, "replica": "bangalore", "ca": ["ba"]}
+{"op": "upmove", "ts": [605, 211, 210], "args": {"n": "bbe", "p": "bb", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [606, 212, 211], "args": {"n": "bbe", "p": "b", "np": "bb"}, "replica": "bangalore", "ca": ["bb"]}
+{"op": "upmove", "ts": [606, 213, 212], "args": {"n": "bbc", "p": "bb", "np": "b"}, "replica": "bangalore", "ca": [""]}
+{"op": "downmove", "ts": [608, 214, 213], "args": {"n": "bbc", "p": "b", "np": "bb"}, "replica": "bangalore", "ca": ["bb"]}
+{"op": "add", "ts": [609, 215, 213], "args": {"n": "cbb02", "p": "cbb"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [609, 216, 213], "args": {"n": "cbb02", "p": "cbb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [609, 217, 213], "args": {"n": "c12", "p": "c"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [609, 218, 213], "args": {"n": "ca22", "p": "ca"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [609, 219, 213], "args": {"n": "ab32", "p": "ab"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [609, 220, 213], "args": {"n": "bbb42", "p": "bbb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [609, 221, 213], "args": {"n": "ca52", "p": "ca"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [609, 222, 213], "args": {"n": "ca52", "p": "ca"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [609, 223, 213], "args": {"n": "bb62", "p": "bb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [609, 224, 213], "args": {"n": "bb72", "p": "bb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [609, 225, 213], "args": {"n": "cba82", "p": "cba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [609, 226, 213], "args": {"n": "aab92", "p": "aab"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [609, 227, 213], "args": {"n": "abc102", "p": "abc"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [610, 228, 213], "args": {"n": "abc102", "p": "abc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [611, 229, 213], "args": {"n": "aab112", "p": "aab"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [612, 230, 213], "args": {"n": "abc122", "p": "abc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [613, 231, 213], "args": {"n": "bcc132", "p": "bcc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [614, 232, 213], "args": {"n": "cc142", "p": "cc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [616, 233, 214], "args": {"n": "bc152", "p": "bc"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [617, 234, 215], "args": {"n": "bc152", "p": "bc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [618, 235, 217], "args": {"n": "aa162", "p": "aa"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [619, 236, 218], "args": {"n": "bbb172", "p": "bbb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [620, 237, 219], "args": {"n": "cbc182", "p": "cbc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [622, 238, 220], "args": {"n": "aa192", "p": "aa"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [623, 239, 222], "args": {"n": "aba202", "p": "aba"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [624, 240, 223], "args": {"n": "aba202", "p": "aba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [625, 241, 224], "args": {"n": "c212", "p": "c"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [626, 242, 225], "args": {"n": "bba222", "p": "bba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [627, 243, 226], "args": {"n": "bcc232", "p": "bcc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [628, 244, 227], "args": {"n": "cba242", "p": "cba"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [629, 245, 228], "args": {"n": "cbc252", "p": "cbc"}, "replica": "bangalore", "ca": []}
+{"op": "remove", "ts": [630, 246, 229], "args": {"n": "cbc252", "p": "cbc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [631, 247, 230], "args": {"n": "bbc262", "p": "bbc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [632, 248, 231], "args": {"n": "cc272", "p": "cc"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [633, 249, 232], "args": {"n": "cb282", "p": "cb"}, "replica": "bangalore", "ca": []}
+{"op": "add", "ts": [634, 250, 233], "args": {"n": "bb292", "p": "bb"}, "replica": "bangalore", "ca": []}
