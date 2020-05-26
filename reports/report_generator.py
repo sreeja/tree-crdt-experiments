@@ -16,6 +16,8 @@ from datetime import datetime, timedelta
 
 replicas = ['paris','bangalore','newyork']
 
+experiments = ['CRDT Tree', 'Opsets based tree', 'Tree with global lock', 'Tree with subtree locks']
+
 def parse_logs(lc_config, exp, conflict):
   data = {}
   for r in replicas:
@@ -215,11 +217,12 @@ def result(lc_config):
     print("Conflict %: " + str(j) + " : ")
     row = []
     for i in range(0,4):
-      print("Experiment " + str(i))
+      # print("Experiment " + str(i))
+      print(experiments[i])
       # print("Conflict %: " + str(j))
       data = parse_logs(lc_config, i, j)
       print("All: " + str(response_time(data)[1].total_seconds()*1000) + " :: Conflicts: " + str(response_time(data)[2].total_seconds()*1000) + " :: Nonconflicts: " + str(response_time(data)[3].total_seconds()*1000))
-      row += ["Experiment " + str(i+1) + ' & ' +str(response_time(data)[1].total_seconds()*1000) + ' & ' +str(response_time(data)[2].total_seconds()*1000) + ' & ' + str(response_time(data)[3].total_seconds()*1000) + '\\\\']
+      row += [experiments[i] + ' & ' +str(response_time(data)[1].total_seconds()*1000) + ' & ' +str(response_time(data)[2].total_seconds()*1000) + ' & ' + str(response_time(data)[3].total_seconds()*1000) + '\\\\']
     # rl += [row]
     file_name = "response"+str(lc_config)+"con"+str(j)+".tex"
     with open(file_name, "w") as f:
@@ -230,14 +233,14 @@ def result(lc_config):
   print("=============")
   sl = []
   for i in range(0,4):
-    print("Experiment " + str(i))
+    print(experiments[i])
     row = []
     for j in [0, 2, 10, 20]:
       # print("Conflict %: " + str(j))
       data = parse_replica_logs(lc_config, i, j)
       print("Conflict %: " + str(j) + " : " + str(stabilization_time(i, data)[1].total_seconds()*1000))
       row += [str(stabilization_time(i, data)[1].total_seconds()*1000)]
-    sl += ["Experiment " + str(i) + " & " + " & ".join(row)]
+    sl += [experiments[i] + " & " + " & ".join(row)]
   file_name = "stabilization"+str(lc_config)+".tex"
   with open(file_name, "w") as f:
     f.write("\\\\ \n".join(sl) + "\\\\")
