@@ -48,7 +48,7 @@ services:
       - 6001:6000
     command: flask run --host=0.0.0.0 --port=6000
 
-  worker-bangalore-paris:
+  worker-paris:
     build:
       context: ./worker
       dockerfile: Dockerfile
@@ -56,25 +56,7 @@ services:
       - "./worker:/usr/src/app"
       - "./data/paris:/usr/data"
     environment:
-      - WHOAMI=bangalore-paris
-      - PYTHONUNBUFFERED=1
-    depends_on:
-      - messenger
-      - cache
-    links:
-      - messenger
-      - cache
-    command: python consumer.py
-
-  worker-newyork-paris:
-    build:
-      context: ./worker
-      dockerfile: Dockerfile
-    volumes:
-      - "./worker:/usr/src/app"
-      - "./data/paris:/usr/data"
-    environment:
-      - WHOAMI=newyork-paris
+      - WHOAMI=paris
       - PYTHONUNBUFFERED=1
     depends_on:
       - messenger
@@ -111,7 +93,7 @@ services:
       - 6002:6000
     command: flask run --host=0.0.0.0 --port=6000
 
-  worker-paris-bangalore:
+  worker-bangalore:
     build:
       context: ./worker
       dockerfile: Dockerfile
@@ -119,25 +101,7 @@ services:
       - "./worker:/usr/src/app"
       - "./data/bangalore:/usr/data"
     environment:
-      - WHOAMI=paris-bangalore
-      - PYTHONUNBUFFERED=1
-    depends_on:
-      - messenger
-      - cache
-    links:
-      - messenger
-      - cache
-    command: python consumer.py
-
-  worker-newyork-bangalore:
-    build:
-      context: ./worker
-      dockerfile: Dockerfile
-    volumes:
-      - "./worker:/usr/src/app"
-      - "./data/bangalore:/usr/data"
-    environment:
-      - WHOAMI=newyork-bangalore
+      - WHOAMI=bangalore
       - PYTHONUNBUFFERED=1
     depends_on:
       - messenger
@@ -174,7 +138,7 @@ services:
       - 6003:6000
     command: flask run --host=0.0.0.0 --port=6000
 
-  worker-paris-newyork:
+  worker-newyork:
     build:
       context: ./worker
       dockerfile: Dockerfile
@@ -182,7 +146,7 @@ services:
       - "./worker:/usr/src/app"
       - "./data/newyork:/usr/data"
     environment:
-      - WHOAMI=paris-newyork
+      - WHOAMI=newyork
       - PYTHONUNBUFFERED=1
     depends_on:
       - messenger
@@ -191,22 +155,3 @@ services:
       - messenger
       - cache
     command: python consumer.py
-
-  worker-bangalore-newyork:
-    build:
-      context: ./worker
-      dockerfile: Dockerfile
-    volumes:
-      - "./worker:/usr/src/app"
-      - "./data/newyork:/usr/data"
-    environment:
-      - WHOAMI=bangalore-newyork
-      - PYTHONUNBUFFERED=1
-    depends_on:
-      - messenger
-      - cache
-    links:
-      - messenger
-      - cache
-    command: python consumer.py
-

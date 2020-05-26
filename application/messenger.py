@@ -24,7 +24,9 @@ def write_message(message):
             "msg": message.get("msg", ""),
             "from": whoami
         })
-    queue_name = whoami + "-" + message.get("to", "")
+    queue_name = message.get("to", "")
+
+    channel_name = whoami + '-' + queue_name
 
     connection = pika.BlockingConnection(pika.ConnectionParameters('messenger'))
     channel = connection.channel()
@@ -44,16 +46,16 @@ def write_message(message):
 
     # This is where we declare the delay, and routing for our delay channel.
     # print(latency_config[queue_name]*1000*100)
-    delay_channel.queue_declare(queue=queue_name+'_delay', durable=True,  arguments={
-    'x-message-ttl' : int(latency_config[queue_name]*1000), # Delay until the message is transferred in milliseconds.
+    delay_channel.queue_declare(queue=channel_name+'_delay', durable=True,  arguments={
+    'x-message-ttl' : int(latency_config[channel_name]*1000), # Delay until the message is transferred in milliseconds.
     'x-dead-letter-exchange' : 'amq.direct', # Exchange used to transfer the message from A to B.
     'x-dead-letter-routing-key' : queue_name # Name of the queue we want the message transferred to.
     })
 
     delay_channel.basic_publish(exchange='',
-                        routing_key=queue_name+'_delay',
+                        routing_key=channel_name+'_delay',
                         body=payload,
                         properties=pika.BasicProperties(delivery_mode=2))
 
     connection.close()
-    print(f"wrote to {queue_name}", flush=True)
+    # print(f"wrote to {queue_name}", flush=True)
