@@ -7,6 +7,17 @@ class Node:
   def __eq__(self, obj):
     return self.id == obj.id
 
+  @classmethod
+  def serialize(cls, node):
+    result = {'id':node.id, 'parent':node.parent, 'tombstone':node.tombstone}
+    return result
+
+  @classmethod
+  def deserialize(cls, string):
+    node = Node(string['id'], string['parent'])
+    node.tombstone = string['tombstone']
+    return node
+
 #########################################################################################################
 # CRDT tree
 class Tree_CRDT:
@@ -98,7 +109,9 @@ class Tree_CRDT:
     return False
 
   @classmethod
-  def construct_tree(cls, tree = Tree_CRDT(), logs):
+  def construct_tree(cls, logs, tree = None):
+    if tree == None:
+      tree = Tree_CRDT()
     moves = {}
     for l in logs:
       if l['op'] == 'add':
@@ -128,6 +141,21 @@ class Tree_CRDT:
                 flag = True
       if not flag:
         tree.move_eff(moves[m]['n'], moves[m]['p'], moves[m]['np'])
+    return tree
+
+  @classmethod
+  def serialize(cls, tree):
+    node_list = {}
+    for each in tree.nodes:
+      node_list[each] = Node.serialize(tree.nodes[each])
+    result = {'root':Node.serialize(tree.root), 'nodes':node_list}
+    return result
+
+  @classmethod
+  def deserialize(cls, string):
+    tree = Tree_CRDT()
+    for each in string['nodes']:
+      tree.nodes[each] = Node.deserialize(string['nodes'][each])
     return tree
 
 #########################################################################################################
@@ -188,7 +216,9 @@ class Tree_Opset:
           return (op, args, ca)  
   
   @classmethod
-  def construct_tree(cls, tree = Tree_Opset(), logs):
+  def construct_tree(cls, logs, tree = None):
+    if tree == None:
+      tree = Tree_Opset()
     for l in logs:
       if l['op'] == 'add':
         tree.add_eff(l['args']['n'], l['args']['p'])
@@ -198,6 +228,21 @@ class Tree_Opset:
         tree.move_eff(l['args']['n'], l['args']['p'], l['args']['np'])
       else:
         Exception('Unknown operation')
+    return tree
+
+  @classmethod
+  def serialize(cls, tree):
+    node_list = {}
+    for each in tree.nodes:
+      node_list[each] = Node.serialize(tree.nodes[each])
+    result = {'root':Node.serialize(tree.root), 'nodes':node_list}
+    return result
+
+  @classmethod
+  def deserialize(cls, string):
+    tree = Tree_Opset()
+    for each in string['nodes']:
+      tree.nodes[each] = Node.deserialize(string['nodes'][each])
     return tree
 
 #########################################################################################################
@@ -253,7 +298,9 @@ class Tree_Globalock:
           return (op, args, ca)  
 
   @classmethod
-  def construct_tree(cls, tree = Tree_Globalock(), logs):
+  def construct_tree(cls, logs, tree = None):
+    if tree == None:
+      tree = Tree_Globalock()
     for l in logs:
       if l['op'] == 'add':
         tree.add_eff(l['args']['n'], l['args']['p'])
@@ -263,6 +310,21 @@ class Tree_Globalock:
         tree.move_eff(l['args']['n'], l['args']['p'], l['args']['np'])
       else:
         Exception('Unknown operation')
+    return tree
+
+  @classmethod
+  def serialize(cls, tree):
+    node_list = {}
+    for each in tree.nodes:
+      node_list[each] = Node.serialize(tree.nodes[each])
+    result = {'root':Node.serialize(tree.root), 'nodes':node_list}
+    return result
+
+  @classmethod
+  def deserialize(cls, string):
+    tree = Tree_Globalock()
+    for each in string['nodes']:
+      tree.nodes[each] = Node.deserialize(string['nodes'][each])
     return tree
 
 #########################################################################################################
@@ -325,7 +387,9 @@ class Tree_Sublock:
           return (op, args, ca)  
   
   @classmethod
-  def construct_tree(cls, tree = Tree_Sublock(), logs):
+  def construct_tree(cls, logs, tree=None):
+    if tree == None:
+      tree = Tree_Sublock()
     for l in logs:
       if l['op'] == 'add':
         tree.add_eff(l['args']['n'], l['args']['p'])
@@ -335,4 +399,19 @@ class Tree_Sublock:
         tree.move_eff(l['args']['n'], l['args']['p'], l['args']['np'])
       else:
         Exception('Unknown operation')
+    return tree
+
+  @classmethod
+  def serialize(cls, tree):
+    node_list = {}
+    for each in tree.nodes:
+      node_list[each] = Node.serialize(tree.nodes[each])
+    result = {'root':Node.serialize(tree.root), 'nodes':node_list}
+    return result
+
+  @classmethod
+  def deserialize(cls, string):
+    tree = Tree_Sublock()
+    for each in string['nodes']:
+      tree.nodes[each] = Node.deserialize(string['nodes'][each])
     return tree
