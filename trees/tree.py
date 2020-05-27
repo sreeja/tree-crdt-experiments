@@ -98,8 +98,7 @@ class Tree_CRDT:
     return False
 
   @classmethod
-  def construct_tree(cls, logs):
-    tree = Tree_Sublock()
+  def construct_tree(cls, tree = Tree_CRDT(), logs):
     moves = {}
     for l in logs:
       if l['op'] == 'add':
@@ -189,8 +188,7 @@ class Tree_Opset:
           return (op, args, ca)  
   
   @classmethod
-  def construct_tree(cls, logs):
-    tree = Tree_Opset()
+  def construct_tree(cls, tree = Tree_Opset(), logs):
     for l in logs:
       if l['op'] == 'add':
         tree.add_eff(l['args']['n'], l['args']['p'])
@@ -255,8 +253,7 @@ class Tree_Globalock:
           return (op, args, ca)  
 
   @classmethod
-  def construct_tree(cls, logs):
-    tree = Tree_Globalock()
+  def construct_tree(cls, tree = Tree_Globalock(), logs):
     for l in logs:
       if l['op'] == 'add':
         tree.add_eff(l['args']['n'], l['args']['p'])
@@ -328,8 +325,7 @@ class Tree_Sublock:
           return (op, args, ca)  
   
   @classmethod
-  def construct_tree(cls, logs):
-    tree = Tree_Sublock()
+  def construct_tree(cls, tree = Tree_Sublock(), logs):
     for l in logs:
       if l['op'] == 'add':
         tree.add_eff(l['args']['n'], l['args']['p'])
