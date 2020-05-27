@@ -24,28 +24,37 @@ memcache = FlaskPyMemcache()
 def create_app():
     app = Flask(__name__)
     LC = {1:{
+        "paris-paris": 0,
         "paris-bangalore": 0,
         "paris-newyork": 0,
         "bangalore-paris": 0,
+        "bangalore-bangalore": 0
         "bangalore-newyork": 0,
         "newyork-paris": 0,
         "newyork-bangalore": 0,
+        "newyork-newyork": 0,
     },
     2: {
+        "paris-paris": 0,
         "paris-bangalore": .144,
         "paris-newyork": .075,
         "bangalore-paris": .144,
+        "bangalore-bangalore": 0
         "bangalore-newyork": .215,
         "newyork-paris": .075,
         "newyork-bangalore": .215,
+        "newyork-newyork": 0,
     }, 
     3: {
+        "paris-paris": 0,
         "paris-bangalore": 1.44,
         "paris-newyork": 0.75,
         "bangalore-paris": 1.44,
+        "bangalore-bangalore": 0
         "bangalore-newyork": 2.15,
         "newyork-paris": 0.75,
         "newyork-bangalore": 2.15,
+        "newyork-newyork": 0,
     },
     }
     app.config["latency_config"] = LC[lc]
@@ -89,11 +98,11 @@ def register_op(ts, timestamp):
 def prepare_message(op, ts, args, replica, ca = []):
     return {"op": op, "ts":ts, "args": args, "replica": replica, "ca":ca}
 
-def log_message(message):
-    msg = json.dumps(message.get("msg", ""))
-    f_to_write = os.path.join('/', 'usr', 'data', f'{whoami}.txt')
-    with open(f_to_write, "a") as f:
-        f.write(f"{msg}\n")
+# def log_message(message):
+#     msg = json.dumps(message.get("msg", ""))
+#     f_to_write = os.path.join('/', 'usr', 'data', f'{whoami}.txt')
+#     with open(f_to_write, "a") as f:
+#         f.write(f"{msg}\n")
 
 def log_logtime(ts, timestamp):
     logging = json.dumps({"ts":ts, "time":str(timestamp)})
@@ -139,10 +148,10 @@ def add():
     p = request.args.get('p', '')
     msg = prepare_message("add", ts, {"n": n, "p": p}, whoami)
     message = {"to": whoami, "msg": msg}
-    log_message(message)
     log_time = datetime.now()
     update_ts_self(ts[replicaid])
     end_time = datetime.now()
+    write_message(message)
     for each in [r for r in replicas if r != whoami]:
         message = {"to": each, "msg": msg}
         write_message(message)
@@ -161,10 +170,10 @@ def remove():
     p = request.args.get('p', '')
     msg = prepare_message("remove", ts, {"n": n, "p": p}, whoami)
     message = {"to": whoami, "msg": msg}
-    log_message(message)
     log_time = datetime.now()
     update_ts_self(ts[replicaid])
     end_time = datetime.now()
+    write_message(message)
     for each in [r for r in replicas if r != whoami]:
         message = {"to": each, "msg": msg}
         write_message(message)
@@ -191,10 +200,10 @@ def downmove():
             simulate_latency()
             msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
             message = {"to": whoami, "msg": msg}
-            log_message(message)
             log_time = datetime.now()
             update_ts_self(ts[replicaid])
             end_time = datetime.now()
+            write_message(message)
             simulate_latency()
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
@@ -209,10 +218,10 @@ def downmove():
             simulate_latency(len(locks))
             msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
             message = {"to": whoami, "msg": msg}
-            log_message(message)
             log_time = datetime.now()
             update_ts_self(ts[replicaid])
             end_time = datetime.now()
+            write_message(message)
             simulate_latency(len(locks))
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
@@ -222,10 +231,10 @@ def downmove():
         # crdt/opsets
         msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
         message = {"to": whoami, "msg": msg}
-        log_message(message)
         log_time = datetime.now()
         update_ts_self(ts[replicaid])
         end_time = datetime.now()
+        write_message(message)
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
             write_message(message)
@@ -253,10 +262,10 @@ def upmove():
             simulate_latency()
             msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
             message = {"to": whoami, "msg": msg}
-            log_message(message)
             log_time = datetime.now()
             update_ts_self(ts[replicaid])
             end_time = datetime.now()
+            write_message(message)
             simulate_latency()
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
@@ -271,10 +280,10 @@ def upmove():
             simulate_latency(len(locks))
             msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
             message = {"to": whoami, "msg": msg}
-            log_message(message)
             log_time = datetime.now()
             update_ts_self(ts[replicaid])
             end_time = datetime.now()
+            write_message(message)
             simulate_latency(len(locks))
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
@@ -284,10 +293,10 @@ def upmove():
         # crdt/opsets
         msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
         message = {"to": whoami, "msg": msg}
-        log_message(message)
         log_time = datetime.now()
         update_ts_self(ts[replicaid])
         end_time = datetime.now()
+        write_message(message)
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
             write_message(message)
