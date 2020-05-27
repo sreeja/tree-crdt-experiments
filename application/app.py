@@ -14,6 +14,8 @@ from flask_pymemcache import FlaskPyMemcache
 
 from contextlib import ExitStack
 
+from trees.tree import Tree_CRDT, Tree_Opset, Tree_Globalock, Tree_Sublock
+
 # latency configuration, 1,2,3
 lc = int(os.environ.get("LC"))
 # 0 for crdt, 1 for opsets, 2 for global lock, 3 for rw lock
@@ -134,102 +136,142 @@ def get_locks(n, ca):
             locks += [zk.ReadLock('/'+each)]
     return locks
 
+def get_logs():
+    logs = []
+    for each in replicas:
+        f_to_read = os.path.join('/', 'usr', 'data', f'{each}.txt')
+        with open(f_to_read, "r") as f:
+            lines = f.readlines()
+            for line in lines:
+                logs += [json.loads(line)]
+    return logs
+
+def extract_ts(js):
+    return js['ts']
+
+def order_logs(logs):
+    ordered_logs = sorted(logs, key=extract_ts)
+    return ordered_logs, ordered_logs[len(ordered_logs) -1]['ts']
+
+def rebuild_tree(logs, tree):
+    ordered_logs, last_ts = order_logs(logs)
+    if exp == 0:
+        # build CRDT tree
+        stree = Tree_CRDT.serialize(Tree_CRDT.construct_tree(logs, tree))
+    elif exp == 1:
+        # build opsets tree
+        stree = Tree_Opset.serialize(Tree_Opset.construct_tree(ordered_logs, tree))
+    elif exp == 2:
+        # build tree with single lock
+        stree = Tree_Globalock.serialize(Tree_Globalock.construct_tree(logs, tree))
+    else:
+        # build tree with subtree locking
+        stree = Tree_Sublock.serialize(Tree_Sublock.construct_tree(logs, tree))
+    return stree, last_ts
+
+def get_tree(ts):
+    stree = memcache.client.get(whoami+'-tree')
+    if stree['ts'] == ts:
+        if exp == 0:
+            tree = Tree_CRDT.deserialize(stree['tree'])
+        elif exp ==1:
+            tree = Tree_Opset.deserialize(stree['tree'])
+        elif exp == 2:
+            tree = Tree_Globalock.deserialize(stree['tree'])
+        else:
+            tree = Tree_Sublock.deserialize(stree['tree'])
+    else:
+        logs = get_logs()
+        tree, last_ts = rebuild_tree(logs, None)
+    return tree
+
 @app.route('/')
 def hello_world():
     return f'Hello world from {whoami}'
 
 @app.route('/add')
 def add():
+    # start_time = datetime.now()
+    # ts = get_latest_ts()
+    # replicaid = get_id(whoami)
+    # ts[replicaid] += 1
+    # n = request.args.get('n', '')
+    # p = request.args.get('p', '')
+    # msg = prepare_message("add", ts, {"n": n, "p": p}, whoami)
+    # message = {"to": whoami, "msg": msg}
+    # log_time = datetime.now()
+    # update_ts_self(ts[replicaid])
+    # end_time = datetime.now()
+    # write_message(message)
+    # for each in [r for r in replicas if r != whoami]:
+    #     message = {"to": each, "msg": msg}
+    #     write_message(message)
+    # register_op(ts, start_time)
+    # log_logtime(ts, log_time)
+    # acknowledge(ts, end_time)
+    # return "done"
+
     start_time = datetime.now()
-    ts = get_latest_ts()
     replicaid = get_id(whoami)
-    ts[replicaid] += 1
+    
     n = request.args.get('n', '')
     p = request.args.get('p', '')
-    msg = prepare_message("add", ts, {"n": n, "p": p}, whoami)
-    message = {"to": whoami, "msg": msg}
-    log_time = datetime.now()
-    update_ts_self(ts[replicaid])
-    end_time = datetime.now()
-    write_message(message)
-    for each in [r for r in replicas if r != whoami]:
-        message = {"to": each, "msg": msg}
+
+    ts = get_latest_ts()
+    tree = get_tree(ts)
+    prep = tree.add_gen(n, p)
+    if prep:
+        ts[replicaid] += 1
+        msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
+        message = {"to": whoami, "msg": msg}
+        log_time = datetime.now()
+        update_ts_self(ts[replicaid])
+        end_time = datetime.now()
         write_message(message)
-    register_op(ts, start_time)
-    log_logtime(ts, log_time)
-    acknowledge(ts, end_time)
-    return "done"
+        for each in [r for r in replicas if r != whoami]:
+            message = {"to": each, "msg": msg}
+            write_message(message)
+        register_op(ts, start_time)
+        log_logtime(ts, log_time)
+        acknowledge(ts, end_time)
+        return "done"
+    else:
+        return "skipped"
 
 @app.route('/remove')
 def remove():
+    # start_time = datetime.now()
+    # ts = get_latest_ts()
+    # replicaid = get_id(whoami)
+    # ts[replicaid] += 1
+    # n = request.args.get('n', '')
+    # p = request.args.get('p', '')
+    # msg = prepare_message("remove", ts, {"n": n, "p": p}, whoami)
+    # message = {"to": whoami, "msg": msg}
+    # log_time = datetime.now()
+    # update_ts_self(ts[replicaid])
+    # end_time = datetime.now()
+    # write_message(message)
+    # for each in [r for r in replicas if r != whoami]:
+    #     message = {"to": each, "msg": msg}
+    #     write_message(message)
+    # register_op(ts, start_time)
+    # log_logtime(ts, log_time)
+    # acknowledge(ts, end_time)
+    # return "done"
+
     start_time = datetime.now()
-    ts = get_latest_ts()
     replicaid = get_id(whoami)
-    ts[replicaid] += 1
+    
     n = request.args.get('n', '')
     p = request.args.get('p', '')
-    msg = prepare_message("remove", ts, {"n": n, "p": p}, whoami)
-    message = {"to": whoami, "msg": msg}
-    log_time = datetime.now()
-    update_ts_self(ts[replicaid])
-    end_time = datetime.now()
-    write_message(message)
-    for each in [r for r in replicas if r != whoami]:
-        message = {"to": each, "msg": msg}
-        write_message(message)
-    register_op(ts, start_time)
-    log_logtime(ts, log_time)
-    acknowledge(ts, end_time)
-    return "done"
 
-@app.route('/downmove')
-def downmove():
-    start_time = datetime.now()
     ts = get_latest_ts()
-    replicaid = get_id(whoami)
-    ts[replicaid] += 1
-    n = request.args.get('n', '')
-    p = request.args.get('p', '')
-    np = request.args.get('np', '')
-    ca = request.args.get('ca', '').split(',')
-    if exp == 2:
-        # global lock
-        simulate_latency()
-        lock = zk.Lock('/lockpath', 'global')
-        with lock:
-            simulate_latency()
-            msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
-            message = {"to": whoami, "msg": msg}
-            log_time = datetime.now()
-            update_ts_self(ts[replicaid])
-            end_time = datetime.now()
-            write_message(message)
-            simulate_latency()
-        for each in [r for r in replicas if r != whoami]:
-            message = {"to": each, "msg": msg}
-            write_message(message)
-
-    elif exp == 3:
-        # rw lock
-        locks = get_locks(n, ca)
-        simulate_latency(len(locks))
-        with ExitStack() as stack:
-            l = [stack.enter_context(lock) for lock in locks]
-            simulate_latency(len(locks))
-            msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
-            message = {"to": whoami, "msg": msg}
-            log_time = datetime.now()
-            update_ts_self(ts[replicaid])
-            end_time = datetime.now()
-            write_message(message)
-            simulate_latency(len(locks))
-        for each in [r for r in replicas if r != whoami]:
-            message = {"to": each, "msg": msg}
-            write_message(message)
-
-    else:
-        # crdt/opsets
-        msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
+    tree = get_tree(ts)
+    prep = tree.remove_gen(n, p)
+    if prep:
+        ts[replicaid] += 1
+        msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
         message = {"to": whoami, "msg": msg}
         log_time = datetime.now()
         update_ts_self(ts[replicaid])
@@ -238,71 +280,211 @@ def downmove():
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
             write_message(message)
+        register_op(ts, start_time)
+        log_logtime(ts, log_time)
+        acknowledge(ts, end_time)
+        return "done"
+    else:
+        return "skipped"
 
-    register_op(ts, start_time)
-    log_logtime(ts, log_time)
-    acknowledge(ts, end_time)
-    return "done"
-
-@app.route('/upmove')
-def upmove():
+@app.route('/move')
+def move():
     start_time = datetime.now()
-    ts = get_latest_ts()
     replicaid = get_id(whoami)
-    ts[replicaid] += 1
+    
     n = request.args.get('n', '')
     p = request.args.get('p', '')
     np = request.args.get('np', '')
-    ca = request.args.get('ca', '').split(',')
-    if exp == 2:
-        # global lock
-        simulate_latency()
-        lock = zk.Lock('/lockpath', 'global')
-        with lock:
+
+    ts = get_latest_ts()
+    tree = get_tree(ts)
+    prep = tree.move_gen(n, p)
+    if prep:
+        ts[replicaid] += 1
+        if exp == 2:
             simulate_latency()
-            msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
+            lock = zk.Lock('/global')
+            with lock:
+                simulate_latency()
+                ts = get_latest_ts()
+                tree = get_tree(ts)
+                prep = tree.move_gen(n, p)
+                if prep:
+                    msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
+                    message = {"to": whoami, "msg": msg}
+                    log_time = datetime.now()
+                    update_ts_self(ts[replicaid])
+                    end_time = datetime.now()
+                    write_message(message)
+                    for each in [r for r in replicas if r != whoami]:
+                        message = {"to": each, "msg": msg}
+                        write_message(message)
+                    register_op(ts, start_time)
+                    log_logtime(ts, log_time)
+                    acknowledge(ts, end_time)
+                    return "done"
+        if exp == 3:
+            locks = get_locks(n, ca)
+            simulate_latency(len(locks))
+            with ExitStack() as stack:
+                l = [stack.enter_context(lock) for lock in locks]
+                simulate_latency(len(locks))
+                ts = get_latest_ts()
+                tree = get_tree(ts)
+                prep = tree.move_gen(n, p)
+                if prep:
+                    msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
+                    message = {"to": whoami, "msg": msg}
+                    log_time = datetime.now()
+                    update_ts_self(ts[replicaid])
+                    end_time = datetime.now()
+                    write_message(message)
+                    for each in [r for r in replicas if r != whoami]:
+                        message = {"to": each, "msg": msg}
+                        write_message(message)
+                    register_op(ts, start_time)
+                    log_logtime(ts, log_time)
+                    acknowledge(ts, end_time)
+                    return "done"
+        else:
+            msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
             message = {"to": whoami, "msg": msg}
             log_time = datetime.now()
             update_ts_self(ts[replicaid])
             end_time = datetime.now()
             write_message(message)
-            simulate_latency()
-        for each in [r for r in replicas if r != whoami]:
-            message = {"to": each, "msg": msg}
-            write_message(message)
-
-    elif exp == 3:
-        # rw lock
-        locks = get_locks(n, ca)
-        simulate_latency(len(locks))
-        with ExitStack() as stack:
-            l = [stack.enter_context(lock) for lock in locks]
-            simulate_latency(len(locks))
-            msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
-            message = {"to": whoami, "msg": msg}
-            log_time = datetime.now()
-            update_ts_self(ts[replicaid])
-            end_time = datetime.now()
-            write_message(message)
-            simulate_latency(len(locks))
-        for each in [r for r in replicas if r != whoami]:
-            message = {"to": each, "msg": msg}
-            write_message(message)
-
+            for each in [r for r in replicas if r != whoami]:
+                message = {"to": each, "msg": msg}
+                write_message(message)
+            register_op(ts, start_time)
+            log_logtime(ts, log_time)
+            acknowledge(ts, end_time)
+            return "done"
     else:
-        # crdt/opsets
-        msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
-        message = {"to": whoami, "msg": msg}
-        log_time = datetime.now()
-        update_ts_self(ts[replicaid])
-        end_time = datetime.now()
-        write_message(message)
-        for each in [r for r in replicas if r != whoami]:
-            message = {"to": each, "msg": msg}
-            write_message(message)
+        return "skipped"
 
-    register_op(ts, start_time)
-    log_logtime(ts, log_time)
-    acknowledge(ts, end_time)
-    return "done"
+
+# @app.route('/downmove')
+# def downmove():
+#     start_time = datetime.now()
+#     ts = get_latest_ts()
+#     replicaid = get_id(whoami)
+#     ts[replicaid] += 1
+#     n = request.args.get('n', '')
+#     p = request.args.get('p', '')
+#     np = request.args.get('np', '')
+#     ca = request.args.get('ca', '').split(',')
+#     if exp == 2:
+#         # global lock
+#         simulate_latency()
+#         lock = zk.Lock('/lockpath', 'global')
+#         with lock:
+#             simulate_latency()
+#             msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
+#             message = {"to": whoami, "msg": msg}
+#             log_time = datetime.now()
+#             update_ts_self(ts[replicaid])
+#             end_time = datetime.now()
+#             write_message(message)
+#             simulate_latency()
+#         for each in [r for r in replicas if r != whoami]:
+#             message = {"to": each, "msg": msg}
+#             write_message(message)
+
+#     elif exp == 3:
+#         # rw lock
+#         locks = get_locks(n, ca)
+#         simulate_latency(len(locks))
+#         with ExitStack() as stack:
+#             l = [stack.enter_context(lock) for lock in locks]
+#             simulate_latency(len(locks))
+#             msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
+#             message = {"to": whoami, "msg": msg}
+#             log_time = datetime.now()
+#             update_ts_self(ts[replicaid])
+#             end_time = datetime.now()
+#             write_message(message)
+#             simulate_latency(len(locks))
+#         for each in [r for r in replicas if r != whoami]:
+#             message = {"to": each, "msg": msg}
+#             write_message(message)
+
+#     else:
+#         # crdt/opsets
+#         msg = prepare_message("downmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
+#         message = {"to": whoami, "msg": msg}
+#         log_time = datetime.now()
+#         update_ts_self(ts[replicaid])
+#         end_time = datetime.now()
+#         write_message(message)
+#         for each in [r for r in replicas if r != whoami]:
+#             message = {"to": each, "msg": msg}
+#             write_message(message)
+
+#     register_op(ts, start_time)
+#     log_logtime(ts, log_time)
+#     acknowledge(ts, end_time)
+#     return "done"
+
+# @app.route('/upmove')
+# def upmove():
+#     start_time = datetime.now()
+#     ts = get_latest_ts()
+#     replicaid = get_id(whoami)
+#     ts[replicaid] += 1
+#     n = request.args.get('n', '')
+#     p = request.args.get('p', '')
+#     np = request.args.get('np', '')
+#     ca = request.args.get('ca', '').split(',')
+#     if exp == 2:
+#         # global lock
+#         simulate_latency()
+#         lock = zk.Lock('/lockpath', 'global')
+#         with lock:
+#             simulate_latency()
+#             msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
+#             message = {"to": whoami, "msg": msg}
+#             log_time = datetime.now()
+#             update_ts_self(ts[replicaid])
+#             end_time = datetime.now()
+#             write_message(message)
+#             simulate_latency()
+#         for each in [r for r in replicas if r != whoami]:
+#             message = {"to": each, "msg": msg}
+#             write_message(message)
+
+#     elif exp == 3:
+#         # rw lock
+#         locks = get_locks(n, ca)
+#         simulate_latency(len(locks))
+#         with ExitStack() as stack:
+#             l = [stack.enter_context(lock) for lock in locks]
+#             simulate_latency(len(locks))
+#             msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
+#             message = {"to": whoami, "msg": msg}
+#             log_time = datetime.now()
+#             update_ts_self(ts[replicaid])
+#             end_time = datetime.now()
+#             write_message(message)
+#             simulate_latency(len(locks))
+#         for each in [r for r in replicas if r != whoami]:
+#             message = {"to": each, "msg": msg}
+#             write_message(message)
+
+#     else:
+#         # crdt/opsets
+#         msg = prepare_message("upmove", ts, {"n": n, "p": p, "np": np}, whoami, ca)
+#         message = {"to": whoami, "msg": msg}
+#         log_time = datetime.now()
+#         update_ts_self(ts[replicaid])
+#         end_time = datetime.now()
+#         write_message(message)
+#         for each in [r for r in replicas if r != whoami]:
+#             message = {"to": each, "msg": msg}
+#             write_message(message)
+
+#     register_op(ts, start_time)
+#     log_logtime(ts, log_time)
+#     acknowledge(ts, end_time)
+#     return "done"
 
