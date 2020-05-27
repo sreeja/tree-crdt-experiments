@@ -14,6 +14,8 @@ from flask_pymemcache import FlaskPyMemcache
 
 from contextlib import ExitStack
 
+import sys
+sys.path.insert(1,'/Users/snair/works/tree-crdt-experiments')
 from trees.tree import Tree_CRDT, Tree_Opset, Tree_Globalock, Tree_Sublock
 
 # latency configuration, 1,2,3

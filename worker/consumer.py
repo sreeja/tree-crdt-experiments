@@ -5,6 +5,8 @@ import json
 from datetime import datetime
 from pymemcache.client.base import Client
 
+import sys
+sys.path.insert(1,'/Users/snair/works/tree-crdt-experiments')
 from trees.tree import Tree_CRDT, Tree_Opset, Tree_Globalock, Tree_Sublock
 
 time.sleep(30)  # A hack for rabbitmq to start
