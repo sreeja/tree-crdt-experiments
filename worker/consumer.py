@@ -17,6 +17,24 @@ channel.queue_declare(queue=queue_to_cosume, durable=True)
 replicas = ['paris', 'bangalore','newyork']
 cache_client = Client(('cache', 11211))
 
+exp = int(os.environ.get("EXP"))
+
+def apply_log(log):
+    # cache_client.get(queue_to_cosume+'-tree', )
+    if exp == 0:
+        # build CRDT tree
+        pass
+    elif exp == 1:
+        # build opsets tree
+        pass
+    elif exp == 2:
+        # build tree with single lock
+        pass
+    else:
+        # build tree with subtree locking
+        pass
+
+
 def callback(ch, method, properties, body):
     message = json.loads(body)
     from_replica = message.get("from", "")
@@ -34,15 +52,9 @@ def callback(ch, method, properties, body):
     with open(f_to_write, "a") as f:
         f.write(f"{msg}\n")
     # updating ts
-    cache_client.set(queue_to_cosume, msg_ts[replicas.index(from_replica)])
+    cache_client.set(from_replica+'-'+queue_to_cosume, msg_ts[replicas.index(from_replica)])
 
-    # build tree
-    
-
-    # file_ts = os.path.join('/', 'usr', 'data', f'ts{from_replica}.txt')
-    # with open(file_ts, 'w') as f:
-    #     f.write(str(msg_ts[replicas.index(from_replica)]))
-
+    apply_log(msg)
     print(f"Read the message: {body}")
 
 channel.basic_consume(
