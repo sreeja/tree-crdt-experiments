@@ -14,9 +14,7 @@ from flask_pymemcache import FlaskPyMemcache
 
 from contextlib import ExitStack
 
-import sys
-sys.path.insert(1,'/Users/snair/works/tree-crdt-experiments')
-from trees.tree import Tree_CRDT, Tree_Opset, Tree_Globalock, Tree_Sublock
+from tree import Tree_CRDT, Tree_Opset, Tree_Globalock, Tree_Sublock
 
 # latency configuration, 1,2,3
 lc = int(os.environ.get("LC"))
@@ -32,7 +30,7 @@ def create_app():
         "paris-bangalore": 0,
         "paris-newyork": 0,
         "bangalore-paris": 0,
-        "bangalore-bangalore": 0
+        "bangalore-bangalore": 0,
         "bangalore-newyork": 0,
         "newyork-paris": 0,
         "newyork-bangalore": 0,
@@ -43,7 +41,7 @@ def create_app():
         "paris-bangalore": .144,
         "paris-newyork": .075,
         "bangalore-paris": .144,
-        "bangalore-bangalore": 0
+        "bangalore-bangalore": 0,
         "bangalore-newyork": .215,
         "newyork-paris": .075,
         "newyork-bangalore": .215,
@@ -54,7 +52,7 @@ def create_app():
         "paris-bangalore": 1.44,
         "paris-newyork": 0.75,
         "bangalore-paris": 1.44,
-        "bangalore-bangalore": 0
+        "bangalore-bangalore": 0,
         "bangalore-newyork": 2.15,
         "newyork-paris": 0.75,
         "newyork-bangalore": 2.15,
@@ -149,39 +147,48 @@ def get_logs():
     return logs
 
 def extract_ts(js):
-    return js['ts']
+    return js["ts"]
 
 def order_logs(logs):
     ordered_logs = sorted(logs, key=extract_ts)
-    return ordered_logs, ordered_logs[len(ordered_logs) -1]['ts']
+    if len(ordered_logs) > 0:
+        last_ts = ordered_logs[len(ordered_logs) -1]['ts']
+    else:
+        last_ts = [0, 0, 0]
+    return ordered_logs, last_ts
 
 def rebuild_tree(logs, tree):
     ordered_logs, last_ts = order_logs(logs)
     if exp == 0:
         # build CRDT tree
-        stree = Tree_CRDT.serialize(Tree_CRDT.construct_tree(logs, tree))
+        tree = Tree_CRDT.construct_tree(logs, tree)
     elif exp == 1:
         # build opsets tree
-        stree = Tree_Opset.serialize(Tree_Opset.construct_tree(ordered_logs, tree))
+        tree = Tree_Opset.construct_tree(ordered_logs, tree)
     elif exp == 2:
         # build tree with single lock
-        stree = Tree_Globalock.serialize(Tree_Globalock.construct_tree(logs, tree))
+        tree = Tree_Globalock.construct_tree(logs, tree)
     else:
         # build tree with subtree locking
-        stree = Tree_Sublock.serialize(Tree_Sublock.construct_tree(logs, tree))
-    return stree, last_ts
+        tree = Tree_Sublock.construct_tree(logs, tree)
+    return tree, last_ts
 
 def get_tree(ts):
-    stree = memcache.client.get(whoami+'-tree')
-    if stree['ts'] == ts:
-        if exp == 0:
-            tree = Tree_CRDT.deserialize(stree['tree'])
-        elif exp ==1:
-            tree = Tree_Opset.deserialize(stree['tree'])
-        elif exp == 2:
-            tree = Tree_Globalock.deserialize(stree['tree'])
+    cached_tree = memcache.client.get(whoami+'-tree')
+    if cached_tree:
+        stree = json.loads(cached_tree)
+        if  stree["ts"] == ts:
+            if exp == 0:
+                tree = Tree_CRDT.deserialize(stree['tree'])
+            elif exp ==1:
+                tree = Tree_Opset.deserialize(stree['tree'])
+            elif exp == 2:
+                tree = Tree_Globalock.deserialize(stree['tree'])
+            else:
+                tree = Tree_Sublock.deserialize(stree['tree'])
         else:
-            tree = Tree_Sublock.deserialize(stree['tree'])
+            logs = get_logs()
+            tree, last_ts = rebuild_tree(logs, None)
     else:
         logs = get_logs()
         tree, last_ts = rebuild_tree(logs, None)
@@ -234,7 +241,7 @@ def add():
             message = {"to": each, "msg": msg}
             write_message(message)
         register_op(ts, start_time)
-        log_logtime(ts, log_time)
+        # log_logtime(ts, log_time)
         acknowledge(ts, end_time)
         return "done"
     else:
@@ -283,7 +290,7 @@ def remove():
             message = {"to": each, "msg": msg}
             write_message(message)
         register_op(ts, start_time)
-        log_logtime(ts, log_time)
+        # log_logtime(ts, log_time)
         acknowledge(ts, end_time)
         return "done"
     else:
@@ -300,7 +307,7 @@ def move():
 
     ts = get_latest_ts()
     tree = get_tree(ts)
-    prep = tree.move_gen(n, p)
+    prep = tree.move_gen(n, p, np)
     if prep:
         ts[replicaid] += 1
         if exp == 2:
@@ -359,7 +366,7 @@ def move():
                 message = {"to": each, "msg": msg}
                 write_message(message)
             register_op(ts, start_time)
-            log_logtime(ts, log_time)
+            # log_logtime(ts, log_time)
             acknowledge(ts, end_time)
             return "done"
     else:

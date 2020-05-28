@@ -5,9 +5,7 @@ import json
 from datetime import datetime
 from pymemcache.client.base import Client
 
-import sys
-sys.path.insert(1,'/Users/snair/works/tree-crdt-experiments')
-from trees.tree import Tree_CRDT, Tree_Opset, Tree_Globalock, Tree_Sublock
+from tree import Tree_CRDT, Tree_Opset, Tree_Globalock, Tree_Sublock
 
 time.sleep(30)  # A hack for rabbitmq to start
 connection = pika.BlockingConnection(
@@ -42,11 +40,12 @@ def get_logs():
     return logs
 
 def extract_ts(js):
-    return js['ts']
+    print(js, type(js), flush=True)
+    return js["ts"]
 
 def order_logs(logs):
     ordered_logs = sorted(logs, key=extract_ts)
-    return ordered_logs, ordered_logs[len(ordered_logs) -1]['ts']
+    return ordered_logs, ordered_logs[len(ordered_logs) -1]["ts"]
 
 def rebuild_tree(logs, tree):
     ordered_logs, last_ts = order_logs(logs)
@@ -65,23 +64,29 @@ def rebuild_tree(logs, tree):
     return stree, last_ts
 
 def apply_log(log):
-    cached_tree = cache_client.get(queue_to_cosume+'-tree')
-    latest_ts = get_latest_ts()
-    if latest_ts == cached_tree['ts']:
-        if exp == 0:
-            # build CRDT tree
-            tree = Tree_CRDT.deserialize(cached_tree['tree'])
-        elif exp == 1:
-            # build opsets tree
-            tree = Tree_Opset.deserialize(cached_tree['tree'])
-        elif exp == 2:
-            # build tree with single lock
-            tree = Tree_Globalock.deserialize(cached_tree['tree'])
+    c = cache_client.get(queue_to_cosume+'-tree')
+    if c:
+        cached_tree = json.loads(c)
+        latest_ts = get_latest_ts()
+        if cached_tree and latest_ts == cached_tree['ts']:
+            if exp == 0:
+                # build CRDT tree
+                tree = Tree_CRDT.deserialize(cached_tree['tree'])
+            elif exp == 1:
+                # build opsets tree
+                tree = Tree_Opset.deserialize(cached_tree['tree'])
+            elif exp == 2:
+                # build tree with single lock
+                tree = Tree_Globalock.deserialize(cached_tree['tree'])
+            else:
+                # build tree with subtree locking
+                tree = Tree_Sublock.deserialize(cached_tree['tree'])
+            logs = [log]
+            tree, last_ts = rebuild_tree(logs, tree)
         else:
-            # build tree with subtree locking
-            tree = Tree_Sublock.deserialize(cached_tree['tree'])
-        logs += [log]
-        tree, last_ts = rebuild_tree(logs, tree)
+            # get_logs
+            logs = get_logs()
+            tree, last_ts = rebuild_tree(logs, None)
     else:
         # get_logs
         logs = get_logs()
@@ -105,11 +110,11 @@ def callback(ch, method, properties, body):
     with open(f_to_write, "a") as f:
         f.write(f"{msg}\n")
 
-    tree, last_ts = apply_log(msg)
+    tree, last_ts = apply_log(message.get("msg", ""))
     # updating ts
     cache_client.set(from_replica+'-'+queue_to_cosume, msg_ts[replicas.index(from_replica)])
     # updating tree
-    cache_client.set(queue_to_cosume+'-tree', {'ts':last_ts, 'tree':tree})
+    cache_client.set(queue_to_cosume+'-tree', json.dumps({'ts':last_ts, 'tree':tree}))
 
     print(f"Read the message: {body}")
 
