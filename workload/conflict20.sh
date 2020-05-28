@@ -1,32 +1,32 @@
-curl "http://localhost:6001/upmove?n=aaa&p=aa&np=ab&ca=ab" & curl "http://localhost:6002/downmove?n=ab&p=a&np=aaa&ca=aaa,aa" & curl "http://localhost:6003/upmove?n=cge&p=cg&np=c"
+curl "http://localhost:6001/move?n=aaa&p=aa&np=ab" & curl "http://localhost:6002/move?n=ab&p=a&np=aaa" & curl "http://localhost:6003/move?n=cge&p=cg&np=c"
 wait 
-curl "http://localhost:6001/upmove?n=aba&p=ab&np=ac&ca=ac" & curl "http://localhost:6002/downmove?n=ac&p=a&np=aba&ca=aba,ab" & curl "http://localhost:6003/downmove?n=cge&p=c&np=cg&ca=cg"
+curl "http://localhost:6001/move?n=aba&p=ab&np=ac" & curl "http://localhost:6002/move?n=ac&p=a&np=aba" & curl "http://localhost:6003/move?n=cge&p=c&np=cg"
 wait 
-curl "http://localhost:6001/upmove?n=aca&p=ac&np=ad&ca=ad" & curl "http://localhost:6002/downmove?n=ad&p=a&np=aca&ca=aca,ac" & curl "http://localhost:6003/upmove?n=cge&p=cg&np=c"
+curl "http://localhost:6001/move?n=aca&p=ac&np=ad" & curl "http://localhost:6002/move?n=ad&p=a&np=aca" & curl "http://localhost:6003/move?n=cge&p=cg&np=c"
 wait 
-curl "http://localhost:6001/upmove?n=ada&p=ad&np=ae&ca=ae" & curl "http://localhost:6002/downmove?n=ae&p=a&np=ada&ca=ada,ad" & curl "http://localhost:6003/downmove?n=cge&p=c&np=cg&ca=cg"
+curl "http://localhost:6001/move?n=ada&p=ad&np=ae" & curl "http://localhost:6002/move?n=ae&p=a&np=ada" & curl "http://localhost:6003/move?n=cge&p=c&np=cg"
 wait 
-curl "http://localhost:6001/upmove?n=aea&p=ae&np=af&ca=af" & curl "http://localhost:6002/downmove?n=af&p=a&np=aea&ca=aea,ae" & curl "http://localhost:6003/add?n=aa03&p=aa"
+curl "http://localhost:6001/move?n=aea&p=ae&np=af" & curl "http://localhost:6002/move?n=af&p=a&np=aea" & curl "http://localhost:6003/add?n=aa03&p=aa"
 wait 
-curl "http://localhost:6001/upmove?n=agc&p=ag&np=a" & curl "http://localhost:6002/upmove?n=baa&p=ba&np=bb&ca=bb" & curl "http://localhost:6003/downmove?n=bb&p=b&np=baa&ca=baa,ba"
+curl "http://localhost:6001/move?n=agc&p=ag&np=a" & curl "http://localhost:6002/move?n=baa&p=ba&np=bb" & curl "http://localhost:6003/move?n=bb&p=b&np=baa"
 wait 
-curl "http://localhost:6001/downmove?n=agc&p=a&np=ag&ca=ag" & curl "http://localhost:6002/upmove?n=bba&p=bb&np=bc&ca=bc" & curl "http://localhost:6003/downmove?n=bc&p=b&np=bba&ca=bba,bb"
+curl "http://localhost:6001/move?n=agc&p=a&np=ag" & curl "http://localhost:6002/move?n=bba&p=bb&np=bc" & curl "http://localhost:6003/move?n=bc&p=b&np=bba"
 wait 
-curl "http://localhost:6001/upmove?n=aga&p=ag&np=a" & curl "http://localhost:6002/upmove?n=bca&p=bc&np=bd&ca=bd" & curl "http://localhost:6003/downmove?n=bd&p=b&np=bca&ca=bca,bc"
+curl "http://localhost:6001/move?n=aga&p=ag&np=a" & curl "http://localhost:6002/move?n=bca&p=bc&np=bd" & curl "http://localhost:6003/move?n=bd&p=b&np=bca"
 wait 
-curl "http://localhost:6001/downmove?n=aga&p=a&np=ag&ca=ag" & curl "http://localhost:6002/upmove?n=bda&p=bd&np=be&ca=be" & curl "http://localhost:6003/downmove?n=be&p=b&np=bda&ca=bda,bd"
+curl "http://localhost:6001/move?n=aga&p=a&np=ag" & curl "http://localhost:6002/move?n=bda&p=bd&np=be" & curl "http://localhost:6003/move?n=be&p=b&np=bda"
 wait 
-curl "http://localhost:6001/add?n=aa01&p=aa" & curl "http://localhost:6002/upmove?n=bea&p=be&np=bf&ca=bf" & curl "http://localhost:6003/downmove?n=bf&p=b&np=bea&ca=bea,be"
+curl "http://localhost:6001/add?n=aa01&p=aa" & curl "http://localhost:6002/move?n=bea&p=be&np=bf" & curl "http://localhost:6003/move?n=bf&p=b&np=bea"
 wait 
-curl "http://localhost:6001/downmove?n=cb&p=c&np=caa&ca=caa,ca" & curl "http://localhost:6002/upmove?n=bgg&p=bg&np=b" & curl "http://localhost:6003/upmove?n=caa&p=ca&np=cb&ca=cb"
+curl "http://localhost:6001/move?n=cb&p=c&np=caa" & curl "http://localhost:6002/move?n=bgg&p=bg&np=b" & curl "http://localhost:6003/move?n=caa&p=ca&np=cb"
 wait 
-curl "http://localhost:6001/downmove?n=cc&p=c&np=cba&ca=cba,cb" & curl "http://localhost:6002/downmove?n=bgg&p=b&np=bg&ca=bg" & curl "http://localhost:6003/upmove?n=cba&p=cb&np=cc&ca=cc"
+curl "http://localhost:6001/move?n=cc&p=c&np=cba" & curl "http://localhost:6002/move?n=bgg&p=b&np=bg" & curl "http://localhost:6003/move?n=cba&p=cb&np=cc"
 wait 
-curl "http://localhost:6001/downmove?n=cd&p=c&np=cca&ca=cca,cc" & curl "http://localhost:6002/upmove?n=bga&p=bg&np=b" & curl "http://localhost:6003/upmove?n=cca&p=cc&np=cd&ca=cd"
+curl "http://localhost:6001/move?n=cd&p=c&np=cca" & curl "http://localhost:6002/move?n=bga&p=bg&np=b" & curl "http://localhost:6003/move?n=cca&p=cc&np=cd"
 wait 
-curl "http://localhost:6001/downmove?n=ce&p=c&np=cda&ca=cda,cd" & curl "http://localhost:6002/downmove?n=bga&p=b&np=bg&ca=bg" & curl "http://localhost:6003/upmove?n=cda&p=cd&np=ce&ca=ce"
+curl "http://localhost:6001/move?n=ce&p=c&np=cda" & curl "http://localhost:6002/move?n=bga&p=b&np=bg" & curl "http://localhost:6003/move?n=cda&p=cd&np=ce"
 wait 
-curl "http://localhost:6001/downmove?n=cf&p=c&np=cea&ca=cea,ce" & curl "http://localhost:6002/add?n=bb02&p=bb" & curl "http://localhost:6003/upmove?n=cea&p=ce&np=cf&ca=cf"
+curl "http://localhost:6001/move?n=cf&p=c&np=cea" & curl "http://localhost:6002/add?n=bb02&p=bb" & curl "http://localhost:6003/move?n=cea&p=ce&np=cf"
 wait 
 curl "http://localhost:6001/remove?n=aa01&p=aa" & curl "http://localhost:6002/remove?n=bb02&p=bb" & curl "http://localhost:6003/remove?n=aa03&p=aa"
 wait 
