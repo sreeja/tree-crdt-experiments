@@ -40,7 +40,7 @@ def get_logs():
     return logs
 
 def extract_ts(js):
-    print(js, type(js), flush=True)
+    # print(js, type(js), flush=True)
     return js["ts"]
 
 def order_logs(logs):
