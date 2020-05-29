@@ -120,6 +120,8 @@ class Tree_CRDT:
         tree.remove_eff(l['args']['n'])
       elif l['op'] in ['upmove', 'downmove']:
         moves[str(l['ts'])] = {'type':l['op'], 'n':l['args']['n'], 'p':l['args']['p'], 'np':l['args']['np'], 'ca':l['ca'], 'replica':l['replica'], 'ts':l['ts']}
+      elif l['op'] == 'skip':
+        pass
       else:
         Exception('Unknown operation')
 
@@ -226,6 +228,8 @@ class Tree_Opset:
         tree.remove_eff(l['args']['n'])
       elif l['op'] == 'move':
         tree.move_eff(l['args']['n'], l['args']['p'], l['args']['np'])
+      elif l['op'] == 'skip':
+        pass
       else:
         Exception('Unknown operation')
     return tree
@@ -308,6 +312,8 @@ class Tree_Globalock:
         tree.remove_eff(l['args']['n'])
       elif l['op'] == 'move':
         tree.move_eff(l['args']['n'], l['args']['p'], l['args']['np'])
+      elif l['op'] == 'skip':
+        pass
       else:
         Exception('Unknown operation')
     return tree
@@ -397,6 +403,8 @@ class Tree_Sublock:
         tree.remove_eff(l['args']['n'])
       elif l['op'] == 'move':
         tree.move_eff(l['args']['n'], l['args']['p'], l['args']['np'])
+      elif l['op'] == 'skip':
+        pass
       else:
         Exception('Unknown operation')
     return tree
