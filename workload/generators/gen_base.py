@@ -3,13 +3,16 @@ def gen_ops():
   l = ['a','b','c','d','e','f','g']
   ops = [] 
   cmd = 'http://localhost:6001/add?n='
-  ops += [cmd+'a&p=root', cmd+'b&p=root', cmd+'c&p=root']
+  ops += [cmd+x+'&p=root' for x in l]
   for each in l:
     for nested in l:
       ops += [cmd+each+nested+'&p='+each]
       p = each+nested
-      for n in l:
-        ops += [cmd+p+n+'&p='+p]
+      ops += [cmd+p+n+'&p='+p for n in l]
+  ops += [cmd+'h&p=root']
+  ops += ['http://localhost:6002/remove?n=h&p=root']
+  ops += ['http://localhost:6003/move?n=ggg&p=gg&np=g']
+  ops += ['http://localhost:6003/move?n=ggg&p=g&np=gg']
   return ops
 
 # print(gen_ops())
