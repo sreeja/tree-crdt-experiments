@@ -223,7 +223,6 @@ def hello_world():
 
 @app.route('/add')
 def add():
-    start_time = datetime.now()
     replicaid = get_id(whoami)
     
     n = request.args.get('n', '')
@@ -231,6 +230,8 @@ def add():
 
     ts = get_latest_ts()
     tree = get_tree(ts)
+
+    start_time = datetime.now()
     prep = tree.add_gen(n, p)
     if prep:
         ts[replicaid] += 1
@@ -253,7 +254,6 @@ def add():
 
 @app.route('/remove')
 def remove():
-    start_time = datetime.now()
     replicaid = get_id(whoami)
     
     n = request.args.get('n', '')
@@ -261,6 +261,8 @@ def remove():
 
     ts = get_latest_ts()
     tree = get_tree(ts)
+
+    start_time = datetime.now()
     prep = tree.remove_gen(n, p)
     if prep:
         ts[replicaid] += 1
@@ -283,7 +285,6 @@ def remove():
 
 @app.route('/move')
 def move():
-    start_time = datetime.now()
     replicaid = get_id(whoami)
     
     n = request.args.get('n', '')
@@ -291,6 +292,7 @@ def move():
     np = request.args.get('np', '')
 
     if exp == 2:
+        start_time = datetime.now()
         lock = zk.Lock('/global')
         simulate_latency()
         with lock:
@@ -319,6 +321,7 @@ def move():
     elif exp == 3:
         ts = get_latest_ts()
         tree = get_tree(ts)
+        start_time = datetime.now()
         prep = tree.move_gen(n, p, np)
         if prep:
             ts[replicaid] += 1
@@ -346,6 +349,7 @@ def move():
     else:
         ts = get_latest_ts()
         tree = get_tree(ts)
+        start_time = datetime.now()
         prep = tree.move_gen(n, p, np)
         if prep:
             ts[replicaid] += 1
