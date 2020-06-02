@@ -130,7 +130,7 @@ class Tree_CRDT:
       flag = False
       if moves[m]['type'] == 'upmove':
         for cm in cms:
-          if moves[cm]['type'] == 'upmove':
+          if moves[cm]['type'] == 'upmove' and moves[m]['n'] == moves[cm]['n']:
             if cls.higher_priority(moves[cm], moves[m]):
               flag = True
       else:

@@ -110,11 +110,11 @@ def callback(ch, method, properties, body):
     with open(f_to_write, "a") as f:
         f.write(f"{msg}\n")
 
-    tree, last_ts = apply_log(message.get("msg", ""))
+    # tree, last_ts = apply_log(message.get("msg", ""))
     # updating ts
     cache_client.set(from_replica+'-'+queue_to_cosume, msg_ts[replicas.index(from_replica)])
     # updating tree
-    cache_client.set(queue_to_cosume+'-tree', json.dumps({'ts':last_ts, 'tree':tree}))
+    # cache_client.set(queue_to_cosume+'-tree', json.dumps({'ts':last_ts, 'tree':tree}))
 
     print(f"Read the message: {body}")
 
