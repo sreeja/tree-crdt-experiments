@@ -8,7 +8,7 @@ do
     do
       export EXP_ENV=$EXP
 
-      for con in 0 2 10 20 
+      for con in 0 2 10 20
         do
         for f in $(find data); do > $f; done
         make down
@@ -17,9 +17,7 @@ do
         sleep 60
         sh workload/base.sh
         sleep $t
-        for i in `seq 0 4`; do
-          sh workload/conflict$con.sh
-        done
+        sh workload/conflict$con.sh
         sleep $t
         cp -r data/ lc$LC_ENV/data$con/$EXP_ENV
         kill $P_PID
