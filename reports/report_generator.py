@@ -26,7 +26,7 @@ def parse_logs(lc_config, exp, conflict):
       lines = l.readlines()
       for each in lines:
         j = json.loads(each)
-        if j["ts"][0] > 395 or (j["ts"][0] == 395 and (j["ts"][1] > 0 or j["ts"][2] > 0)): # filter out initial warm up load
+        if j["ts"][0] > 352 or j["ts"][1] > 352 or j["ts"][2] > 352: # filter out initial warm up load
           key = str(j["ts"])
           if not key in data:
             data[key] = {} 
@@ -39,7 +39,7 @@ def parse_logs(lc_config, exp, conflict):
       lines = l.readlines()
       for each in lines:
         j = json.loads(each)
-        if j["ts"][0] > 395 or (j["ts"][0] == 395 and (j["ts"][1] > 0 or j["ts"][2] > 0)): # filter out initial warm up load
+        if j["ts"][0] > 352 or j["ts"][1] > 352 or j["ts"][2] > 352: # filter out initial warm up load
           key = str(j["ts"])
           if not key in data:
             data[key] = {} 
@@ -54,7 +54,7 @@ def parse_logs(lc_config, exp, conflict):
         lines = l.readlines()
         for each in lines:
           j = json.loads(each)
-          if j["ts"][0] > 395 or (j["ts"][0] == 395 and (j["ts"][1] > 0 or j["ts"][2] > 0)): # filter out initial warm up load
+          if j["ts"][0] > 352 or j["ts"][1] > 352 or j["ts"][2] > 352: # filter out initial warm up load
             key = str(j["ts"])
             if not key in data:
               data[key] = {} 
@@ -70,50 +70,17 @@ def parse_logs(lc_config, exp, conflict):
       lines = l.readlines()
       for each in lines:
         j = json.loads(each)
-        if j["ts"][0] > 395 or (j["ts"][0] == 395 and (j["ts"][1] > 0 or j["ts"][2] > 0)): # filter out initial warm up load
+        if j["ts"][0] > 352 or j["ts"][1] > 352 or j["ts"][2] > 352: # filter out initial warm up load
           key = str(j["ts"])
           data[key]["op"] = {"name":j["op"], "n":j["args"]["n"], "ca":j["ca"]}
           data[key]["origin"] = j["replica"]
   # print([data[x]["ts"][0] for x in data.keys()])
-  for each in range(1,251):
-    assert(each+395 in [data[x]["ts"][0] for x in data.keys()])
+  for each in range(353,653):
+    assert(each in [data[x]["ts"][0] for x in data.keys()])
     assert(each in [data[x]["ts"][1] for x in data.keys()])
     assert(each in [data[x]["ts"][2] for x in data.keys()])
   # print(data.keys(), len(data))
-  assert len(data) == 750
-  return data
-
-
-def parse_client_logs(lc_config, exp, conflict):
-  data = {}
-  for r in replicas:
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, 'register.txt')
-    with open(reg_file, 'r') as l:
-      lines = l.readlines()
-      for each in lines:
-        j = json.loads(each)
-        if j["ts"][0] > 395 or (j["ts"][0] == 395 and (j["ts"][1] > 0 or j["ts"][2] > 0)): # filter out initial warm up load
-          key = str(j["ts"])
-          if not key in data:
-            data[key] = {} 
-          try:
-            data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
-          except:
-            data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, 'done.txt')
-    with open(reg_file) as l:
-      lines = l.readlines()
-      for each in lines:
-        j = json.loads(each)
-        if j["ts"][0] > 395 or (j["ts"][0] == 395 and (j["ts"][1] > 0 or j["ts"][2] > 0)): # filter out initial warm up load
-          key = str(j["ts"])
-          if not key in data:
-            data[key] = {} 
-          try:
-            data[key]["acknowledged"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
-          except:
-            data[key]["acknowledged"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
-  assert len(data) == 150
+  assert len(data) == 900
   return data
 
 def parse_replica_logs(lc_config, exp, conflict):
@@ -126,7 +93,7 @@ def parse_replica_logs(lc_config, exp, conflict):
         lines = l.readlines()
         for each in lines:
           j = json.loads(each)
-          if j["ts"][0] > 395 or (j["ts"][0] == 395 and (j["ts"][1] > 0 or j["ts"][2] > 0)): # filter out initial warm up load
+          if j["ts"][0] > 352 or j["ts"][1] > 352 or j["ts"][2] > 352: # filter out initial warm up load
             key = str(j["ts"])
             if not key in data:
               data[key] = {} 
@@ -142,7 +109,7 @@ def parse_replica_logs(lc_config, exp, conflict):
       lines = l.readlines()
       for each in lines:
         j = json.loads(each)
-        if j["ts"][0] > 395 or (j["ts"][0] == 395 and (j["ts"][1] > 0 or j["ts"][2] > 0)): # filter out initial warm up load
+        if j["ts"][0] > 352 or j["ts"][1] > 352 or j["ts"][2] > 352: # filter out initial warm up load
           key = str(j["ts"])
           data[key]["op"] = {"name":j["op"], "n":j["args"]["n"], "ca":j["ca"]}
           data[key]["origin"] = j["replica"]
@@ -152,12 +119,12 @@ def parse_replica_logs(lc_config, exp, conflict):
 def response_time(data):
   total = 0
   responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys()]
-  assert len(responses) == 750
+  assert len(responses) == 900
   average_response_time = sum(responses, timedelta(0)) / len(responses)
   # print([data[ts]["op"]["name"] for ts in data.keys()])
-  conflict_responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys() if data[ts]["op"]["name"] in ["upmove", "downmove"]]
+  conflict_responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys() if data[ts]["op"]["name"] in ["upmove", "downmove", "move"]]
   average_conflict_response_time = sum(conflict_responses, timedelta(0)) / len(conflict_responses)
-  nonconflict_responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys() if not(data[ts]["op"]["name"] in ["upmove", "downmove"])]
+  nonconflict_responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys() if not(data[ts]["op"]["name"] in ["upmove", "downmove", "move"])]
   average_nonconflict_response_time = sum(nonconflict_responses, timedelta(0)) / len(nonconflict_responses)
   return responses, average_response_time, average_conflict_response_time, average_nonconflict_response_time
 
