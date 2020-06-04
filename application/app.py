@@ -138,12 +138,19 @@ def get_locks(n, ca):
 
 def get_logs():
     logs = []
+    lines = {}
     for each in replicas:
         f_to_read = os.path.join('/', 'usr', 'data', f'{each}.txt')
         with open(f_to_read, "r") as f:
-            lines = f.readlines()
-            for line in lines:
-                logs += [json.loads(line)]
+            lines[each] = f.readlines()
+    
+    common = min([len(lines[each]) for each in lines])
+    for i in range(0, common):
+        for each in replicas:
+            logs += [json.loads(lines[each][i])]
+    for each in lines:
+        if len(lines[each]) > common:
+            logs += [json.loads(lines[each][i]) for i in range(common, len(lines[each]))]
     return logs
 
 def extract_ts(js):
@@ -158,7 +165,7 @@ def order_logs(logs):
     return ordered_logs, last_ts
 
 def rebuild_tree(logs, ts, tree):
-    filtered_logs = [l for l in logs if l["ts"] <= ts]
+    filtered_logs = [l for l in logs if leq(l["ts"], ts)]
     ordered_logs, last_ts = order_logs(filtered_logs)
     assert last_ts <= ts
     if exp == 0:
@@ -180,6 +187,14 @@ def equals(ts1, ts2):
         return False
     for each in range(len(ts1)):
         if ts1[each] != ts2[each]:
+            return False
+    return True
+
+def leq(ts1, ts2):
+    if len(ts1) != len(ts2):
+        return False
+    for each in range(len(ts1)):
+        if ts1[each] > ts2[each]:
             return False
     return True
 
