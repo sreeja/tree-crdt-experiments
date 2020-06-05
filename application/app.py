@@ -253,7 +253,7 @@ def add():
         msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
     else:
         flag = True
-        msg = prepare_message("skip", ts, [], whoami, [])
+        msg = prepare_message("addskip", ts, [], whoami, [])
     message = {"to": whoami, "msg": msg}
     tree = apply_log(msg, tree, ts)
     log_time = datetime.now()
@@ -289,7 +289,7 @@ def remove():
         msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
     else:
         flag = True
-        msg = prepare_message("skip", ts, [], whoami, [])    
+        msg = prepare_message("removeskip", ts, [], whoami, [])    
     message = {"to": whoami, "msg": msg}
     tree = apply_log(msg, tree, ts)
     log_time = datetime.now()
@@ -347,7 +347,7 @@ def move():
                     acknowledge(ts, end_time)
                     simulate_latency()
                     return "done"
-        msg = prepare_message("skip", ts, [], whoami, [])
+        msg = prepare_message("moveskip", ts, [], whoami, [])
         message = {"to": whoami, "msg": msg}
         tree = apply_log(msg, tree, ts)
         log_time = datetime.now()
@@ -395,7 +395,7 @@ def move():
                     acknowledge(ts, end_time)
                     simulate_latency(len(locks))
                     return "done"
-        msg = prepare_message("skip", ts, [], whoami, [])
+        msg = prepare_message("moveskip", ts, [], whoami, [])
         message = {"to": whoami, "msg": msg}
         tree = apply_log(msg, tree, ts)
         log_time = datetime.now()
@@ -415,11 +415,12 @@ def move():
         start_time = datetime.now()
         prep = tree.move_gen(n, p, np)
         ts[replicaid] += 1
+        flag = False
         if prep:
             msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
         else:
             flag = True
-            msg = prepare_message("skip", ts, [], whoami, [])    
+            msg = prepare_message("moveskip", ts, [], whoami, [])    
         message = {"to": whoami, "msg": msg}
         tree = apply_log(msg, tree, ts)
         log_time = datetime.now()

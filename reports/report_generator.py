@@ -72,7 +72,10 @@ def parse_logs(lc_config, exp, conflict):
         j = json.loads(each)
         if j["ts"][0] > 352 or j["ts"][1] > 352 or j["ts"][2] > 352: # filter out initial warm up load
           key = str(j["ts"])
-          data[key]["op"] = {"name":j["op"], "n":j["args"]["n"], "ca":j["ca"]}
+          if not("skip" in j["op"]):
+            data[key]["op"] = {"name":j["op"], "n":j["args"]["n"], "ca":j["ca"]}
+          else:
+            data[key]["op"] = {"name":j["op"], "n":None, "ca":None}
           data[key]["origin"] = j["replica"]
   # print([data[x]["ts"][0] for x in data.keys()])
   for each in range(353,653):
@@ -111,7 +114,10 @@ def parse_replica_logs(lc_config, exp, conflict):
         j = json.loads(each)
         if j["ts"][0] > 352 or j["ts"][1] > 352 or j["ts"][2] > 352: # filter out initial warm up load
           key = str(j["ts"])
-          data[key]["op"] = {"name":j["op"], "n":j["args"]["n"], "ca":j["ca"]}
+          if not("skip" in j["op"]):
+            data[key]["op"] = {"name":j["op"], "n":j["args"]["n"], "ca":j["ca"]}
+          else:
+            data[key]["op"] = {"name":j["op"], "n":None, "ca":None}          
           data[key]["origin"] = j["replica"]
   return data
 
@@ -122,9 +128,9 @@ def response_time(data):
   assert len(responses) == 900
   average_response_time = sum(responses, timedelta(0)) / len(responses)
   # print([data[ts]["op"]["name"] for ts in data.keys()])
-  conflict_responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys() if data[ts]["op"]["name"] in ["upmove", "downmove", "move"]]
+  conflict_responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys() if data[ts]["op"]["name"] in ["upmove", "downmove", "move", "moveskip"]]
   average_conflict_response_time = sum(conflict_responses, timedelta(0)) / len(conflict_responses)
-  nonconflict_responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys() if not(data[ts]["op"]["name"] in ["upmove", "downmove", "move"])]
+  nonconflict_responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys() if not(data[ts]["op"]["name"] in ["upmove", "downmove", "move", "moveskip"])]
   average_nonconflict_response_time = sum(nonconflict_responses, timedelta(0)) / len(nonconflict_responses)
   return responses, average_response_time, average_conflict_response_time, average_nonconflict_response_time
 
@@ -137,7 +143,7 @@ def is_concurrent(ts1, ts2):
 
 def is_conflicting(exp, op1, op2):
   if exp ==0: #crdt, only concurrent moves on critical ancestors conflict
-    if op1["name"] == "downmove": #possible conflict
+    if op1["name"] in ["downmove", "upmove"]: #possible conflict
       # if op2["name"] in ["upmove", "downmove"]:
       #   if op1["n"] in op2["ca"] or op2["n"] in op1["ca"]:
       return True
@@ -183,12 +189,12 @@ def result(lc_config):
   for j in [0, 2, 10, 20]:
     print("Conflict %: " + str(j) + " : ")
     row = []
-    for i in range(0,4):
+    for i in [0, 1, 2, 3]:
       # print("Experiment " + str(i))
       print(experiments[i])
       # print("Conflict %: " + str(j))
       data = parse_logs(lc_config, i, j)
-      print("All: " + str(response_time(data)[1].total_seconds()*1000) + " :: Conflicts: " + str(response_time(data)[2].total_seconds()*1000) + " :: Nonconflicts: " + str(response_time(data)[3].total_seconds()*1000))
+      print("All: " + str(response_time(data)[1].total_seconds()*1000) + " :: Moves: " + str(response_time(data)[2].total_seconds()*1000) + " :: Nonmoves: " + str(response_time(data)[3].total_seconds()*1000))
       row += [experiments[i] + ' & ' +str(response_time(data)[1].total_seconds()*1000) + ' & ' +str(response_time(data)[2].total_seconds()*1000) + ' & ' + str(response_time(data)[3].total_seconds()*1000) + '\\\\']
     # rl += [row]
     file_name = "response"+str(lc_config)+"con"+str(j)+".tex"
@@ -199,7 +205,7 @@ def result(lc_config):
   print("Stabilization time")
   print("=============")
   sl = []
-  for i in range(0,4):
+  for i in [0, 1, 2, 3]:
     print(experiments[i])
     row = []
     for j in [0, 2, 10, 20]:
