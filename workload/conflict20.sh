@@ -1,3 +1,213 @@
+curl "http://localhost:6001/add?n=afe00&p=afe" & curl "http://localhost:6002/add?n=bjb01&p=bjb" & curl "http://localhost:6003/add?n=ccf02&p=ccf"
+wait 
+curl "http://localhost:6001/remove?n=afe00&p=afe" & curl "http://localhost:6002/remove?n=bjb01&p=bjb" & curl "http://localhost:6003/remove?n=ccf02&p=ccf"
+wait 
+curl "http://localhost:6001/add?n=aea10&p=aea" & curl "http://localhost:6002/add?n=bie11&p=bie" & curl "http://localhost:6003/add?n=cce12&p=cce"
+wait 
+curl "http://localhost:6001/add?n=ajb20&p=ajb" & curl "http://localhost:6002/add?n=bde21&p=bde" & curl "http://localhost:6003/add?n=cae22&p=cae"
+wait 
+curl "http://localhost:6001/add?n=ajf30&p=ajf" & curl "http://localhost:6002/add?n=bjf31&p=bjf" & curl "http://localhost:6003/add?n=ccd32&p=ccd"
+wait 
+curl "http://localhost:6001/add?n=ajb40&p=ajb" & curl "http://localhost:6002/add?n=bie41&p=bie" & curl "http://localhost:6003/add?n=cjc42&p=cjc"
+wait 
+curl "http://localhost:6001/add?n=ajd50&p=ajd" & curl "http://localhost:6002/add?n=bga51&p=bga" & curl "http://localhost:6003/add?n=cff52&p=cff"
+wait 
+curl "http://localhost:6001/add?n=afc60&p=afc" & curl "http://localhost:6002/add?n=bdf61&p=bdf" & curl "http://localhost:6003/add?n=cgf62&p=cgf"
+wait 
+curl "http://localhost:6001/remove?n=afc60&p=afc" & curl "http://localhost:6002/remove?n=bdf61&p=bdf" & curl "http://localhost:6003/remove?n=cgf62&p=cgf"
+wait 
+curl "http://localhost:6001/add?n=abc70&p=abc" & curl "http://localhost:6002/add?n=baa71&p=baa" & curl "http://localhost:6003/add?n=cdc72&p=cdc"
+wait 
+curl "http://localhost:6001/add?n=aje80&p=aje" & curl "http://localhost:6002/add?n=bgd81&p=bgd" & curl "http://localhost:6003/add?n=ced82&p=ced"
+wait 
+curl "http://localhost:6001/add?n=aff90&p=aff" & curl "http://localhost:6002/add?n=baa91&p=baa" & curl "http://localhost:6003/add?n=ckb92&p=ckb"
+wait 
+curl "http://localhost:6001/add?n=afb100&p=afb" & curl "http://localhost:6002/add?n=bia101&p=bia" & curl "http://localhost:6003/add?n=cha102&p=cha"
+wait 
+curl "http://localhost:6001/add?n=aid110&p=aid" & curl "http://localhost:6002/add?n=bgb111&p=bgb" & curl "http://localhost:6003/add?n=che112&p=che"
+wait 
+curl "http://localhost:6001/add?n=agd120&p=agd" & curl "http://localhost:6002/add?n=bga121&p=bga" & curl "http://localhost:6003/add?n=cec122&p=cec"
+wait 
+curl "http://localhost:6001/remove?n=agd120&p=agd" & curl "http://localhost:6002/remove?n=bga121&p=bga" & curl "http://localhost:6003/remove?n=cec122&p=cec"
+wait 
+curl "http://localhost:6001/add?n=aib130&p=aib" & curl "http://localhost:6002/add?n=bff131&p=bff" & curl "http://localhost:6003/add?n=chf132&p=chf"
+wait 
+curl "http://localhost:6001/add?n=ahd140&p=ahd" & curl "http://localhost:6002/add?n=bke141&p=bke" & curl "http://localhost:6003/add?n=cdb142&p=cdb"
+wait 
+curl "http://localhost:6001/add?n=aia150&p=aia" & curl "http://localhost:6002/add?n=bec151&p=bec" & curl "http://localhost:6003/add?n=cbb152&p=cbb"
+wait 
+curl "http://localhost:6001/add?n=aic160&p=aic" & curl "http://localhost:6002/add?n=bid161&p=bid" & curl "http://localhost:6003/add?n=cib162&p=cib"
+wait 
+curl "http://localhost:6001/add?n=aad170&p=aad" & curl "http://localhost:6002/add?n=bkd171&p=bkd" & curl "http://localhost:6003/add?n=che172&p=che"
+wait 
+curl "http://localhost:6001/add?n=aca180&p=aca" & curl "http://localhost:6002/add?n=baa181&p=baa" & curl "http://localhost:6003/add?n=cje182&p=cje"
+wait 
+curl "http://localhost:6001/remove?n=aca180&p=aca" & curl "http://localhost:6002/remove?n=baa181&p=baa" & curl "http://localhost:6003/remove?n=cje182&p=cje"
+wait 
+curl "http://localhost:6001/add?n=aee190&p=aee" & curl "http://localhost:6002/add?n=bbc191&p=bbc" & curl "http://localhost:6003/add?n=cbb192&p=cbb"
+wait 
+curl "http://localhost:6001/add?n=ajb200&p=ajb" & curl "http://localhost:6002/add?n=baf201&p=baf" & curl "http://localhost:6003/add?n=cce202&p=cce"
+wait 
+curl "http://localhost:6001/add?n=aea210&p=aea" & curl "http://localhost:6002/add?n=bhf211&p=bhf" & curl "http://localhost:6003/add?n=cbd212&p=cbd"
+wait 
+curl "http://localhost:6001/add?n=aea220&p=aea" & curl "http://localhost:6002/add?n=bhe221&p=bhe" & curl "http://localhost:6003/add?n=ckb222&p=ckb"
+wait 
+curl "http://localhost:6001/add?n=abc230&p=abc" & curl "http://localhost:6002/add?n=bgf231&p=bgf" & curl "http://localhost:6003/add?n=cce232&p=cce"
+wait 
+curl "http://localhost:6001/add?n=abc240&p=abc" & curl "http://localhost:6002/add?n=bed241&p=bed" & curl "http://localhost:6003/add?n=cbd242&p=cbd"
+wait 
+curl "http://localhost:6001/remove?n=abc240&p=abc" & curl "http://localhost:6002/remove?n=bed241&p=bed" & curl "http://localhost:6003/remove?n=cbd242&p=cbd"
+wait 
+curl "http://localhost:6001/add?n=ahd250&p=ahd" & curl "http://localhost:6002/add?n=bee251&p=bee" & curl "http://localhost:6003/add?n=ccd252&p=ccd"
+wait 
+curl "http://localhost:6001/add?n=afb260&p=afb" & curl "http://localhost:6002/add?n=bhe261&p=bhe" & curl "http://localhost:6003/add?n=cba262&p=cba"
+wait 
+curl "http://localhost:6001/add?n=aee270&p=aee" & curl "http://localhost:6002/add?n=bkc271&p=bkc" & curl "http://localhost:6003/add?n=ckc272&p=ckc"
+wait 
+curl "http://localhost:6001/add?n=aib280&p=aib" & curl "http://localhost:6002/add?n=bff281&p=bff" & curl "http://localhost:6003/add?n=cda282&p=cda"
+wait 
+curl "http://localhost:6001/add?n=aid290&p=aid" & curl "http://localhost:6002/add?n=bhe291&p=bhe" & curl "http://localhost:6003/add?n=cff292&p=cff"
+wait 
+curl "http://localhost:6001/add?n=aac300&p=aac" & curl "http://localhost:6002/add?n=bdc301&p=bdc" & curl "http://localhost:6003/add?n=ckb302&p=ckb"
+wait 
+curl "http://localhost:6001/remove?n=aac300&p=aac" & curl "http://localhost:6002/remove?n=bdc301&p=bdc" & curl "http://localhost:6003/remove?n=ckb302&p=ckb"
+wait 
+curl "http://localhost:6001/add?n=aaa310&p=aaa" & curl "http://localhost:6002/add?n=bbd311&p=bbd" & curl "http://localhost:6003/add?n=cga312&p=cga"
+wait 
+curl "http://localhost:6001/add?n=aac320&p=aac" & curl "http://localhost:6002/add?n=bjb321&p=bjb" & curl "http://localhost:6003/add?n=cie322&p=cie"
+wait 
+curl "http://localhost:6001/add?n=aca330&p=aca" & curl "http://localhost:6002/add?n=baf331&p=baf" & curl "http://localhost:6003/add?n=cid332&p=cid"
+wait 
+curl "http://localhost:6001/add?n=aca340&p=aca" & curl "http://localhost:6002/add?n=bdc341&p=bdc" & curl "http://localhost:6003/add?n=cid342&p=cid"
+wait 
+curl "http://localhost:6001/add?n=agf350&p=agf" & curl "http://localhost:6002/add?n=bgf351&p=bgf" & curl "http://localhost:6003/add?n=cfa352&p=cfa"
+wait 
+curl "http://localhost:6001/add?n=afc360&p=afc" & curl "http://localhost:6002/add?n=bid361&p=bid" & curl "http://localhost:6003/add?n=cea362&p=cea"
+wait 
+curl "http://localhost:6001/remove?n=afc360&p=afc" & curl "http://localhost:6002/remove?n=bid361&p=bid" & curl "http://localhost:6003/remove?n=cea362&p=cea"
+wait 
+curl "http://localhost:6001/add?n=aed370&p=aed" & curl "http://localhost:6002/add?n=bfe371&p=bfe" & curl "http://localhost:6003/add?n=cgf372&p=cgf"
+wait 
+curl "http://localhost:6001/add?n=aja380&p=aja" & curl "http://localhost:6002/add?n=bjb381&p=bjb" & curl "http://localhost:6003/add?n=cje382&p=cje"
+wait 
+curl "http://localhost:6001/add?n=ajf390&p=ajf" & curl "http://localhost:6002/add?n=bhc391&p=bhc" & curl "http://localhost:6003/add?n=chb392&p=chb"
+wait 
+curl "http://localhost:6001/add?n=afb400&p=afb" & curl "http://localhost:6002/add?n=bjc401&p=bjc" & curl "http://localhost:6003/add?n=cjd402&p=cjd"
+wait 
+curl "http://localhost:6001/add?n=abe410&p=abe" & curl "http://localhost:6002/add?n=bgb411&p=bgb" & curl "http://localhost:6003/add?n=cid412&p=cid"
+wait 
+curl "http://localhost:6001/add?n=ajb420&p=ajb" & curl "http://localhost:6002/add?n=bbe421&p=bbe" & curl "http://localhost:6003/add?n=cea422&p=cea"
+wait 
+curl "http://localhost:6001/remove?n=ajb420&p=ajb" & curl "http://localhost:6002/remove?n=bbe421&p=bbe" & curl "http://localhost:6003/remove?n=cea422&p=cea"
+wait 
+curl "http://localhost:6001/add?n=aid430&p=aid" & curl "http://localhost:6002/add?n=bge431&p=bge" & curl "http://localhost:6003/add?n=cje432&p=cje"
+wait 
+curl "http://localhost:6001/add?n=aca440&p=aca" & curl "http://localhost:6002/add?n=bfe441&p=bfe" & curl "http://localhost:6003/add?n=cff442&p=cff"
+wait 
+curl "http://localhost:6001/add?n=akd450&p=akd" & curl "http://localhost:6002/add?n=bkd451&p=bkd" & curl "http://localhost:6003/add?n=caa452&p=caa"
+wait 
+curl "http://localhost:6001/add?n=aic460&p=aic" & curl "http://localhost:6002/add?n=bgb461&p=bgb" & curl "http://localhost:6003/add?n=chc462&p=chc"
+wait 
+curl "http://localhost:6001/add?n=adb470&p=adb" & curl "http://localhost:6002/add?n=bbb471&p=bbb" & curl "http://localhost:6003/add?n=cgc472&p=cgc"
+wait 
+curl "http://localhost:6001/add?n=aab480&p=aab" & curl "http://localhost:6002/add?n=bcf481&p=bcf" & curl "http://localhost:6003/add?n=cja482&p=cja"
+wait 
+curl "http://localhost:6001/remove?n=aab480&p=aab" & curl "http://localhost:6002/remove?n=bcf481&p=bcf" & curl "http://localhost:6003/remove?n=cja482&p=cja"
+wait 
+curl "http://localhost:6001/add?n=aib490&p=aib" & curl "http://localhost:6002/add?n=bgb491&p=bgb" & curl "http://localhost:6003/add?n=cga492&p=cga"
+wait 
+curl "http://localhost:6001/add?n=ahf500&p=ahf" & curl "http://localhost:6002/add?n=bhf501&p=bhf" & curl "http://localhost:6003/add?n=cda502&p=cda"
+wait 
+curl "http://localhost:6001/add?n=abd510&p=abd" & curl "http://localhost:6002/add?n=bif511&p=bif" & curl "http://localhost:6003/add?n=cha512&p=cha"
+wait 
+curl "http://localhost:6001/add?n=abd520&p=abd" & curl "http://localhost:6002/add?n=bka521&p=bka" & curl "http://localhost:6003/add?n=cfd522&p=cfd"
+wait 
+curl "http://localhost:6001/add?n=ahe530&p=ahe" & curl "http://localhost:6002/add?n=bie531&p=bie" & curl "http://localhost:6003/add?n=cdd532&p=cdd"
+wait 
+curl "http://localhost:6001/add?n=aia540&p=aia" & curl "http://localhost:6002/add?n=bkc541&p=bkc" & curl "http://localhost:6003/add?n=caa542&p=caa"
+wait 
+curl "http://localhost:6001/remove?n=aia540&p=aia" & curl "http://localhost:6002/remove?n=bkc541&p=bkc" & curl "http://localhost:6003/remove?n=caa542&p=caa"
+wait 
+curl "http://localhost:6001/add?n=adc550&p=adc" & curl "http://localhost:6002/add?n=bfb551&p=bfb" & curl "http://localhost:6003/add?n=cbf552&p=cbf"
+wait 
+curl "http://localhost:6001/add?n=aca560&p=aca" & curl "http://localhost:6002/add?n=bbd561&p=bbd" & curl "http://localhost:6003/add?n=cgb562&p=cgb"
+wait 
+curl "http://localhost:6001/add?n=agb570&p=agb" & curl "http://localhost:6002/add?n=bde571&p=bde" & curl "http://localhost:6003/add?n=ccc572&p=ccc"
+wait 
+curl "http://localhost:6001/add?n=aee580&p=aee" & curl "http://localhost:6002/add?n=bdf581&p=bdf" & curl "http://localhost:6003/add?n=cgc582&p=cgc"
+wait 
+curl "http://localhost:6001/add?n=agf590&p=agf" & curl "http://localhost:6002/add?n=bic591&p=bic" & curl "http://localhost:6003/add?n=ccc592&p=ccc"
+wait 
+curl "http://localhost:6001/add?n=afa600&p=afa" & curl "http://localhost:6002/add?n=bkd601&p=bkd" & curl "http://localhost:6003/add?n=cke602&p=cke"
+wait 
+curl "http://localhost:6001/remove?n=afa600&p=afa" & curl "http://localhost:6002/remove?n=bkd601&p=bkd" & curl "http://localhost:6003/remove?n=cke602&p=cke"
+wait 
+curl "http://localhost:6001/add?n=ajb610&p=ajb" & curl "http://localhost:6002/add?n=bcd611&p=bcd" & curl "http://localhost:6003/add?n=cgd612&p=cgd"
+wait 
+curl "http://localhost:6001/add?n=acd620&p=acd" & curl "http://localhost:6002/add?n=bka621&p=bka" & curl "http://localhost:6003/add?n=chd622&p=chd"
+wait 
+curl "http://localhost:6001/add?n=add630&p=add" & curl "http://localhost:6002/add?n=bee631&p=bee" & curl "http://localhost:6003/add?n=cdb632&p=cdb"
+wait 
+curl "http://localhost:6001/add?n=acd640&p=acd" & curl "http://localhost:6002/add?n=bde641&p=bde" & curl "http://localhost:6003/add?n=cde642&p=cde"
+wait 
+curl "http://localhost:6001/add?n=adf650&p=adf" & curl "http://localhost:6002/add?n=bic651&p=bic" & curl "http://localhost:6003/add?n=cde652&p=cde"
+wait 
+curl "http://localhost:6001/add?n=aje660&p=aje" & curl "http://localhost:6002/add?n=bfc661&p=bfc" & curl "http://localhost:6003/add?n=cjc662&p=cjc"
+wait 
+curl "http://localhost:6001/remove?n=aje660&p=aje" & curl "http://localhost:6002/remove?n=bfc661&p=bfc" & curl "http://localhost:6003/remove?n=cjc662&p=cjc"
+wait 
+curl "http://localhost:6001/add?n=afd670&p=afd" & curl "http://localhost:6002/add?n=bgf671&p=bgf" & curl "http://localhost:6003/add?n=cgc672&p=cgc"
+wait 
+curl "http://localhost:6001/add?n=abc680&p=abc" & curl "http://localhost:6002/add?n=baf681&p=baf" & curl "http://localhost:6003/add?n=cjf682&p=cjf"
+wait 
+curl "http://localhost:6001/add?n=aec690&p=aec" & curl "http://localhost:6002/add?n=bcc691&p=bcc" & curl "http://localhost:6003/add?n=chb692&p=chb"
+wait 
+curl "http://localhost:6001/add?n=aea700&p=aea" & curl "http://localhost:6002/add?n=bgb701&p=bgb" & curl "http://localhost:6003/add?n=ccc702&p=ccc"
+wait 
+curl "http://localhost:6001/add?n=aff710&p=aff" & curl "http://localhost:6002/add?n=bab711&p=bab" & curl "http://localhost:6003/add?n=ccc712&p=ccc"
+wait 
+curl "http://localhost:6001/add?n=afb720&p=afb" & curl "http://localhost:6002/add?n=beb721&p=beb" & curl "http://localhost:6003/add?n=cjd722&p=cjd"
+wait 
+curl "http://localhost:6001/remove?n=afb720&p=afb" & curl "http://localhost:6002/remove?n=beb721&p=beb" & curl "http://localhost:6003/remove?n=cjd722&p=cjd"
+wait 
+curl "http://localhost:6001/add?n=ace730&p=ace" & curl "http://localhost:6002/add?n=bhb731&p=bhb" & curl "http://localhost:6003/add?n=cdb732&p=cdb"
+wait 
+curl "http://localhost:6001/add?n=afa740&p=afa" & curl "http://localhost:6002/add?n=bcc741&p=bcc" & curl "http://localhost:6003/add?n=chd742&p=chd"
+wait 
+curl "http://localhost:6001/add?n=add750&p=add" & curl "http://localhost:6002/add?n=bgb751&p=bgb" & curl "http://localhost:6003/add?n=chd752&p=chd"
+wait 
+curl "http://localhost:6001/add?n=adc760&p=adc" & curl "http://localhost:6002/add?n=bhf761&p=bhf" & curl "http://localhost:6003/add?n=cdf762&p=cdf"
+wait 
+curl "http://localhost:6001/add?n=aef770&p=aef" & curl "http://localhost:6002/add?n=bfd771&p=bfd" & curl "http://localhost:6003/add?n=cbe772&p=cbe"
+wait 
+curl "http://localhost:6001/add?n=afe780&p=afe" & curl "http://localhost:6002/add?n=bkc781&p=bkc" & curl "http://localhost:6003/add?n=cfb782&p=cfb"
+wait 
+curl "http://localhost:6001/remove?n=afe780&p=afe" & curl "http://localhost:6002/remove?n=bkc781&p=bkc" & curl "http://localhost:6003/remove?n=cfb782&p=cfb"
+wait 
+curl "http://localhost:6001/add?n=aif790&p=aif" & curl "http://localhost:6002/add?n=bje791&p=bje" & curl "http://localhost:6003/add?n=cib792&p=cib"
+wait 
+curl "http://localhost:6001/add?n=aka800&p=aka" & curl "http://localhost:6002/add?n=bcb801&p=bcb" & curl "http://localhost:6003/add?n=cbb802&p=cbb"
+wait 
+curl "http://localhost:6001/add?n=aba810&p=aba" & curl "http://localhost:6002/add?n=bab811&p=bab" & curl "http://localhost:6003/add?n=cdc812&p=cdc"
+wait 
+curl "http://localhost:6001/add?n=akf820&p=akf" & curl "http://localhost:6002/add?n=bcd821&p=bcd" & curl "http://localhost:6003/add?n=ckc822&p=ckc"
+wait 
+curl "http://localhost:6001/add?n=adb830&p=adb" & curl "http://localhost:6002/add?n=bjc831&p=bjc" & curl "http://localhost:6003/add?n=ccb832&p=ccb"
+wait 
+curl "http://localhost:6001/add?n=aed840&p=aed" & curl "http://localhost:6002/add?n=bba841&p=bba" & curl "http://localhost:6003/add?n=cdc842&p=cdc"
+wait 
+curl "http://localhost:6001/remove?n=aed840&p=aed" & curl "http://localhost:6002/remove?n=bba841&p=bba" & curl "http://localhost:6003/remove?n=cdc842&p=cdc"
+wait 
+curl "http://localhost:6001/add?n=aff850&p=aff" & curl "http://localhost:6002/add?n=bgc851&p=bgc" & curl "http://localhost:6003/add?n=cke852&p=cke"
+wait 
+curl "http://localhost:6001/add?n=akd860&p=akd" & curl "http://localhost:6002/add?n=bfb861&p=bfb" & curl "http://localhost:6003/add?n=ccb862&p=ccb"
+wait 
+curl "http://localhost:6001/add?n=ahb870&p=ahb" & curl "http://localhost:6002/add?n=bec871&p=bec" & curl "http://localhost:6003/add?n=cfa872&p=cfa"
+wait 
+curl "http://localhost:6001/add?n=aaa880&p=aaa" & curl "http://localhost:6002/add?n=bdc881&p=bdc" & curl "http://localhost:6003/add?n=cic882&p=cic"
+wait 
+curl "http://localhost:6001/add?n=ahe890&p=ahe" & curl "http://localhost:6002/add?n=bhb891&p=bhb" & curl "http://localhost:6003/add?n=ckb892&p=ckb"
+wait 
 curl "http://localhost:6001/move?n=ada&p=ad&np=ae" & curl "http://localhost:6002/move?n=ae&p=a&np=ada" & curl "http://localhost:6003/move?n=faa&p=fa&np=f"
 wait 
 curl "http://localhost:6001/move?n=aea&p=ae&np=af" & curl "http://localhost:6002/move?n=af&p=a&np=aea" & curl "http://localhost:6003/move?n=faa&p=f&np=fa"
@@ -178,423 +388,213 @@ curl "http://localhost:6001/move?n=cci&p=cc&np=cbi" & curl "http://localhost:600
 wait 
 curl "http://localhost:6001/move?n=ccj&p=cc&np=cbj" & curl "http://localhost:6002/move?n=ece&p=e&np=ec" & curl "http://localhost:6003/move?n=cbj&p=cb&np=ccj"
 wait 
-curl "http://localhost:6001/add?n=aaf00&p=aaf" & curl "http://localhost:6002/add?n=bkb01&p=bkb" & curl "http://localhost:6003/add?n=ckb02&p=ckb"
+curl "http://localhost:6001/add?n=aab900&p=aab" & curl "http://localhost:6002/add?n=bef901&p=bef" & curl "http://localhost:6003/add?n=cbc902&p=cbc"
 wait 
-curl "http://localhost:6001/remove?n=aaf00&p=aaf" & curl "http://localhost:6002/remove?n=bkb01&p=bkb" & curl "http://localhost:6003/remove?n=ckb02&p=ckb"
+curl "http://localhost:6001/remove?n=aab900&p=aab" & curl "http://localhost:6002/remove?n=bef901&p=bef" & curl "http://localhost:6003/remove?n=cbc902&p=cbc"
 wait 
-curl "http://localhost:6001/add?n=aie10&p=aie" & curl "http://localhost:6002/add?n=bae11&p=bae" & curl "http://localhost:6003/add?n=cke12&p=cke"
+curl "http://localhost:6001/add?n=aga910&p=aga" & curl "http://localhost:6002/add?n=baa911&p=baa" & curl "http://localhost:6003/add?n=cbf912&p=cbf"
 wait 
-curl "http://localhost:6001/add?n=aef20&p=aef" & curl "http://localhost:6002/add?n=bka21&p=bka" & curl "http://localhost:6003/add?n=cff22&p=cff"
+curl "http://localhost:6001/add?n=abf920&p=abf" & curl "http://localhost:6002/add?n=beb921&p=beb" & curl "http://localhost:6003/add?n=cjd922&p=cjd"
 wait 
-curl "http://localhost:6001/add?n=aie30&p=aie" & curl "http://localhost:6002/add?n=bef31&p=bef" & curl "http://localhost:6003/add?n=che32&p=che"
+curl "http://localhost:6001/add?n=agc930&p=agc" & curl "http://localhost:6002/add?n=bcc931&p=bcc" & curl "http://localhost:6003/add?n=cga932&p=cga"
 wait 
-curl "http://localhost:6001/add?n=aga40&p=aga" & curl "http://localhost:6002/add?n=bjd41&p=bjd" & curl "http://localhost:6003/add?n=ckd42&p=ckd"
+curl "http://localhost:6001/add?n=agd940&p=agd" & curl "http://localhost:6002/add?n=bbb941&p=bbb" & curl "http://localhost:6003/add?n=cka942&p=cka"
 wait 
-curl "http://localhost:6001/add?n=acc50&p=acc" & curl "http://localhost:6002/add?n=bia51&p=bia" & curl "http://localhost:6003/add?n=cdc52&p=cdc"
+curl "http://localhost:6001/add?n=afb950&p=afb" & curl "http://localhost:6002/add?n=bke951&p=bke" & curl "http://localhost:6003/add?n=cbc952&p=cbc"
 wait 
-curl "http://localhost:6001/add?n=aja60&p=aja" & curl "http://localhost:6002/add?n=baa61&p=baa" & curl "http://localhost:6003/add?n=chc62&p=chc"
+curl "http://localhost:6001/add?n=aac960&p=aac" & curl "http://localhost:6002/add?n=bgd961&p=bgd" & curl "http://localhost:6003/add?n=cjd962&p=cjd"
 wait 
-curl "http://localhost:6001/remove?n=aja60&p=aja" & curl "http://localhost:6002/remove?n=baa61&p=baa" & curl "http://localhost:6003/remove?n=chc62&p=chc"
+curl "http://localhost:6001/remove?n=aac960&p=aac" & curl "http://localhost:6002/remove?n=bgd961&p=bgd" & curl "http://localhost:6003/remove?n=cjd962&p=cjd"
 wait 
-curl "http://localhost:6001/add?n=aie70&p=aie" & curl "http://localhost:6002/add?n=bcb71&p=bcb" & curl "http://localhost:6003/add?n=cja72&p=cja"
+curl "http://localhost:6001/add?n=agd970&p=agd" & curl "http://localhost:6002/add?n=bke971&p=bke" & curl "http://localhost:6003/add?n=che972&p=che"
 wait 
-curl "http://localhost:6001/add?n=aha80&p=aha" & curl "http://localhost:6002/add?n=bad81&p=bad" & curl "http://localhost:6003/add?n=cga82&p=cga"
+curl "http://localhost:6001/add?n=adf980&p=adf" & curl "http://localhost:6002/add?n=bde981&p=bde" & curl "http://localhost:6003/add?n=cgf982&p=cgf"
 wait 
-curl "http://localhost:6001/add?n=acf90&p=acf" & curl "http://localhost:6002/add?n=bic91&p=bic" & curl "http://localhost:6003/add?n=chf92&p=chf"
+curl "http://localhost:6001/add?n=aic990&p=aic" & curl "http://localhost:6002/add?n=bhb991&p=bhb" & curl "http://localhost:6003/add?n=caa992&p=caa"
 wait 
-curl "http://localhost:6001/add?n=aha100&p=aha" & curl "http://localhost:6002/add?n=baf101&p=baf" & curl "http://localhost:6003/add?n=cfc102&p=cfc"
+curl "http://localhost:6001/add?n=ajb1000&p=ajb" & curl "http://localhost:6002/add?n=bjc1001&p=bjc" & curl "http://localhost:6003/add?n=cgd1002&p=cgd"
 wait 
-curl "http://localhost:6001/add?n=aea110&p=aea" & curl "http://localhost:6002/add?n=bja111&p=bja" & curl "http://localhost:6003/add?n=cdb112&p=cdb"
+curl "http://localhost:6001/add?n=acc1010&p=acc" & curl "http://localhost:6002/add?n=bkc1011&p=bkc" & curl "http://localhost:6003/add?n=cef1012&p=cef"
 wait 
-curl "http://localhost:6001/add?n=ahf120&p=ahf" & curl "http://localhost:6002/add?n=bke121&p=bke" & curl "http://localhost:6003/add?n=cfd122&p=cfd"
+curl "http://localhost:6001/add?n=agf1020&p=agf" & curl "http://localhost:6002/add?n=bba1021&p=bba" & curl "http://localhost:6003/add?n=ccf1022&p=ccf"
 wait 
-curl "http://localhost:6001/remove?n=ahf120&p=ahf" & curl "http://localhost:6002/remove?n=bke121&p=bke" & curl "http://localhost:6003/remove?n=cfd122&p=cfd"
+curl "http://localhost:6001/remove?n=agf1020&p=agf" & curl "http://localhost:6002/remove?n=bba1021&p=bba" & curl "http://localhost:6003/remove?n=ccf1022&p=ccf"
 wait 
-curl "http://localhost:6001/add?n=aad130&p=aad" & curl "http://localhost:6002/add?n=bif131&p=bif" & curl "http://localhost:6003/add?n=ckc132&p=ckc"
+curl "http://localhost:6001/add?n=afe1030&p=afe" & curl "http://localhost:6002/add?n=bec1031&p=bec" & curl "http://localhost:6003/add?n=cid1032&p=cid"
 wait 
-curl "http://localhost:6001/add?n=acb140&p=acb" & curl "http://localhost:6002/add?n=bic141&p=bic" & curl "http://localhost:6003/add?n=che142&p=che"
+curl "http://localhost:6001/add?n=acf1040&p=acf" & curl "http://localhost:6002/add?n=bgb1041&p=bgb" & curl "http://localhost:6003/add?n=cdf1042&p=cdf"
 wait 
-curl "http://localhost:6001/add?n=agc150&p=agc" & curl "http://localhost:6002/add?n=bfe151&p=bfe" & curl "http://localhost:6003/add?n=cad152&p=cad"
+curl "http://localhost:6001/add?n=aac1050&p=aac" & curl "http://localhost:6002/add?n=bbc1051&p=bbc" & curl "http://localhost:6003/add?n=cke1052&p=cke"
 wait 
-curl "http://localhost:6001/add?n=aec160&p=aec" & curl "http://localhost:6002/add?n=bgb161&p=bgb" & curl "http://localhost:6003/add?n=cge162&p=cge"
+curl "http://localhost:6001/add?n=ade1060&p=ade" & curl "http://localhost:6002/add?n=bie1061&p=bie" & curl "http://localhost:6003/add?n=cie1062&p=cie"
 wait 
-curl "http://localhost:6001/add?n=adb170&p=adb" & curl "http://localhost:6002/add?n=bib171&p=bib" & curl "http://localhost:6003/add?n=cid172&p=cid"
+curl "http://localhost:6001/add?n=agd1070&p=agd" & curl "http://localhost:6002/add?n=bba1071&p=bba" & curl "http://localhost:6003/add?n=caa1072&p=caa"
 wait 
-curl "http://localhost:6001/add?n=aka180&p=aka" & curl "http://localhost:6002/add?n=bhe181&p=bhe" & curl "http://localhost:6003/add?n=caf182&p=caf"
+curl "http://localhost:6001/add?n=aje1080&p=aje" & curl "http://localhost:6002/add?n=bef1081&p=bef" & curl "http://localhost:6003/add?n=cib1082&p=cib"
 wait 
-curl "http://localhost:6001/remove?n=aka180&p=aka" & curl "http://localhost:6002/remove?n=bhe181&p=bhe" & curl "http://localhost:6003/remove?n=caf182&p=caf"
+curl "http://localhost:6001/remove?n=aje1080&p=aje" & curl "http://localhost:6002/remove?n=bef1081&p=bef" & curl "http://localhost:6003/remove?n=cib1082&p=cib"
 wait 
-curl "http://localhost:6001/add?n=abe190&p=abe" & curl "http://localhost:6002/add?n=bfe191&p=bfe" & curl "http://localhost:6003/add?n=cdd192&p=cdd"
+curl "http://localhost:6001/add?n=abc1090&p=abc" & curl "http://localhost:6002/add?n=bea1091&p=bea" & curl "http://localhost:6003/add?n=ckc1092&p=ckc"
 wait 
-curl "http://localhost:6001/add?n=afe200&p=afe" & curl "http://localhost:6002/add?n=bfc201&p=bfc" & curl "http://localhost:6003/add?n=ckd202&p=ckd"
+curl "http://localhost:6001/add?n=aib1100&p=aib" & curl "http://localhost:6002/add?n=bbb1101&p=bbb" & curl "http://localhost:6003/add?n=cbb1102&p=cbb"
 wait 
-curl "http://localhost:6001/add?n=acd210&p=acd" & curl "http://localhost:6002/add?n=bbf211&p=bbf" & curl "http://localhost:6003/add?n=cge212&p=cge"
+curl "http://localhost:6001/add?n=adf1110&p=adf" & curl "http://localhost:6002/add?n=bgf1111&p=bgf" & curl "http://localhost:6003/add?n=cab1112&p=cab"
 wait 
-curl "http://localhost:6001/add?n=aef220&p=aef" & curl "http://localhost:6002/add?n=bdc221&p=bdc" & curl "http://localhost:6003/add?n=cde222&p=cde"
+curl "http://localhost:6001/add?n=aab1120&p=aab" & curl "http://localhost:6002/add?n=bcf1121&p=bcf" & curl "http://localhost:6003/add?n=cac1122&p=cac"
 wait 
-curl "http://localhost:6001/add?n=aee230&p=aee" & curl "http://localhost:6002/add?n=bbd231&p=bbd" & curl "http://localhost:6003/add?n=caf232&p=caf"
+curl "http://localhost:6001/add?n=ade1130&p=ade" & curl "http://localhost:6002/add?n=bib1131&p=bib" & curl "http://localhost:6003/add?n=ccb1132&p=ccb"
 wait 
-curl "http://localhost:6001/add?n=ada240&p=ada" & curl "http://localhost:6002/add?n=bbd241&p=bbd" & curl "http://localhost:6003/add?n=cha242&p=cha"
+curl "http://localhost:6001/add?n=aca1140&p=aca" & curl "http://localhost:6002/add?n=bfa1141&p=bfa" & curl "http://localhost:6003/add?n=cdc1142&p=cdc"
 wait 
-curl "http://localhost:6001/remove?n=ada240&p=ada" & curl "http://localhost:6002/remove?n=bbd241&p=bbd" & curl "http://localhost:6003/remove?n=cha242&p=cha"
+curl "http://localhost:6001/remove?n=aca1140&p=aca" & curl "http://localhost:6002/remove?n=bfa1141&p=bfa" & curl "http://localhost:6003/remove?n=cdc1142&p=cdc"
 wait 
-curl "http://localhost:6001/add?n=aaf250&p=aaf" & curl "http://localhost:6002/add?n=bke251&p=bke" & curl "http://localhost:6003/add?n=cjd252&p=cjd"
+curl "http://localhost:6001/add?n=acb1150&p=acb" & curl "http://localhost:6002/add?n=bce1151&p=bce" & curl "http://localhost:6003/add?n=ckc1152&p=ckc"
 wait 
-curl "http://localhost:6001/add?n=aaf260&p=aaf" & curl "http://localhost:6002/add?n=bga261&p=bga" & curl "http://localhost:6003/add?n=cbc262&p=cbc"
+curl "http://localhost:6001/add?n=ahb1160&p=ahb" & curl "http://localhost:6002/add?n=bkd1161&p=bkd" & curl "http://localhost:6003/add?n=cab1162&p=cab"
 wait 
-curl "http://localhost:6001/add?n=akd270&p=akd" & curl "http://localhost:6002/add?n=bcd271&p=bcd" & curl "http://localhost:6003/add?n=cff272&p=cff"
+curl "http://localhost:6001/add?n=aba1170&p=aba" & curl "http://localhost:6002/add?n=bke1171&p=bke" & curl "http://localhost:6003/add?n=cfb1172&p=cfb"
 wait 
-curl "http://localhost:6001/add?n=aec280&p=aec" & curl "http://localhost:6002/add?n=bab281&p=bab" & curl "http://localhost:6003/add?n=cga282&p=cga"
+curl "http://localhost:6001/add?n=agf1180&p=agf" & curl "http://localhost:6002/add?n=baa1181&p=baa" & curl "http://localhost:6003/add?n=cha1182&p=cha"
 wait 
-curl "http://localhost:6001/add?n=ahb290&p=ahb" & curl "http://localhost:6002/add?n=bcd291&p=bcd" & curl "http://localhost:6003/add?n=chd292&p=chd"
+curl "http://localhost:6001/add?n=ahc1190&p=ahc" & curl "http://localhost:6002/add?n=bia1191&p=bia" & curl "http://localhost:6003/add?n=cjc1192&p=cjc"
 wait 
-curl "http://localhost:6001/add?n=aec300&p=aec" & curl "http://localhost:6002/add?n=bga301&p=bga" & curl "http://localhost:6003/add?n=cic302&p=cic"
+curl "http://localhost:6001/add?n=akb1200&p=akb" & curl "http://localhost:6002/add?n=bkf1201&p=bkf" & curl "http://localhost:6003/add?n=cha1202&p=cha"
 wait 
-curl "http://localhost:6001/remove?n=aec300&p=aec" & curl "http://localhost:6002/remove?n=bga301&p=bga" & curl "http://localhost:6003/remove?n=cic302&p=cic"
+curl "http://localhost:6001/remove?n=akb1200&p=akb" & curl "http://localhost:6002/remove?n=bkf1201&p=bkf" & curl "http://localhost:6003/remove?n=cha1202&p=cha"
 wait 
-curl "http://localhost:6001/add?n=ajc310&p=ajc" & curl "http://localhost:6002/add?n=baf311&p=baf" & curl "http://localhost:6003/add?n=cfd312&p=cfd"
+curl "http://localhost:6001/add?n=aca1210&p=aca" & curl "http://localhost:6002/add?n=bgf1211&p=bgf" & curl "http://localhost:6003/add?n=cff1212&p=cff"
 wait 
-curl "http://localhost:6001/add?n=ake320&p=ake" & curl "http://localhost:6002/add?n=bhf321&p=bhf" & curl "http://localhost:6003/add?n=cib322&p=cib"
+curl "http://localhost:6001/add?n=adc1220&p=adc" & curl "http://localhost:6002/add?n=bga1221&p=bga" & curl "http://localhost:6003/add?n=cja1222&p=cja"
 wait 
-curl "http://localhost:6001/add?n=aad330&p=aad" & curl "http://localhost:6002/add?n=bgc331&p=bgc" & curl "http://localhost:6003/add?n=cga332&p=cga"
+curl "http://localhost:6001/add?n=aha1230&p=aha" & curl "http://localhost:6002/add?n=bed1231&p=bed" & curl "http://localhost:6003/add?n=ccf1232&p=ccf"
 wait 
-curl "http://localhost:6001/add?n=afb340&p=afb" & curl "http://localhost:6002/add?n=bkc341&p=bkc" & curl "http://localhost:6003/add?n=ced342&p=ced"
+curl "http://localhost:6001/add?n=ajd1240&p=ajd" & curl "http://localhost:6002/add?n=bfa1241&p=bfa" & curl "http://localhost:6003/add?n=cgf1242&p=cgf"
 wait 
-curl "http://localhost:6001/add?n=aff350&p=aff" & curl "http://localhost:6002/add?n=bhe351&p=bhe" & curl "http://localhost:6003/add?n=cfb352&p=cfb"
+curl "http://localhost:6001/add?n=ahf1250&p=ahf" & curl "http://localhost:6002/add?n=baf1251&p=baf" & curl "http://localhost:6003/add?n=chb1252&p=chb"
 wait 
-curl "http://localhost:6001/add?n=ajb360&p=ajb" & curl "http://localhost:6002/add?n=bga361&p=bga" & curl "http://localhost:6003/add?n=ceb362&p=ceb"
+curl "http://localhost:6001/add?n=aif1260&p=aif" & curl "http://localhost:6002/add?n=bgb1261&p=bgb" & curl "http://localhost:6003/add?n=cea1262&p=cea"
 wait 
-curl "http://localhost:6001/remove?n=ajb360&p=ajb" & curl "http://localhost:6002/remove?n=bga361&p=bga" & curl "http://localhost:6003/remove?n=ceb362&p=ceb"
+curl "http://localhost:6001/remove?n=aif1260&p=aif" & curl "http://localhost:6002/remove?n=bgb1261&p=bgb" & curl "http://localhost:6003/remove?n=cea1262&p=cea"
 wait 
-curl "http://localhost:6001/add?n=akf370&p=akf" & curl "http://localhost:6002/add?n=bke371&p=bke" & curl "http://localhost:6003/add?n=cfb372&p=cfb"
+curl "http://localhost:6001/add?n=ajb1270&p=ajb" & curl "http://localhost:6002/add?n=bkf1271&p=bkf" & curl "http://localhost:6003/add?n=cbf1272&p=cbf"
 wait 
-curl "http://localhost:6001/add?n=akb380&p=akb" & curl "http://localhost:6002/add?n=bca381&p=bca" & curl "http://localhost:6003/add?n=cja382&p=cja"
+curl "http://localhost:6001/add?n=ahe1280&p=ahe" & curl "http://localhost:6002/add?n=beb1281&p=beb" & curl "http://localhost:6003/add?n=cba1282&p=cba"
 wait 
-curl "http://localhost:6001/add?n=aec390&p=aec" & curl "http://localhost:6002/add?n=bjc391&p=bjc" & curl "http://localhost:6003/add?n=cbd392&p=cbd"
+curl "http://localhost:6001/add?n=ahd1290&p=ahd" & curl "http://localhost:6002/add?n=bbd1291&p=bbd" & curl "http://localhost:6003/add?n=cfb1292&p=cfb"
 wait 
-curl "http://localhost:6001/add?n=aca400&p=aca" & curl "http://localhost:6002/add?n=bie401&p=bie" & curl "http://localhost:6003/add?n=cde402&p=cde"
+curl "http://localhost:6001/add?n=aid1300&p=aid" & curl "http://localhost:6002/add?n=bdb1301&p=bdb" & curl "http://localhost:6003/add?n=cce1302&p=cce"
 wait 
-curl "http://localhost:6001/add?n=ahb410&p=ahb" & curl "http://localhost:6002/add?n=bce411&p=bce" & curl "http://localhost:6003/add?n=ced412&p=ced"
+curl "http://localhost:6001/add?n=aid1310&p=aid" & curl "http://localhost:6002/add?n=bje1311&p=bje" & curl "http://localhost:6003/add?n=chc1312&p=chc"
 wait 
-curl "http://localhost:6001/add?n=agf420&p=agf" & curl "http://localhost:6002/add?n=baa421&p=baa" & curl "http://localhost:6003/add?n=cae422&p=cae"
+curl "http://localhost:6001/add?n=ahf1320&p=ahf" & curl "http://localhost:6002/add?n=bjd1321&p=bjd" & curl "http://localhost:6003/add?n=cja1322&p=cja"
 wait 
-curl "http://localhost:6001/remove?n=agf420&p=agf" & curl "http://localhost:6002/remove?n=baa421&p=baa" & curl "http://localhost:6003/remove?n=cae422&p=cae"
+curl "http://localhost:6001/remove?n=ahf1320&p=ahf" & curl "http://localhost:6002/remove?n=bjd1321&p=bjd" & curl "http://localhost:6003/remove?n=cja1322&p=cja"
 wait 
-curl "http://localhost:6001/add?n=adc430&p=adc" & curl "http://localhost:6002/add?n=bdd431&p=bdd" & curl "http://localhost:6003/add?n=chb432&p=chb"
+curl "http://localhost:6001/add?n=ahb1330&p=ahb" & curl "http://localhost:6002/add?n=bcd1331&p=bcd" & curl "http://localhost:6003/add?n=cad1332&p=cad"
 wait 
-curl "http://localhost:6001/add?n=adf440&p=adf" & curl "http://localhost:6002/add?n=bgb441&p=bgb" & curl "http://localhost:6003/add?n=chd442&p=chd"
+curl "http://localhost:6001/add?n=ahb1340&p=ahb" & curl "http://localhost:6002/add?n=bja1341&p=bja" & curl "http://localhost:6003/add?n=cib1342&p=cib"
 wait 
-curl "http://localhost:6001/add?n=aga450&p=aga" & curl "http://localhost:6002/add?n=bad451&p=bad" & curl "http://localhost:6003/add?n=caf452&p=caf"
+curl "http://localhost:6001/add?n=aed1350&p=aed" & curl "http://localhost:6002/add?n=bgd1351&p=bgd" & curl "http://localhost:6003/add?n=cbe1352&p=cbe"
 wait 
-curl "http://localhost:6001/add?n=ake460&p=ake" & curl "http://localhost:6002/add?n=bgd461&p=bgd" & curl "http://localhost:6003/add?n=ced462&p=ced"
+curl "http://localhost:6001/add?n=ajb1360&p=ajb" & curl "http://localhost:6002/add?n=bde1361&p=bde" & curl "http://localhost:6003/add?n=cie1362&p=cie"
 wait 
-curl "http://localhost:6001/add?n=afb470&p=afb" & curl "http://localhost:6002/add?n=bab471&p=bab" & curl "http://localhost:6003/add?n=cce472&p=cce"
+curl "http://localhost:6001/add?n=aee1370&p=aee" & curl "http://localhost:6002/add?n=bcc1371&p=bcc" & curl "http://localhost:6003/add?n=ced1372&p=ced"
 wait 
-curl "http://localhost:6001/add?n=aee480&p=aee" & curl "http://localhost:6002/add?n=bhe481&p=bhe" & curl "http://localhost:6003/add?n=cie482&p=cie"
+curl "http://localhost:6001/add?n=ahc1380&p=ahc" & curl "http://localhost:6002/add?n=bfe1381&p=bfe" & curl "http://localhost:6003/add?n=cbc1382&p=cbc"
 wait 
-curl "http://localhost:6001/remove?n=aee480&p=aee" & curl "http://localhost:6002/remove?n=bhe481&p=bhe" & curl "http://localhost:6003/remove?n=cie482&p=cie"
+curl "http://localhost:6001/remove?n=ahc1380&p=ahc" & curl "http://localhost:6002/remove?n=bfe1381&p=bfe" & curl "http://localhost:6003/remove?n=cbc1382&p=cbc"
 wait 
-curl "http://localhost:6001/add?n=aef490&p=aef" & curl "http://localhost:6002/add?n=bha491&p=bha" & curl "http://localhost:6003/add?n=cbd492&p=cbd"
+curl "http://localhost:6001/add?n=afe1390&p=afe" & curl "http://localhost:6002/add?n=bac1391&p=bac" & curl "http://localhost:6003/add?n=chf1392&p=chf"
 wait 
-curl "http://localhost:6001/add?n=aia500&p=aia" & curl "http://localhost:6002/add?n=bcb501&p=bcb" & curl "http://localhost:6003/add?n=cad502&p=cad"
+curl "http://localhost:6001/add?n=ajb1400&p=ajb" & curl "http://localhost:6002/add?n=bka1401&p=bka" & curl "http://localhost:6003/add?n=chd1402&p=chd"
 wait 
-curl "http://localhost:6001/add?n=akb510&p=akb" & curl "http://localhost:6002/add?n=bie511&p=bie" & curl "http://localhost:6003/add?n=cha512&p=cha"
+curl "http://localhost:6001/add?n=agb1410&p=agb" & curl "http://localhost:6002/add?n=bic1411&p=bic" & curl "http://localhost:6003/add?n=ced1412&p=ced"
 wait 
-curl "http://localhost:6001/add?n=adb520&p=adb" & curl "http://localhost:6002/add?n=bee521&p=bee" & curl "http://localhost:6003/add?n=cge522&p=cge"
+curl "http://localhost:6001/add?n=aae1420&p=aae" & curl "http://localhost:6002/add?n=bbb1421&p=bbb" & curl "http://localhost:6003/add?n=cgc1422&p=cgc"
 wait 
-curl "http://localhost:6001/add?n=akb530&p=akb" & curl "http://localhost:6002/add?n=baa531&p=baa" & curl "http://localhost:6003/add?n=cke532&p=cke"
+curl "http://localhost:6001/add?n=agd1430&p=agd" & curl "http://localhost:6002/add?n=bcb1431&p=bcb" & curl "http://localhost:6003/add?n=chd1432&p=chd"
 wait 
-curl "http://localhost:6001/add?n=add540&p=add" & curl "http://localhost:6002/add?n=bcc541&p=bcc" & curl "http://localhost:6003/add?n=caf542&p=caf"
+curl "http://localhost:6001/add?n=aif1440&p=aif" & curl "http://localhost:6002/add?n=bac1441&p=bac" & curl "http://localhost:6003/add?n=cba1442&p=cba"
 wait 
-curl "http://localhost:6001/remove?n=add540&p=add" & curl "http://localhost:6002/remove?n=bcc541&p=bcc" & curl "http://localhost:6003/remove?n=caf542&p=caf"
+curl "http://localhost:6001/remove?n=aif1440&p=aif" & curl "http://localhost:6002/remove?n=bac1441&p=bac" & curl "http://localhost:6003/remove?n=cba1442&p=cba"
 wait 
-curl "http://localhost:6001/add?n=akb550&p=akb" & curl "http://localhost:6002/add?n=bae551&p=bae" & curl "http://localhost:6003/add?n=cef552&p=cef"
+curl "http://localhost:6001/add?n=aef1450&p=aef" & curl "http://localhost:6002/add?n=bhf1451&p=bhf" & curl "http://localhost:6003/add?n=ckf1452&p=ckf"
 wait 
-curl "http://localhost:6001/add?n=add560&p=add" & curl "http://localhost:6002/add?n=baf561&p=baf" & curl "http://localhost:6003/add?n=cie562&p=cie"
+curl "http://localhost:6001/add?n=aae1460&p=aae" & curl "http://localhost:6002/add?n=baa1461&p=baa" & curl "http://localhost:6003/add?n=ccc1462&p=ccc"
 wait 
-curl "http://localhost:6001/add?n=ade570&p=ade" & curl "http://localhost:6002/add?n=bea571&p=bea" & curl "http://localhost:6003/add?n=cka572&p=cka"
+curl "http://localhost:6001/add?n=ada1470&p=ada" & curl "http://localhost:6002/add?n=bfb1471&p=bfb" & curl "http://localhost:6003/add?n=ckc1472&p=ckc"
 wait 
-curl "http://localhost:6001/add?n=agb580&p=agb" & curl "http://localhost:6002/add?n=bdf581&p=bdf" & curl "http://localhost:6003/add?n=cde582&p=cde"
+curl "http://localhost:6001/add?n=abd1480&p=abd" & curl "http://localhost:6002/add?n=bkc1481&p=bkc" & curl "http://localhost:6003/add?n=caa1482&p=caa"
 wait 
-curl "http://localhost:6001/add?n=aie590&p=aie" & curl "http://localhost:6002/add?n=bbd591&p=bbd" & curl "http://localhost:6003/add?n=chd592&p=chd"
+curl "http://localhost:6001/add?n=aga1490&p=aga" & curl "http://localhost:6002/add?n=bcf1491&p=bcf" & curl "http://localhost:6003/add?n=cjb1492&p=cjb"
 wait 
-curl "http://localhost:6001/add?n=ajd600&p=ajd" & curl "http://localhost:6002/add?n=bjd601&p=bjd" & curl "http://localhost:6003/add?n=caf602&p=caf"
+curl "http://localhost:6001/add?n=afb1500&p=afb" & curl "http://localhost:6002/add?n=bdf1501&p=bdf" & curl "http://localhost:6003/add?n=cbb1502&p=cbb"
 wait 
-curl "http://localhost:6001/remove?n=ajd600&p=ajd" & curl "http://localhost:6002/remove?n=bjd601&p=bjd" & curl "http://localhost:6003/remove?n=caf602&p=caf"
+curl "http://localhost:6001/remove?n=afb1500&p=afb" & curl "http://localhost:6002/remove?n=bdf1501&p=bdf" & curl "http://localhost:6003/remove?n=cbb1502&p=cbb"
 wait 
-curl "http://localhost:6001/add?n=afd610&p=afd" & curl "http://localhost:6002/add?n=bef611&p=bef" & curl "http://localhost:6003/add?n=cff612&p=cff"
+curl "http://localhost:6001/add?n=aid1510&p=aid" & curl "http://localhost:6002/add?n=bia1511&p=bia" & curl "http://localhost:6003/add?n=cfc1512&p=cfc"
 wait 
-curl "http://localhost:6001/add?n=ace620&p=ace" & curl "http://localhost:6002/add?n=bif621&p=bif" & curl "http://localhost:6003/add?n=cia622&p=cia"
+curl "http://localhost:6001/add?n=agd1520&p=agd" & curl "http://localhost:6002/add?n=bcb1521&p=bcb" & curl "http://localhost:6003/add?n=ccf1522&p=ccf"
 wait 
-curl "http://localhost:6001/add?n=aje630&p=aje" & curl "http://localhost:6002/add?n=bjd631&p=bjd" & curl "http://localhost:6003/add?n=cgd632&p=cgd"
+curl "http://localhost:6001/add?n=aie1530&p=aie" & curl "http://localhost:6002/add?n=bkc1531&p=bkc" & curl "http://localhost:6003/add?n=cke1532&p=cke"
 wait 
-curl "http://localhost:6001/add?n=akf640&p=akf" & curl "http://localhost:6002/add?n=baa641&p=baa" & curl "http://localhost:6003/add?n=cfa642&p=cfa"
+curl "http://localhost:6001/add?n=acc1540&p=acc" & curl "http://localhost:6002/add?n=bed1541&p=bed" & curl "http://localhost:6003/add?n=ccf1542&p=ccf"
 wait 
-curl "http://localhost:6001/add?n=agd650&p=agd" & curl "http://localhost:6002/add?n=bkc651&p=bkc" & curl "http://localhost:6003/add?n=cdd652&p=cdd"
+curl "http://localhost:6001/add?n=aea1550&p=aea" & curl "http://localhost:6002/add?n=bia1551&p=bia" & curl "http://localhost:6003/add?n=cje1552&p=cje"
 wait 
-curl "http://localhost:6001/add?n=ajd660&p=ajd" & curl "http://localhost:6002/add?n=bha661&p=bha" & curl "http://localhost:6003/add?n=cfe662&p=cfe"
+curl "http://localhost:6001/add?n=akc1560&p=akc" & curl "http://localhost:6002/add?n=bge1561&p=bge" & curl "http://localhost:6003/add?n=cka1562&p=cka"
 wait 
-curl "http://localhost:6001/remove?n=ajd660&p=ajd" & curl "http://localhost:6002/remove?n=bha661&p=bha" & curl "http://localhost:6003/remove?n=cfe662&p=cfe"
+curl "http://localhost:6001/remove?n=akc1560&p=akc" & curl "http://localhost:6002/remove?n=bge1561&p=bge" & curl "http://localhost:6003/remove?n=cka1562&p=cka"
 wait 
-curl "http://localhost:6001/add?n=ahe670&p=ahe" & curl "http://localhost:6002/add?n=bhc671&p=bhc" & curl "http://localhost:6003/add?n=cea672&p=cea"
+curl "http://localhost:6001/add?n=aic1570&p=aic" & curl "http://localhost:6002/add?n=bja1571&p=bja" & curl "http://localhost:6003/add?n=cde1572&p=cde"
 wait 
-curl "http://localhost:6001/add?n=akb680&p=akb" & curl "http://localhost:6002/add?n=bda681&p=bda" & curl "http://localhost:6003/add?n=cce682&p=cce"
+curl "http://localhost:6001/add?n=ahc1580&p=ahc" & curl "http://localhost:6002/add?n=bdf1581&p=bdf" & curl "http://localhost:6003/add?n=cjb1582&p=cjb"
 wait 
-curl "http://localhost:6001/add?n=agf690&p=agf" & curl "http://localhost:6002/add?n=bib691&p=bib" & curl "http://localhost:6003/add?n=cac692&p=cac"
+curl "http://localhost:6001/add?n=afa1590&p=afa" & curl "http://localhost:6002/add?n=bic1591&p=bic" & curl "http://localhost:6003/add?n=cbf1592&p=cbf"
 wait 
-curl "http://localhost:6001/add?n=acd700&p=acd" & curl "http://localhost:6002/add?n=bac701&p=bac" & curl "http://localhost:6003/add?n=cie702&p=cie"
+curl "http://localhost:6001/add?n=ahf1600&p=ahf" & curl "http://localhost:6002/add?n=bka1601&p=bka" & curl "http://localhost:6003/add?n=cba1602&p=cba"
 wait 
-curl "http://localhost:6001/add?n=agb710&p=agb" & curl "http://localhost:6002/add?n=bab711&p=bab" & curl "http://localhost:6003/add?n=cee712&p=cee"
+curl "http://localhost:6001/add?n=aad1610&p=aad" & curl "http://localhost:6002/add?n=bdc1611&p=bdc" & curl "http://localhost:6003/add?n=cbd1612&p=cbd"
 wait 
-curl "http://localhost:6001/add?n=ahe720&p=ahe" & curl "http://localhost:6002/add?n=bgf721&p=bgf" & curl "http://localhost:6003/add?n=ckf722&p=ckf"
+curl "http://localhost:6001/add?n=ade1620&p=ade" & curl "http://localhost:6002/add?n=bfe1621&p=bfe" & curl "http://localhost:6003/add?n=cbc1622&p=cbc"
 wait 
-curl "http://localhost:6001/remove?n=ahe720&p=ahe" & curl "http://localhost:6002/remove?n=bgf721&p=bgf" & curl "http://localhost:6003/remove?n=ckf722&p=ckf"
+curl "http://localhost:6001/remove?n=ade1620&p=ade" & curl "http://localhost:6002/remove?n=bfe1621&p=bfe" & curl "http://localhost:6003/remove?n=cbc1622&p=cbc"
 wait 
-curl "http://localhost:6001/add?n=ake730&p=ake" & curl "http://localhost:6002/add?n=bjd731&p=bjd" & curl "http://localhost:6003/add?n=cee732&p=cee"
+curl "http://localhost:6001/add?n=abb1630&p=abb" & curl "http://localhost:6002/add?n=bge1631&p=bge" & curl "http://localhost:6003/add?n=ckf1632&p=ckf"
 wait 
-curl "http://localhost:6001/add?n=ajc740&p=ajc" & curl "http://localhost:6002/add?n=bed741&p=bed" & curl "http://localhost:6003/add?n=cca742&p=cca"
+curl "http://localhost:6001/add?n=ahe1640&p=ahe" & curl "http://localhost:6002/add?n=bae1641&p=bae" & curl "http://localhost:6003/add?n=cef1642&p=cef"
 wait 
-curl "http://localhost:6001/add?n=aff750&p=aff" & curl "http://localhost:6002/add?n=bdc751&p=bdc" & curl "http://localhost:6003/add?n=cic752&p=cic"
+curl "http://localhost:6001/add?n=aid1650&p=aid" & curl "http://localhost:6002/add?n=bia1651&p=bia" & curl "http://localhost:6003/add?n=cde1652&p=cde"
 wait 
-curl "http://localhost:6001/add?n=aab760&p=aab" & curl "http://localhost:6002/add?n=bef761&p=bef" & curl "http://localhost:6003/add?n=cdd762&p=cdd"
+curl "http://localhost:6001/add?n=agd1660&p=agd" & curl "http://localhost:6002/add?n=bka1661&p=bka" & curl "http://localhost:6003/add?n=chd1662&p=chd"
 wait 
-curl "http://localhost:6001/add?n=aca770&p=aca" & curl "http://localhost:6002/add?n=bic771&p=bic" & curl "http://localhost:6003/add?n=cdf772&p=cdf"
+curl "http://localhost:6001/add?n=aaf1670&p=aaf" & curl "http://localhost:6002/add?n=bie1671&p=bie" & curl "http://localhost:6003/add?n=chf1672&p=chf"
 wait 
-curl "http://localhost:6001/add?n=aec780&p=aec" & curl "http://localhost:6002/add?n=baf781&p=baf" & curl "http://localhost:6003/add?n=cac782&p=cac"
+curl "http://localhost:6001/add?n=aeb1680&p=aeb" & curl "http://localhost:6002/add?n=bje1681&p=bje" & curl "http://localhost:6003/add?n=ccb1682&p=ccb"
 wait 
-curl "http://localhost:6001/remove?n=aec780&p=aec" & curl "http://localhost:6002/remove?n=baf781&p=baf" & curl "http://localhost:6003/remove?n=cac782&p=cac"
+curl "http://localhost:6001/remove?n=aeb1680&p=aeb" & curl "http://localhost:6002/remove?n=bje1681&p=bje" & curl "http://localhost:6003/remove?n=ccb1682&p=ccb"
 wait 
-curl "http://localhost:6001/add?n=aha790&p=aha" & curl "http://localhost:6002/add?n=bjf791&p=bjf" & curl "http://localhost:6003/add?n=cca792&p=cca"
+curl "http://localhost:6001/add?n=agb1690&p=agb" & curl "http://localhost:6002/add?n=bgf1691&p=bgf" & curl "http://localhost:6003/add?n=cae1692&p=cae"
 wait 
-curl "http://localhost:6001/add?n=abe800&p=abe" & curl "http://localhost:6002/add?n=baa801&p=baa" & curl "http://localhost:6003/add?n=cbe802&p=cbe"
+curl "http://localhost:6001/add?n=aie1700&p=aie" & curl "http://localhost:6002/add?n=bbb1701&p=bbb" & curl "http://localhost:6003/add?n=ced1702&p=ced"
 wait 
-curl "http://localhost:6001/add?n=ahe810&p=ahe" & curl "http://localhost:6002/add?n=bae811&p=bae" & curl "http://localhost:6003/add?n=cja812&p=cja"
+curl "http://localhost:6001/add?n=agf1710&p=agf" & curl "http://localhost:6002/add?n=bbd1711&p=bbd" & curl "http://localhost:6003/add?n=ckf1712&p=ckf"
 wait 
-curl "http://localhost:6001/add?n=aka820&p=aka" & curl "http://localhost:6002/add?n=bgd821&p=bgd" & curl "http://localhost:6003/add?n=cjb822&p=cjb"
+curl "http://localhost:6001/add?n=adc1720&p=adc" & curl "http://localhost:6002/add?n=bdf1721&p=bdf" & curl "http://localhost:6003/add?n=cdd1722&p=cdd"
 wait 
-curl "http://localhost:6001/add?n=agb830&p=agb" & curl "http://localhost:6002/add?n=bbe831&p=bbe" & curl "http://localhost:6003/add?n=cef832&p=cef"
+curl "http://localhost:6001/add?n=afb1730&p=afb" & curl "http://localhost:6002/add?n=bja1731&p=bja" & curl "http://localhost:6003/add?n=cgb1732&p=cgb"
 wait 
-curl "http://localhost:6001/add?n=aaa840&p=aaa" & curl "http://localhost:6002/add?n=bje841&p=bje" & curl "http://localhost:6003/add?n=cab842&p=cab"
+curl "http://localhost:6001/add?n=adb1740&p=adb" & curl "http://localhost:6002/add?n=bjf1741&p=bjf" & curl "http://localhost:6003/add?n=ckc1742&p=ckc"
 wait 
-curl "http://localhost:6001/remove?n=aaa840&p=aaa" & curl "http://localhost:6002/remove?n=bje841&p=bje" & curl "http://localhost:6003/remove?n=cab842&p=cab"
+curl "http://localhost:6001/remove?n=adb1740&p=adb" & curl "http://localhost:6002/remove?n=bjf1741&p=bjf" & curl "http://localhost:6003/remove?n=ckc1742&p=ckc"
 wait 
-curl "http://localhost:6001/add?n=adf850&p=adf" & curl "http://localhost:6002/add?n=bda851&p=bda" & curl "http://localhost:6003/add?n=cbb852&p=cbb"
+curl "http://localhost:6001/add?n=aaf1750&p=aaf" & curl "http://localhost:6002/add?n=bca1751&p=bca" & curl "http://localhost:6003/add?n=cib1752&p=cib"
 wait 
-curl "http://localhost:6001/add?n=ahc860&p=ahc" & curl "http://localhost:6002/add?n=bec861&p=bec" & curl "http://localhost:6003/add?n=ckd862&p=ckd"
+curl "http://localhost:6001/add?n=aja1760&p=aja" & curl "http://localhost:6002/add?n=bdc1761&p=bdc" & curl "http://localhost:6003/add?n=cia1762&p=cia"
 wait 
-curl "http://localhost:6001/add?n=aed870&p=aed" & curl "http://localhost:6002/add?n=bjc871&p=bjc" & curl "http://localhost:6003/add?n=ckf872&p=ckf"
+curl "http://localhost:6001/add?n=aaf1770&p=aaf" & curl "http://localhost:6002/add?n=bgf1771&p=bgf" & curl "http://localhost:6003/add?n=cdb1772&p=cdb"
 wait 
-curl "http://localhost:6001/add?n=adc880&p=adc" & curl "http://localhost:6002/add?n=bjf881&p=bjf" & curl "http://localhost:6003/add?n=cdb882&p=cdb"
+curl "http://localhost:6001/add?n=aae1780&p=aae" & curl "http://localhost:6002/add?n=bhc1781&p=bhc" & curl "http://localhost:6003/add?n=cib1782&p=cib"
 wait 
-curl "http://localhost:6001/add?n=ahe890&p=ahe" & curl "http://localhost:6002/add?n=bke891&p=bke" & curl "http://localhost:6003/add?n=cie892&p=cie"
-wait 
-curl "http://localhost:6001/add?n=agd900&p=agd" & curl "http://localhost:6002/add?n=bba901&p=bba" & curl "http://localhost:6003/add?n=ckf902&p=ckf"
-wait 
-curl "http://localhost:6001/remove?n=agd900&p=agd" & curl "http://localhost:6002/remove?n=bba901&p=bba" & curl "http://localhost:6003/remove?n=ckf902&p=ckf"
-wait 
-curl "http://localhost:6001/add?n=aef910&p=aef" & curl "http://localhost:6002/add?n=beb911&p=beb" & curl "http://localhost:6003/add?n=cha912&p=cha"
-wait 
-curl "http://localhost:6001/add?n=akb920&p=akb" & curl "http://localhost:6002/add?n=bge921&p=bge" & curl "http://localhost:6003/add?n=cdc922&p=cdc"
-wait 
-curl "http://localhost:6001/add?n=akf930&p=akf" & curl "http://localhost:6002/add?n=bgb931&p=bgb" & curl "http://localhost:6003/add?n=cba932&p=cba"
-wait 
-curl "http://localhost:6001/add?n=aga940&p=aga" & curl "http://localhost:6002/add?n=bea941&p=bea" & curl "http://localhost:6003/add?n=cia942&p=cia"
-wait 
-curl "http://localhost:6001/add?n=agb950&p=agb" & curl "http://localhost:6002/add?n=bib951&p=bib" & curl "http://localhost:6003/add?n=ceb952&p=ceb"
-wait 
-curl "http://localhost:6001/add?n=age960&p=age" & curl "http://localhost:6002/add?n=bkf961&p=bkf" & curl "http://localhost:6003/add?n=ccb962&p=ccb"
-wait 
-curl "http://localhost:6001/remove?n=age960&p=age" & curl "http://localhost:6002/remove?n=bkf961&p=bkf" & curl "http://localhost:6003/remove?n=ccb962&p=ccb"
-wait 
-curl "http://localhost:6001/add?n=aee970&p=aee" & curl "http://localhost:6002/add?n=bid971&p=bid" & curl "http://localhost:6003/add?n=cka972&p=cka"
-wait 
-curl "http://localhost:6001/add?n=age980&p=age" & curl "http://localhost:6002/add?n=bee981&p=bee" & curl "http://localhost:6003/add?n=cga982&p=cga"
-wait 
-curl "http://localhost:6001/add?n=aac990&p=aac" & curl "http://localhost:6002/add?n=bge991&p=bge" & curl "http://localhost:6003/add?n=cda992&p=cda"
-wait 
-curl "http://localhost:6001/add?n=agf1000&p=agf" & curl "http://localhost:6002/add?n=bkc1001&p=bkc" & curl "http://localhost:6003/add?n=cac1002&p=cac"
-wait 
-curl "http://localhost:6001/add?n=aje1010&p=aje" & curl "http://localhost:6002/add?n=bjb1011&p=bjb" & curl "http://localhost:6003/add?n=cie1012&p=cie"
-wait 
-curl "http://localhost:6001/add?n=adf1020&p=adf" & curl "http://localhost:6002/add?n=bff1021&p=bff" & curl "http://localhost:6003/add?n=che1022&p=che"
-wait 
-curl "http://localhost:6001/remove?n=adf1020&p=adf" & curl "http://localhost:6002/remove?n=bff1021&p=bff" & curl "http://localhost:6003/remove?n=che1022&p=che"
-wait 
-curl "http://localhost:6001/add?n=aia1030&p=aia" & curl "http://localhost:6002/add?n=bkb1031&p=bkb" & curl "http://localhost:6003/add?n=ced1032&p=ced"
-wait 
-curl "http://localhost:6001/add?n=aca1040&p=aca" & curl "http://localhost:6002/add?n=bha1041&p=bha" & curl "http://localhost:6003/add?n=cga1042&p=cga"
-wait 
-curl "http://localhost:6001/add?n=akf1050&p=akf" & curl "http://localhost:6002/add?n=bja1051&p=bja" & curl "http://localhost:6003/add?n=cbf1052&p=cbf"
-wait 
-curl "http://localhost:6001/add?n=ajd1060&p=ajd" & curl "http://localhost:6002/add?n=bbb1061&p=bbb" & curl "http://localhost:6003/add?n=cff1062&p=cff"
-wait 
-curl "http://localhost:6001/add?n=aed1070&p=aed" & curl "http://localhost:6002/add?n=bcc1071&p=bcc" & curl "http://localhost:6003/add?n=cbd1072&p=cbd"
-wait 
-curl "http://localhost:6001/add?n=adf1080&p=adf" & curl "http://localhost:6002/add?n=bab1081&p=bab" & curl "http://localhost:6003/add?n=cid1082&p=cid"
-wait 
-curl "http://localhost:6001/remove?n=adf1080&p=adf" & curl "http://localhost:6002/remove?n=bab1081&p=bab" & curl "http://localhost:6003/remove?n=cid1082&p=cid"
-wait 
-curl "http://localhost:6001/add?n=akf1090&p=akf" & curl "http://localhost:6002/add?n=bac1091&p=bac" & curl "http://localhost:6003/add?n=cgc1092&p=cgc"
-wait 
-curl "http://localhost:6001/add?n=aaa1100&p=aaa" & curl "http://localhost:6002/add?n=bed1101&p=bed" & curl "http://localhost:6003/add?n=cff1102&p=cff"
-wait 
-curl "http://localhost:6001/add?n=abc1110&p=abc" & curl "http://localhost:6002/add?n=bie1111&p=bie" & curl "http://localhost:6003/add?n=ccc1112&p=ccc"
-wait 
-curl "http://localhost:6001/add?n=aae1120&p=aae" & curl "http://localhost:6002/add?n=bjd1121&p=bjd" & curl "http://localhost:6003/add?n=cfb1122&p=cfb"
-wait 
-curl "http://localhost:6001/add?n=ada1130&p=ada" & curl "http://localhost:6002/add?n=bbc1131&p=bbc" & curl "http://localhost:6003/add?n=cgd1132&p=cgd"
-wait 
-curl "http://localhost:6001/add?n=abf1140&p=abf" & curl "http://localhost:6002/add?n=bkd1141&p=bkd" & curl "http://localhost:6003/add?n=cke1142&p=cke"
-wait 
-curl "http://localhost:6001/remove?n=abf1140&p=abf" & curl "http://localhost:6002/remove?n=bkd1141&p=bkd" & curl "http://localhost:6003/remove?n=cke1142&p=cke"
-wait 
-curl "http://localhost:6001/add?n=acb1150&p=acb" & curl "http://localhost:6002/add?n=bkd1151&p=bkd" & curl "http://localhost:6003/add?n=cje1152&p=cje"
-wait 
-curl "http://localhost:6001/add?n=ake1160&p=ake" & curl "http://localhost:6002/add?n=bdc1161&p=bdc" & curl "http://localhost:6003/add?n=ckd1162&p=ckd"
-wait 
-curl "http://localhost:6001/add?n=aga1170&p=aga" & curl "http://localhost:6002/add?n=bkd1171&p=bkd" & curl "http://localhost:6003/add?n=cef1172&p=cef"
-wait 
-curl "http://localhost:6001/add?n=akf1180&p=akf" & curl "http://localhost:6002/add?n=bfb1181&p=bfb" & curl "http://localhost:6003/add?n=cad1182&p=cad"
-wait 
-curl "http://localhost:6001/add?n=akb1190&p=akb" & curl "http://localhost:6002/add?n=bce1191&p=bce" & curl "http://localhost:6003/add?n=ccf1192&p=ccf"
-wait 
-curl "http://localhost:6001/add?n=ade1200&p=ade" & curl "http://localhost:6002/add?n=bhe1201&p=bhe" & curl "http://localhost:6003/add?n=chc1202&p=chc"
-wait 
-curl "http://localhost:6001/remove?n=ade1200&p=ade" & curl "http://localhost:6002/remove?n=bhe1201&p=bhe" & curl "http://localhost:6003/remove?n=chc1202&p=chc"
-wait 
-curl "http://localhost:6001/add?n=abb1210&p=abb" & curl "http://localhost:6002/add?n=bhe1211&p=bhe" & curl "http://localhost:6003/add?n=cia1212&p=cia"
-wait 
-curl "http://localhost:6001/add?n=aia1220&p=aia" & curl "http://localhost:6002/add?n=bec1221&p=bec" & curl "http://localhost:6003/add?n=cca1222&p=cca"
-wait 
-curl "http://localhost:6001/add?n=adc1230&p=adc" & curl "http://localhost:6002/add?n=bed1231&p=bed" & curl "http://localhost:6003/add?n=cbf1232&p=cbf"
-wait 
-curl "http://localhost:6001/add?n=akf1240&p=akf" & curl "http://localhost:6002/add?n=bbe1241&p=bbe" & curl "http://localhost:6003/add?n=ccf1242&p=ccf"
-wait 
-curl "http://localhost:6001/add?n=adf1250&p=adf" & curl "http://localhost:6002/add?n=bce1251&p=bce" & curl "http://localhost:6003/add?n=ckc1252&p=ckc"
-wait 
-curl "http://localhost:6001/add?n=aac1260&p=aac" & curl "http://localhost:6002/add?n=bbd1261&p=bbd" & curl "http://localhost:6003/add?n=cee1262&p=cee"
-wait 
-curl "http://localhost:6001/remove?n=aac1260&p=aac" & curl "http://localhost:6002/remove?n=bbd1261&p=bbd" & curl "http://localhost:6003/remove?n=cee1262&p=cee"
-wait 
-curl "http://localhost:6001/add?n=afb1270&p=afb" & curl "http://localhost:6002/add?n=bfc1271&p=bfc" & curl "http://localhost:6003/add?n=cef1272&p=cef"
-wait 
-curl "http://localhost:6001/add?n=aje1280&p=aje" & curl "http://localhost:6002/add?n=bje1281&p=bje" & curl "http://localhost:6003/add?n=cea1282&p=cea"
-wait 
-curl "http://localhost:6001/add?n=aid1290&p=aid" & curl "http://localhost:6002/add?n=bca1291&p=bca" & curl "http://localhost:6003/add?n=cdc1292&p=cdc"
-wait 
-curl "http://localhost:6001/add?n=ake1300&p=ake" & curl "http://localhost:6002/add?n=bif1301&p=bif" & curl "http://localhost:6003/add?n=cif1302&p=cif"
-wait 
-curl "http://localhost:6001/add?n=abb1310&p=abb" & curl "http://localhost:6002/add?n=bda1311&p=bda" & curl "http://localhost:6003/add?n=cac1312&p=cac"
-wait 
-curl "http://localhost:6001/add?n=ada1320&p=ada" & curl "http://localhost:6002/add?n=bif1321&p=bif" & curl "http://localhost:6003/add?n=cja1322&p=cja"
-wait 
-curl "http://localhost:6001/remove?n=ada1320&p=ada" & curl "http://localhost:6002/remove?n=bif1321&p=bif" & curl "http://localhost:6003/remove?n=cja1322&p=cja"
-wait 
-curl "http://localhost:6001/add?n=adc1330&p=adc" & curl "http://localhost:6002/add?n=bba1331&p=bba" & curl "http://localhost:6003/add?n=cje1332&p=cje"
-wait 
-curl "http://localhost:6001/add?n=aca1340&p=aca" & curl "http://localhost:6002/add?n=bhb1341&p=bhb" & curl "http://localhost:6003/add?n=cef1342&p=cef"
-wait 
-curl "http://localhost:6001/add?n=acd1350&p=acd" & curl "http://localhost:6002/add?n=bec1351&p=bec" & curl "http://localhost:6003/add?n=cia1352&p=cia"
-wait 
-curl "http://localhost:6001/add?n=akb1360&p=akb" & curl "http://localhost:6002/add?n=bge1361&p=bge" & curl "http://localhost:6003/add?n=cid1362&p=cid"
-wait 
-curl "http://localhost:6001/add?n=aka1370&p=aka" & curl "http://localhost:6002/add?n=bdc1371&p=bdc" & curl "http://localhost:6003/add?n=cbc1372&p=cbc"
-wait 
-curl "http://localhost:6001/add?n=aba1380&p=aba" & curl "http://localhost:6002/add?n=bbb1381&p=bbb" & curl "http://localhost:6003/add?n=ccf1382&p=ccf"
-wait 
-curl "http://localhost:6001/remove?n=aba1380&p=aba" & curl "http://localhost:6002/remove?n=bbb1381&p=bbb" & curl "http://localhost:6003/remove?n=ccf1382&p=ccf"
-wait 
-curl "http://localhost:6001/add?n=aac1390&p=aac" & curl "http://localhost:6002/add?n=baf1391&p=baf" & curl "http://localhost:6003/add?n=ckd1392&p=ckd"
-wait 
-curl "http://localhost:6001/add?n=aha1400&p=aha" & curl "http://localhost:6002/add?n=bhc1401&p=bhc" & curl "http://localhost:6003/add?n=cgf1402&p=cgf"
-wait 
-curl "http://localhost:6001/add?n=afe1410&p=afe" & curl "http://localhost:6002/add?n=bce1411&p=bce" & curl "http://localhost:6003/add?n=cja1412&p=cja"
-wait 
-curl "http://localhost:6001/add?n=aec1420&p=aec" & curl "http://localhost:6002/add?n=bdd1421&p=bdd" & curl "http://localhost:6003/add?n=cac1422&p=cac"
-wait 
-curl "http://localhost:6001/add?n=ajb1430&p=ajb" & curl "http://localhost:6002/add?n=bgd1431&p=bgd" & curl "http://localhost:6003/add?n=ckb1432&p=ckb"
-wait 
-curl "http://localhost:6001/add?n=aif1440&p=aif" & curl "http://localhost:6002/add?n=bkd1441&p=bkd" & curl "http://localhost:6003/add?n=ckf1442&p=ckf"
-wait 
-curl "http://localhost:6001/remove?n=aif1440&p=aif" & curl "http://localhost:6002/remove?n=bkd1441&p=bkd" & curl "http://localhost:6003/remove?n=ckf1442&p=ckf"
-wait 
-curl "http://localhost:6001/add?n=abc1450&p=abc" & curl "http://localhost:6002/add?n=bgb1451&p=bgb" & curl "http://localhost:6003/add?n=cde1452&p=cde"
-wait 
-curl "http://localhost:6001/add?n=aaa1460&p=aaa" & curl "http://localhost:6002/add?n=bec1461&p=bec" & curl "http://localhost:6003/add?n=cib1462&p=cib"
-wait 
-curl "http://localhost:6001/add?n=abc1470&p=abc" & curl "http://localhost:6002/add?n=bea1471&p=bea" & curl "http://localhost:6003/add?n=cde1472&p=cde"
-wait 
-curl "http://localhost:6001/add?n=afe1480&p=afe" & curl "http://localhost:6002/add?n=bdf1481&p=bdf" & curl "http://localhost:6003/add?n=cjf1482&p=cjf"
-wait 
-curl "http://localhost:6001/add?n=aha1490&p=aha" & curl "http://localhost:6002/add?n=bfd1491&p=bfd" & curl "http://localhost:6003/add?n=cce1492&p=cce"
-wait 
-curl "http://localhost:6001/add?n=abf1500&p=abf" & curl "http://localhost:6002/add?n=bif1501&p=bif" & curl "http://localhost:6003/add?n=cid1502&p=cid"
-wait 
-curl "http://localhost:6001/remove?n=abf1500&p=abf" & curl "http://localhost:6002/remove?n=bif1501&p=bif" & curl "http://localhost:6003/remove?n=cid1502&p=cid"
-wait 
-curl "http://localhost:6001/add?n=ahf1510&p=ahf" & curl "http://localhost:6002/add?n=bca1511&p=bca" & curl "http://localhost:6003/add?n=cab1512&p=cab"
-wait 
-curl "http://localhost:6001/add?n=aad1520&p=aad" & curl "http://localhost:6002/add?n=bhc1521&p=bhc" & curl "http://localhost:6003/add?n=cge1522&p=cge"
-wait 
-curl "http://localhost:6001/add?n=ace1530&p=ace" & curl "http://localhost:6002/add?n=bca1531&p=bca" & curl "http://localhost:6003/add?n=cab1532&p=cab"
-wait 
-curl "http://localhost:6001/add?n=add1540&p=add" & curl "http://localhost:6002/add?n=bie1541&p=bie" & curl "http://localhost:6003/add?n=cca1542&p=cca"
-wait 
-curl "http://localhost:6001/add?n=aec1550&p=aec" & curl "http://localhost:6002/add?n=bad1551&p=bad" & curl "http://localhost:6003/add?n=cja1552&p=cja"
-wait 
-curl "http://localhost:6001/add?n=aje1560&p=aje" & curl "http://localhost:6002/add?n=bbd1561&p=bbd" & curl "http://localhost:6003/add?n=ced1562&p=ced"
-wait 
-curl "http://localhost:6001/remove?n=aje1560&p=aje" & curl "http://localhost:6002/remove?n=bbd1561&p=bbd" & curl "http://localhost:6003/remove?n=ced1562&p=ced"
-wait 
-curl "http://localhost:6001/add?n=ace1570&p=ace" & curl "http://localhost:6002/add?n=bkc1571&p=bkc" & curl "http://localhost:6003/add?n=chb1572&p=chb"
-wait 
-curl "http://localhost:6001/add?n=ahd1580&p=ahd" & curl "http://localhost:6002/add?n=bdd1581&p=bdd" & curl "http://localhost:6003/add?n=cba1582&p=cba"
-wait 
-curl "http://localhost:6001/add?n=aac1590&p=aac" & curl "http://localhost:6002/add?n=bie1591&p=bie" & curl "http://localhost:6003/add?n=cec1592&p=cec"
-wait 
-curl "http://localhost:6001/add?n=akd1600&p=akd" & curl "http://localhost:6002/add?n=bke1601&p=bke" & curl "http://localhost:6003/add?n=cic1602&p=cic"
-wait 
-curl "http://localhost:6001/add?n=ahb1610&p=ahb" & curl "http://localhost:6002/add?n=bbd1611&p=bbd" & curl "http://localhost:6003/add?n=cjb1612&p=cjb"
-wait 
-curl "http://localhost:6001/add?n=afd1620&p=afd" & curl "http://localhost:6002/add?n=beb1621&p=beb" & curl "http://localhost:6003/add?n=cjb1622&p=cjb"
-wait 
-curl "http://localhost:6001/remove?n=afd1620&p=afd" & curl "http://localhost:6002/remove?n=beb1621&p=beb" & curl "http://localhost:6003/remove?n=cjb1622&p=cjb"
-wait 
-curl "http://localhost:6001/add?n=acd1630&p=acd" & curl "http://localhost:6002/add?n=bjf1631&p=bjf" & curl "http://localhost:6003/add?n=cca1632&p=cca"
-wait 
-curl "http://localhost:6001/add?n=aed1640&p=aed" & curl "http://localhost:6002/add?n=bac1641&p=bac" & curl "http://localhost:6003/add?n=cdc1642&p=cdc"
-wait 
-curl "http://localhost:6001/add?n=add1650&p=add" & curl "http://localhost:6002/add?n=bcd1651&p=bcd" & curl "http://localhost:6003/add?n=ceb1652&p=ceb"
-wait 
-curl "http://localhost:6001/add?n=afd1660&p=afd" & curl "http://localhost:6002/add?n=bcb1661&p=bcb" & curl "http://localhost:6003/add?n=cfb1662&p=cfb"
-wait 
-curl "http://localhost:6001/add?n=aaf1670&p=aaf" & curl "http://localhost:6002/add?n=bbc1671&p=bbc" & curl "http://localhost:6003/add?n=cfd1672&p=cfd"
-wait 
-curl "http://localhost:6001/add?n=aif1680&p=aif" & curl "http://localhost:6002/add?n=bib1681&p=bib" & curl "http://localhost:6003/add?n=che1682&p=che"
-wait 
-curl "http://localhost:6001/remove?n=aif1680&p=aif" & curl "http://localhost:6002/remove?n=bib1681&p=bib" & curl "http://localhost:6003/remove?n=che1682&p=che"
-wait 
-curl "http://localhost:6001/add?n=aad1690&p=aad" & curl "http://localhost:6002/add?n=bka1691&p=bka" & curl "http://localhost:6003/add?n=ckf1692&p=ckf"
-wait 
-curl "http://localhost:6001/add?n=aif1700&p=aif" & curl "http://localhost:6002/add?n=bhb1701&p=bhb" & curl "http://localhost:6003/add?n=cjc1702&p=cjc"
-wait 
-curl "http://localhost:6001/add?n=agf1710&p=agf" & curl "http://localhost:6002/add?n=bdc1711&p=bdc" & curl "http://localhost:6003/add?n=cjf1712&p=cjf"
-wait 
-curl "http://localhost:6001/add?n=aaf1720&p=aaf" & curl "http://localhost:6002/add?n=bha1721&p=bha" & curl "http://localhost:6003/add?n=caf1722&p=caf"
-wait 
-curl "http://localhost:6001/add?n=ahe1730&p=ahe" & curl "http://localhost:6002/add?n=bdd1731&p=bdd" & curl "http://localhost:6003/add?n=ccb1732&p=ccb"
-wait 
-curl "http://localhost:6001/add?n=agd1740&p=agd" & curl "http://localhost:6002/add?n=bgb1741&p=bgb" & curl "http://localhost:6003/add?n=cid1742&p=cid"
-wait 
-curl "http://localhost:6001/remove?n=agd1740&p=agd" & curl "http://localhost:6002/remove?n=bgb1741&p=bgb" & curl "http://localhost:6003/remove?n=cid1742&p=cid"
-wait 
-curl "http://localhost:6001/add?n=aja1750&p=aja" & curl "http://localhost:6002/add?n=bfa1751&p=bfa" & curl "http://localhost:6003/add?n=ckd1752&p=ckd"
-wait 
-curl "http://localhost:6001/add?n=aab1760&p=aab" & curl "http://localhost:6002/add?n=bec1761&p=bec" & curl "http://localhost:6003/add?n=cda1762&p=cda"
-wait 
-curl "http://localhost:6001/add?n=afb1770&p=afb" & curl "http://localhost:6002/add?n=bie1771&p=bie" & curl "http://localhost:6003/add?n=cke1772&p=cke"
-wait 
-curl "http://localhost:6001/add?n=akb1780&p=akb" & curl "http://localhost:6002/add?n=bec1781&p=bec" & curl "http://localhost:6003/add?n=cgc1782&p=cgc"
-wait 
-curl "http://localhost:6001/add?n=abb1790&p=abb" & curl "http://localhost:6002/add?n=bdc1791&p=bdc" & curl "http://localhost:6003/add?n=cib1792&p=cib"
+curl "http://localhost:6001/add?n=adc1790&p=adc" & curl "http://localhost:6002/add?n=bia1791&p=bia" & curl "http://localhost:6003/add?n=cfa1792&p=cfa"
 wait 

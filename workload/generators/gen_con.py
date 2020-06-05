@@ -15,6 +15,18 @@ def gen_ops(conflict):
     ops[r] = []
     nc_ops[r] = []
 
+  # add and remove ops
+  for i in range(0,90): 
+    for r in range(0, 3): 
+      parent = chr(97 + r) + chr(97 + random.randint(0,10)) + chr(97 + random.randint(0,5)) 
+      args = ['n='+parent + str(i) + str(r), 'p='+parent]
+      ops[r] += [(r, 'add', '&'.join(args))]
+      if not i%6: 
+        # print('remove this') 
+        ops[r] += [(r, 'remove', '&'.join(args))]
+
+
+  for r in range(0,3):
     rep = chr(97 + r)
     # conflict loads
     for j in range(3,(conflict/2) + 3):
@@ -110,7 +122,7 @@ def gen_ops(conflict):
 
 
   # add and remove ops
-  for i in range(0,180): 
+  for i in range(90,180): 
     for r in range(0, 3): 
       parent = chr(97 + r) + chr(97 + random.randint(0,10)) + chr(97 + random.randint(0,5)) 
       args = ['n='+parent + str(i) + str(r), 'p='+parent]
