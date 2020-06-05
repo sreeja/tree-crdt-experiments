@@ -4,6 +4,13 @@ def gen_ops(conflict):
   x = 97
   # an op tuple : (replica, operation, args)
   ops = {} 
+
+  # add operations
+  a_ops = {}
+  # remove operations
+  r_ops = {}
+  # move operations
+  m_ops = {}
   # non conflicting operations
   nc_ops = {}
   # conflicting operations
@@ -14,16 +21,19 @@ def gen_ops(conflict):
   for r in range(0,3):
     ops[r] = []
     nc_ops[r] = []
+    a_ops[r] = []
+    r_ops[r] = []
+    m_ops[r] = []
 
   # add and remove ops
-  for i in range(0,90): 
+  for i in range(0,180): 
     for r in range(0, 3): 
       parent = chr(97 + r) + chr(97 + random.randint(0,10)) + chr(97 + random.randint(0,5)) 
       args = ['n='+parent + str(i) + str(r), 'p='+parent]
-      ops[r] += [(r, 'add', '&'.join(args))]
+      a_ops[r] += [(r, 'add', '&'.join(args))]
       if not i%6: 
         # print('remove this') 
-        ops[r] += [(r, 'remove', '&'.join(args))]
+        r_ops[r] += [(r, 'remove', '&'.join(args))]
 
 
   for r in range(0,3):
@@ -82,34 +92,34 @@ def gen_ops(conflict):
   k2=0
   for j in range(len(c_ops)):
     if c_ops[j][0][0] == 0:
-      ops[0] += [c_ops[j][0]]
+      m_ops[0] += [c_ops[j][0]]
       if c_ops[j][1][0] == 1:
-        ops[1] += [c_ops[j][1]]
-        ops[2] += [nc_ops[2][k2]]
+        m_ops[1] += [c_ops[j][1]]
+        m_ops[2] += [nc_ops[2][k2]]
         k2 += 1
       else:
-        ops[2] += [c_ops[j][1]]
-        ops[1] += [nc_ops[1][k1]]
+        m_ops[2] += [c_ops[j][1]]
+        m_ops[1] += [nc_ops[1][k1]]
         k1 += 1
     elif c_ops[j][0][0] == 1:
-      ops[1] += [c_ops[j][0]]
+      m_ops[1] += [c_ops[j][0]]
       if c_ops[j][1][0] == 0:
-        ops[0] += [c_ops[j][1]]
-        ops[2] += [nc_ops[2][k2]]
+        m_ops[0] += [c_ops[j][1]]
+        m_ops[2] += [nc_ops[2][k2]]
         k2 += 1
       else:
-        ops[2] += [c_ops[j][1]]
-        ops[0] += [nc_ops[0][k0]]
+        m_ops[2] += [c_ops[j][1]]
+        m_ops[0] += [nc_ops[0][k0]]
         k0 += 1
     else:
-      ops[2] += [c_ops[j][0]]
+      m_ops[2] += [c_ops[j][0]]
       if c_ops[j][1][0] == 0:
-        ops[0] += [c_ops[j][1]]
-        ops[1] += [nc_ops[1][k1]]
+        m_ops[0] += [c_ops[j][1]]
+        m_ops[1] += [nc_ops[1][k1]]
         k1 += 1
       else:
-        ops[1] += [c_ops[j][1]]
-        ops[0] += [nc_ops[0][k0]]
+        m_ops[1] += [c_ops[j][1]]
+        m_ops[0] += [nc_ops[0][k0]]
         k0 += 1
 
   assert(k0 == k1)
@@ -117,27 +127,42 @@ def gen_ops(conflict):
 
   while k0 < len(nc_ops[0]):
     for i in range(0, 3):
-      ops[i] += [nc_ops[i][k0]]
+      m_ops[i] += [nc_ops[i][k0]]
     k0 += 1
 
+  
+  # we have adds, removes and moves now. 
+  # pattern is 2 adds, 1 move, 2 adds, 1 move, 1 remove, 2 adds, 1 move = 6 adds, 1 remove, 3 moves per set
 
-  # add and remove ops
-  for i in range(90,180): 
-    for r in range(0, 3): 
-      parent = chr(97 + r) + chr(97 + random.randint(0,10)) + chr(97 + random.randint(0,5)) 
-      args = ['n='+parent + str(i) + str(r), 'p='+parent]
-      ops[r] += [(r, 'add', '&'.join(args))]
-      if not i%6: 
-        # print('remove this') 
-        ops[r] += [(r, 'remove', '&'.join(args))]
+  ad = 0
+  rm = 0
+  mv = 0
+  for i in range(0, 30):
+    # print(i, ad, rm, mv)
+    for r in range(0, 3):
+      ops[r] += [a_ops[r][ad]]
+      ops[r] += [a_ops[r][ad+1]]
 
+      ops[r] += [m_ops[r][mv]]
+
+      ops[r] += [a_ops[r][ad+2]]
+      ops[r] += [a_ops[r][ad+3]]
+
+      ops[r] += [m_ops[r][mv+1]]
+
+      ops[r] += [r_ops[r][rm]]
+
+      ops[r] += [a_ops[r][ad+4]]
+      ops[r] += [a_ops[r][ad+5]]
+
+      ops[r] += [m_ops[r][mv+2]]
+
+    ad += 6
+    rm += 1
+    mv += 3
 
   return ops
 
-# ops = gen_ops(2)
-# for each in ops:
-#   print(ops[each])
-#   print(len(ops[each]))
 
 for conflict in [0, 2, 10, 20]:
   ops = gen_ops(conflict)

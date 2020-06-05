@@ -63,6 +63,7 @@ def parse_logs(lc_config, exp, conflict):
             except:
               data[key][r] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
             data[key]["ts"] = j["ts"]
+  skipmove_count = 0
   for r in replicas:
     file_name = r+'.txt'
     reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), 'paris', file_name)
@@ -75,6 +76,10 @@ def parse_logs(lc_config, exp, conflict):
           if not("skip" in j["op"]):
             data[key]["op"] = {"name":j["op"], "n":j["args"]["n"], "ca":j["ca"]}
           else:
+            if j["op"] in ["addskip", "removeskip"]:
+              print("issue: " + j)
+            else:
+              skipmove_count += 1
             data[key]["op"] = {"name":j["op"], "n":None, "ca":None}
           data[key]["origin"] = j["replica"]
   # print([data[x]["ts"][0] for x in data.keys()])
@@ -84,6 +89,7 @@ def parse_logs(lc_config, exp, conflict):
     assert(each in [data[x]["ts"][2] for x in data.keys()])
   # print(data.keys(), len(data))
   assert len(data) == 900
+  print ("skipmoves : " + str(skipmove_count))
   return data
 
 def parse_replica_logs(lc_config, exp, conflict):
@@ -219,6 +225,6 @@ def result(lc_config):
     f.write("\\\\ \n".join(sl) + "\\\\")
   print("=============")
 
-for i in range(1,4):
+for i in [1, 2, 3]:
   print("LATENCY CONFIG " + str(i) + " \n")
   result(i)

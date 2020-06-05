@@ -10,21 +10,21 @@ do
 
       for con in 0 2 10 20
         do
-        for f in $(find data); do > $f; done
-        make down
-        make run &
-        P_PID=$!
-        sleep 60
-        sh workload/base.sh
-        sleep $t
-        sh workload/conflict$con.sh
-        sleep $t
-        cp -r data/ lc$LC_ENV/data$con/$EXP_ENV
-        kill $P_PID
-        sleep 45
+          for f in $(find data); do > $f; done
+          make down
+          make run &
+          P_PID=$!
+          sleep 60
+          sh workload/base.sh
+          sleep $t
+          sh workload/conflict$con.sh
+          sleep $t
+          cp -r data/ lc$LC_ENV/data$con/$EXP_ENV
+          kill $P_PID
+          sleep 45
 
-        echo "Done lc" $LC_ENV " exp "$EXP_ENV " con " $con >> log.txt
-      done
+          echo "Done lc" $LC_ENV " exp "$EXP_ENV " con " $con >> log.txt
+        done
 
     done
 done

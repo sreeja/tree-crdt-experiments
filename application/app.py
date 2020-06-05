@@ -120,10 +120,10 @@ def acknowledge(ts, timestamp):
 
 def simulate_latency(n=1):
     latency_config = app.config["latency_config"]
-    avg = sum(latency_config.values()) / len(latency_config.values())
-    time.sleep(avg * n)
-    # if whoami != chairman:
-    #     time.sleep(latency_config[whoami+'-'+chairman] * n)
+    # avg = sum(latency_config.values()) / len(latency_config.values())
+    # time.sleep(avg * n)
+    if whoami != chairman:
+        time.sleep(latency_config[whoami+'-'+chairman] * n)
 
 def get_locks(n, ca):
     w = n
@@ -264,7 +264,7 @@ def add():
         message = {"to": each, "msg": msg}
         write_message(message)
     register_op(ts, start_time)
-    # log_logtime(ts, log_time)
+    log_logtime(ts, log_time)
     acknowledge(ts, end_time)
     if not flag:
         return "done"
@@ -300,7 +300,7 @@ def remove():
         message = {"to": each, "msg": msg}
         write_message(message)
     register_op(ts, start_time)
-    # log_logtime(ts, log_time)
+    log_logtime(ts, log_time)
     acknowledge(ts, end_time)
     if not flag:
         return "done"
@@ -363,7 +363,6 @@ def move():
         return "skipped"
 
     elif exp == 3:
-        # edit this code - should take a stable snapshot to work on and acquire locks
         ts = get_latest_ts()
         tree = get_tree(ts)
         start_time = datetime.now()
@@ -431,7 +430,7 @@ def move():
             message = {"to": each, "msg": msg}
             write_message(message)
         register_op(ts, start_time)
-        # log_logtime(ts, log_time)
+        log_logtime(ts, log_time)
         acknowledge(ts, end_time)
         if flag:
                 return "skipped"
