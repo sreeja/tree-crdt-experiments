@@ -89,7 +89,7 @@ def parse_logs(lc_config, exp, conflict):
     assert(each in [data[x]["ts"][2] for x in data.keys()])
   # print(data.keys(), len(data))
   assert len(data) == 900
-  print ("skipmoves : " + str(skipmove_count))
+  # print ("skipmoves : " + str(skipmove_count))
   return data
 
 def parse_replica_logs(lc_config, exp, conflict):
@@ -149,7 +149,7 @@ def is_concurrent(ts1, ts2):
 
 def is_conflicting(exp, op1, op2):
   if exp ==0: #crdt, only concurrent moves on critical ancestors conflict
-    if op1["name"] in ["downmove", "upmove"]: #possible conflict
+    if op1["name"] in ["downmove", "upmove", "move", "moveskip"]: #possible conflict
       # if op2["name"] in ["upmove", "downmove"]:
       #   if op1["n"] in op2["ca"] or op2["n"] in op1["ca"]:
       return True
@@ -172,6 +172,8 @@ def get_conflicting_conc_ops(entry, data, exp):
 
 def stabilization_time(exp, data):
   stabilizations = []
+  stabilizations_moves = []
+  stabilizations_nonmoves = []
   total = 0
   for each in data:
     stabilized_time = 0
@@ -179,11 +181,20 @@ def stabilization_time(exp, data):
     conflicts = get_conflicting_conc_ops(data[each], data, exp)
     if conflicts:
       last_conflict_time = max([conflicts[x][origin] for x in conflicts])
-      stabilizations += [last_conflict_time - data[each][origin]]
+      st = last_conflict_time - data[each][origin]
+      stabilizations += [st]
     else:
-      stabilizations += [timedelta(0)]
+      st = timedelta(0)
+      stabilizations += [st]
+    # print(data[each], st.total_seconds()*1000)
+    if data[each]["op"]["name"] in ["upmove", "downmove", "move", "moveskip"]:
+      stabilizations_moves += [st]
+    else:
+      stabilizations_nonmoves += [st]
   average_stabilization_time = sum(stabilizations, timedelta(0)) / len(stabilizations)
-  return stabilizations, average_stabilization_time
+  average_stabilization_time_moves = sum(stabilizations_moves, timedelta(0)) / len(stabilizations_moves)
+  average_stabilization_time_nonmoves = sum(stabilizations_nonmoves, timedelta(0)) / len(stabilizations_nonmoves)
+  return stabilizations, average_stabilization_time, average_stabilization_time_moves, average_stabilization_time_nonmoves
 
 
 def result(lc_config):
@@ -197,10 +208,9 @@ def result(lc_config):
     row = []
     for i in [0, 1, 2, 3]:
       # print("Experiment " + str(i))
-      print(experiments[i])
       # print("Conflict %: " + str(j))
       data = parse_logs(lc_config, i, j)
-      print("All: " + str(response_time(data)[1].total_seconds()*1000) + " :: Moves: " + str(response_time(data)[2].total_seconds()*1000) + " :: Nonmoves: " + str(response_time(data)[3].total_seconds()*1000))
+      print(experiments[i] + " All: " + str(response_time(data)[1].total_seconds()*1000) + " :: Moves: " + str(response_time(data)[2].total_seconds()*1000) + " :: Nonmoves: " + str(response_time(data)[3].total_seconds()*1000))
       row += [experiments[i] + ' & ' +str(response_time(data)[1].total_seconds()*1000) + ' & ' +str(response_time(data)[2].total_seconds()*1000) + ' & ' + str(response_time(data)[3].total_seconds()*1000) + '\\\\']
     # rl += [row]
     file_name = "response"+str(lc_config)+"con"+str(j)+".tex"
@@ -217,7 +227,8 @@ def result(lc_config):
     for j in [0, 2, 10, 20]:
       # print("Conflict %: " + str(j))
       data = parse_replica_logs(lc_config, i, j)
-      print("Conflict %: " + str(j) + " : " + str(stabilization_time(i, data)[1].total_seconds()*1000))
+      res = stabilization_time(i, data)
+      print("Conflict %: " + str(j) + " : " + "All: " + str(res[1].total_seconds()*1000) + " moves: " + str(res[2].total_seconds()*1000) + " other operations: " + str(res[3].total_seconds()*1000))
       row += [str(stabilization_time(i, data)[1].total_seconds()*1000)]
     sl += [experiments[i] + " & " + " & ".join(row)]
   file_name = "stabilization"+str(lc_config)+".tex"
