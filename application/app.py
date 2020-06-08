@@ -370,10 +370,12 @@ def move():
         ts[replicaid] += 1
         if prep:
             locks = get_locks(n, prep[2])
-            simulate_latency(len(locks))
+            # simulate_latency(len(locks))
+            simulate_latency()
             with ExitStack() as stack:
                 l = [stack.enter_context(lock) for lock in locks]
-                simulate_latency(len(locks))
+                # simulate_latency(len(locks))
+                simulate_latency()
                 ts = get_latest_ts()
                 tree = get_tree(ts)
                 prep = tree.move_gen(n, p, np)
@@ -392,7 +394,8 @@ def move():
                     register_op(ts, start_time)
                     log_logtime(ts, log_time)
                     acknowledge(ts, end_time)
-                    simulate_latency(len(locks))
+                    # simulate_latency(len(locks))
+                    simulate_latency()
                     return "done"
         msg = prepare_message("moveskip", ts, [], whoami, [])
         message = {"to": whoami, "msg": msg}
