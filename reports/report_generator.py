@@ -138,7 +138,7 @@ def response_time(data):
   average_conflict_response_time = sum(conflict_responses, timedelta(0)) / len(conflict_responses)
   nonconflict_responses = [data[ts]["acknowledged"] - data[ts]["requested_time"] for ts in data.keys() if not(data[ts]["op"]["name"] in ["upmove", "downmove", "move", "moveskip"])]
   average_nonconflict_response_time = sum(nonconflict_responses, timedelta(0)) / len(nonconflict_responses)
-  return responses, average_response_time, average_conflict_response_time, average_nonconflict_response_time
+  return [(ts, data[ts]["op"]["name"], (data[ts]["acknowledged"] - data[ts]["requested_time"]).total_seconds()*1000) for ts in data.keys()], average_response_time, average_conflict_response_time, average_nonconflict_response_time
 
 def is_concurrent(ts1, ts2):
   if ts1[0] >= ts2[0] and ts1[1] >= ts2[1] and ts1[2] >= ts2[2]:
@@ -174,6 +174,9 @@ def stabilization_time(exp, data):
   stabilizations = []
   stabilizations_moves = []
   stabilizations_nonmoves = []
+
+  stabs = []
+
   total = 0
   for each in data:
     stabilized_time = 0
@@ -191,10 +194,11 @@ def stabilization_time(exp, data):
       stabilizations_moves += [st]
     else:
       stabilizations_nonmoves += [st]
+    stabs += [(each, data[each]["op"]["name"], st)]
   average_stabilization_time = sum(stabilizations, timedelta(0)) / len(stabilizations)
   average_stabilization_time_moves = sum(stabilizations_moves, timedelta(0)) / len(stabilizations_moves)
   average_stabilization_time_nonmoves = sum(stabilizations_nonmoves, timedelta(0)) / len(stabilizations_nonmoves)
-  return stabilizations, average_stabilization_time, average_stabilization_time_moves, average_stabilization_time_nonmoves
+  return stabs, average_stabilization_time, average_stabilization_time_moves, average_stabilization_time_nonmoves
 
 
 def result(lc_config):
@@ -210,8 +214,12 @@ def result(lc_config):
       # print("Experiment " + str(i))
       # print("Conflict %: " + str(j))
       data = parse_logs(lc_config, i, j)
-      print(experiments[i] + " All: " + str(response_time(data)[1].total_seconds()*1000) + " :: Moves: " + str(response_time(data)[2].total_seconds()*1000) + " :: Nonmoves: " + str(response_time(data)[3].total_seconds()*1000))
-      row += [experiments[i] + ' & ' +str(response_time(data)[1].total_seconds()*1000) + ' & ' +str(response_time(data)[2].total_seconds()*1000) + ' & ' + str(response_time(data)[3].total_seconds()*1000) + '\\\\']
+      rt = response_time(data)
+      print(experiments[i] + " All: " + str(rt[1].total_seconds()*1000) + " :: Moves: " + str(rt[2].total_seconds()*1000) + " :: Nonmoves: " + str(rt[3].total_seconds()*1000))
+      row += [experiments[i] + ' & ' +str(rt[1].total_seconds()*1000) + ' & ' +str(rt[2].total_seconds()*1000) + ' & ' + str(rt[3].total_seconds()*1000) + '\\\\']
+      file_name = "response"+str(lc_config)+"con"+str(j)+"exp"+str(i)+".json"
+      with open(file_name, "w") as f:
+        f.write("\n".join([str(r) for r in rt[0]]))
     # rl += [row]
     file_name = "response"+str(lc_config)+"con"+str(j)+".tex"
     with open(file_name, "w") as f:
@@ -230,12 +238,16 @@ def result(lc_config):
       res = stabilization_time(i, data)
       print("Conflict %: " + str(j) + " : " + "All: " + str(res[1].total_seconds()*1000) + " moves: " + str(res[2].total_seconds()*1000) + " other operations: " + str(res[3].total_seconds()*1000))
       row += [str(stabilization_time(i, data)[1].total_seconds()*1000)]
+      file_name = "stab"+str(lc_config)+"con"+str(j)+"exp"+str(i)+".json"
+      with open(file_name, "w") as f:
+        f.write("\n".join([str(s) for s in res[0]]))
     sl += [experiments[i] + " & " + " & ".join(row)]
   file_name = "stabilization"+str(lc_config)+".tex"
   with open(file_name, "w") as f:
     f.write("\\\\ \n".join(sl) + "\\\\")
   print("=============")
 
+
 for i in [1, 2, 3]:
   print("LATENCY CONFIG " + str(i) + " \n")
-  result(i)
+  result(i,)
