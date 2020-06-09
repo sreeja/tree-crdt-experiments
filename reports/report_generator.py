@@ -18,10 +18,10 @@ replicas = ['paris','bangalore','newyork']
 
 experiments = ['CRDT Tree', 'Opsets based tree', 'Tree with global lock', 'Tree with subtree locks']
 
-def parse_logs(lc_config, exp, conflict):
+def parse_logs(lc_config, exp, conflict, run):
   data = {}
   for r in replicas:
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, 'register.txt')
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, 'register.txt')
     with open(reg_file, 'r') as l:
       lines = l.readlines()
       for each in lines:
@@ -34,7 +34,7 @@ def parse_logs(lc_config, exp, conflict):
             data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
           except:
             data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, 'done.txt')
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, 'done.txt')
     with open(reg_file) as l:
       lines = l.readlines()
       for each in lines:
@@ -49,7 +49,7 @@ def parse_logs(lc_config, exp, conflict):
             data[key]["acknowledged"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
     for r1 in replicas:
       file_name = 'time'+r1+'.txt'
-      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, file_name)
+      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, file_name)
       with open(reg_file, 'r') as l:
         lines = l.readlines()
         for each in lines:
@@ -66,7 +66,7 @@ def parse_logs(lc_config, exp, conflict):
   skipmove_count = 0
   for r in replicas:
     file_name = r+'.txt'
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), 'paris', file_name)
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), 'paris', file_name)
     with open(reg_file, 'r') as l:
       lines = l.readlines()
       for each in lines:
@@ -92,12 +92,12 @@ def parse_logs(lc_config, exp, conflict):
   # print ("skipmoves : " + str(skipmove_count))
   return data
 
-def parse_replica_logs(lc_config, exp, conflict):
+def parse_replica_logs(lc_config, exp, conflict, run):
   data = {}
   for r in replicas:
     for r1 in replicas:
       file_name = 'time'+r1+'.txt'
-      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, file_name)
+      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, file_name)
       with open(reg_file, 'r') as l:
         lines = l.readlines()
         for each in lines:
@@ -113,7 +113,7 @@ def parse_replica_logs(lc_config, exp, conflict):
             data[key]["ts"] = j["ts"]
   for r in replicas:
     file_name = r+'.txt'
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'lc'+str(lc_config), 'data'+str(conflict), str(exp), 'paris', file_name)
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), 'paris', file_name)
     with open(reg_file, 'r') as l:
       lines = l.readlines()
       for each in lines:
@@ -201,53 +201,141 @@ def stabilization_time(exp, data):
   return stabs, average_stabilization_time, average_stabilization_time_moves, average_stabilization_time_nonmoves
 
 
-def result(lc_config):
+def result(lc_config, run):
   # latex output
   # return average response time, per experiment
-  print("Response time")
-  print("=============")
+  # print("Response time")
+  # print("=============")
+  responses = {}
+  stabilizations = {}
   rl = []
   for j in [0, 2, 10, 20]:
-    print("Conflict %: " + str(j) + " : ")
+    responses[j] = {}
+    stabilizations[j] = {}
+    # print("Conflict %: " + str(j) + " : ")
     row = []
     for i in [0, 1, 2, 3]:
       # print("Experiment " + str(i))
       # print("Conflict %: " + str(j))
-      data = parse_logs(lc_config, i, j)
+      data = parse_logs(lc_config, i, j, run)
       rt = response_time(data)
-      print(experiments[i] + " All: " + str(rt[1].total_seconds()*1000) + " :: Moves: " + str(rt[2].total_seconds()*1000) + " :: Nonmoves: " + str(rt[3].total_seconds()*1000))
+      # print(experiments[i] + " All: " + str(rt[1].total_seconds()*1000) + " :: Moves: " + str(rt[2].total_seconds()*1000) + " :: Nonmoves: " + str(rt[3].total_seconds()*1000))
       row += [experiments[i] + ' & ' +str(rt[1].total_seconds()*1000) + ' & ' +str(rt[2].total_seconds()*1000) + ' & ' + str(rt[3].total_seconds()*1000) + '\\\\']
       file_name = "response"+str(lc_config)+"con"+str(j)+"exp"+str(i)+".json"
-      with open(file_name, "w") as f:
+      file_to_write = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(j), str(i), file_name)
+      with open(file_to_write, "w") as f:
         f.write("\n".join([str(r) for r in rt[0]]))
+      responses[j][i] = rt[1].total_seconds()*1000
     # rl += [row]
     file_name = "response"+str(lc_config)+"con"+str(j)+".tex"
     with open(file_name, "w") as f:
       f.write("\n".join(row))
-  print("=============")
+  # print("=============")
   # return  average stabilization time per experiment
-  print("Stabilization time")
-  print("=============")
+  # print("Stabilization time")
+  # print("=============")
   sl = []
   for i in [0, 1, 2, 3]:
-    print(experiments[i])
+    # print(experiments[i])
     row = []
     for j in [0, 2, 10, 20]:
       # print("Conflict %: " + str(j))
-      data = parse_replica_logs(lc_config, i, j)
+      data = parse_replica_logs(lc_config, i, j, run)
       res = stabilization_time(i, data)
-      print("Conflict %: " + str(j) + " : " + "All: " + str(res[1].total_seconds()*1000) + " moves: " + str(res[2].total_seconds()*1000) + " other operations: " + str(res[3].total_seconds()*1000))
-      row += [str(stabilization_time(i, data)[1].total_seconds()*1000)]
+      # print("Conflict %: " + str(j) + " : " + "All: " + str(res[1].total_seconds()*1000) + " moves: " + str(res[2].total_seconds()*1000) + " other operations: " + str(res[3].total_seconds()*1000))
+      row += [str(res[1].total_seconds()*1000)]
       file_name = "stab"+str(lc_config)+"con"+str(j)+"exp"+str(i)+".json"
-      with open(file_name, "w") as f:
+      file_to_write = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(j), str(i), file_name)
+      with open(file_to_write, "w") as f:
         f.write("\n".join([str(s) for s in res[0]]))
+      stabilizations[j][i] = res[1].total_seconds()*1000
     sl += [experiments[i] + " & " + " & ".join(row)]
   file_name = "stabilization"+str(lc_config)+".tex"
   with open(file_name, "w") as f:
     f.write("\\\\ \n".join(sl) + "\\\\")
-  print("=============")
+  # print("=============")
+  return responses, stabilizations
 
+import random
+responses = {}
+stabilizations = {}
+for l in [1, 2, 3]:
+  responses[l] = {}
+  stabilizations[l] = {}
+  for c in [0, 2, 10, 20]:
+    responses[l][c] = {}
+    stabilizations[l][c] = {}
+    for e in range(4):
+      responses[l][c][e] = []
+      stabilizations[l][c][e] = []
 
-for i in [1, 2, 3]:
-  print("LATENCY CONFIG " + str(i) + " \n")
-  result(i,)
+for run in range(1, 15):
+  for i in [1, 2, 3]:
+    # print("LATENCY CONFIG " + str(i) + " \n")
+    res0, res1 = result(i,run)
+    for con in [0, 2, 10, 20]:
+      for exp in range(4):
+        responses[i][con][exp] += [res0[con][exp]]
+        stabilizations[i][con][exp] += [res1[con][exp]]
+    # for con in [0, 2, 10, 20]:
+    #   for e in range(4):
+    #     responses[con][e] += [random.randint(0,5)]
+
+# print(responses, stabilizations)
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+x_pos = np.arange(4)
+width = 0.2
+resp0 = [np.mean(np.array(responses[2][con][0])) for con in responses[2]]
+resperr0 = [np.std(np.array(responses[2][con][0])) for con in responses[2]]
+resp1 = [np.mean(np.array(responses[2][con][1])) for con in responses[2]]
+resperr1 = [np.std(np.array(responses[2][con][1])) for con in responses[2]]
+resp2 = [np.mean(np.array(responses[2][con][2])) for con in responses[2]]
+resperr2 = [np.std(np.array(responses[2][con][2])) for con in responses[2]]
+resp3 = [np.mean(np.array(responses[2][con][3])) for con in responses[2]]
+resperr3 = [np.std(np.array(responses[2][con][3])) for con in responses[2]]
+
+# Build the plot
+fig, ax = plt.subplots()
+bar0 = ax.bar(x_pos - 1.5*width, resp0, width, yerr=resperr0, align='center', alpha=0.5, ecolor='black', capsize=2)
+bar1 = ax.bar(x_pos - width/2, resp1, width, yerr=resperr1, align='center', alpha=0.5, ecolor='black', capsize=2)
+bar2 = ax.bar(x_pos + width/2, resp2, width, yerr=resperr2, align='center', alpha=0.5, ecolor='black', capsize=2)
+bar3 = ax.bar(x_pos + 1.5*width, resp3, width, yerr=resperr3, align='center', alpha=0.5, ecolor='black', capsize=2)
+ax.set_ylabel('Response time in ms')
+ax.set_xticks(x_pos)
+ax.set_xticklabels([0, 2, 10, 20])
+ax.set_title('Response time for varying conflict rates')
+ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('CRDT', 'Opsets', 'global', 'subtree'))
+ax.yaxis.grid(True)
+
+# Save the figure and show
+plt.tight_layout()
+plt.savefig('response_time.png')
+# plt.show()
+
+x_pos = np.arange(3)
+stab0 = [np.mean(np.array(stabilizations[l][0][0])) for l in stabilizations]
+staberr0 = [np.std(np.array(stabilizations[l][0][0])) for l in stabilizations]
+stab1 = [np.mean(np.array(stabilizations[l][0][1])) for l in stabilizations]
+staberr1 = [np.std(np.array(stabilizations[l][0][1])) for l in stabilizations]
+
+# print(stab0, staberr0)
+# print(stab1, staberr1)
+
+# Build the plot
+fig, ax = plt.subplots()
+bar0 = ax.bar(x_pos - width/2, stab0, width, yerr=staberr0, align='center', alpha=0.5, ecolor='black', capsize=2)
+bar1 = ax.bar(x_pos + width/2, stab1, width, yerr=staberr1, align='center', alpha=0.5, ecolor='black', capsize=2)
+ax.set_ylabel('Stabilization time in ms')
+ax.set_xticks(x_pos)
+ax.set_xticklabels([1, 2, 3])
+ax.set_title('Stabilization time for varying latency configurations')
+ax.legend((bar0[0], bar1[0]), ('CRDT', 'Opsets'))
+ax.yaxis.grid(True)
+
+# Save the figure and show
+plt.tight_layout()
+plt.savefig('stabilization_time.png')
+# plt.show()
