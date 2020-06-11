@@ -392,7 +392,7 @@
 {"op": "downmove", "ts": [392, 391, 391], "args": {"n": "abb", "p": "ab", "np": "acb"}, "replica": "paris", "ca": ["acb", "ac"]}
 {"op": "add", "ts": [393, 392, 392], "args": {"n": "akb240", "p": "akb"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [394, 393, 393], "args": {"n": "abf250", "p": "abf"}, "replica": "paris", "ca": []}
-{"op": "downmove", "ts": [395, 394, 394], "args": {"n": "abc", "p": "ab", "np": "acc"}, "replica": "paris", "ca": ["ac", "acc"]}
+{"op": "downmove", "ts": [395, 394, 394], "args": {"n": "abc", "p": "ab", "np": "acc"}, "replica": "paris", "ca": ["acc", "ac"]}
 {"op": "add", "ts": [396, 395, 395], "args": {"n": "ake260", "p": "ake"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [397, 396, 396], "args": {"n": "ace270", "p": "ace"}, "replica": "paris", "ca": []}
 {"op": "downmove", "ts": [398, 397, 397], "args": {"n": "abd", "p": "ab", "np": "acd"}, "replica": "paris", "ca": ["ac", "acd"]}
@@ -455,17 +455,17 @@
 {"op": "downmove", "ts": [455, 454, 454], "args": {"n": "ce", "p": "c", "np": "cda"}, "replica": "paris", "ca": ["cda", "cd"]}
 {"op": "add", "ts": [456, 455, 455], "args": {"n": "agf620", "p": "agf"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [457, 456, 456], "args": {"n": "aic630", "p": "aic"}, "replica": "paris", "ca": []}
-{"op": "downmove", "ts": [458, 457, 457], "args": {"n": "cf", "p": "c", "np": "cea"}, "replica": "paris", "ca": ["ce", "cea"]}
+{"op": "downmove", "ts": [458, 457, 457], "args": {"n": "cf", "p": "c", "np": "cea"}, "replica": "paris", "ca": ["cea", "ce"]}
 {"op": "remove", "ts": [459, 458, 458], "args": {"n": "aif600", "p": "aif"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [460, 459, 459], "args": {"n": "afb640", "p": "afb"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [461, 460, 460], "args": {"n": "aac650", "p": "aac"}, "replica": "paris", "ca": []}
 {"op": "downmove", "ts": [462, 461, 461], "args": {"n": "cg", "p": "c", "np": "cfa"}, "replica": "paris", "ca": ["cf", "cfa"]}
 {"op": "add", "ts": [463, 462, 462], "args": {"n": "aba660", "p": "aba"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [464, 463, 463], "args": {"n": "aad670", "p": "aad"}, "replica": "paris", "ca": []}
-{"op": "downmove", "ts": [465, 464, 464], "args": {"n": "ch", "p": "c", "np": "cga"}, "replica": "paris", "ca": ["cg", "cga"]}
+{"op": "downmove", "ts": [465, 464, 464], "args": {"n": "ch", "p": "c", "np": "cga"}, "replica": "paris", "ca": ["cga", "cg"]}
 {"op": "add", "ts": [466, 465, 465], "args": {"n": "akb680", "p": "akb"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [467, 466, 466], "args": {"n": "aad690", "p": "aad"}, "replica": "paris", "ca": []}
-{"op": "downmove", "ts": [468, 467, 467], "args": {"n": "ci", "p": "c", "np": "cha"}, "replica": "paris", "ca": ["ch", "cha"]}
+{"op": "downmove", "ts": [468, 467, 467], "args": {"n": "ci", "p": "c", "np": "cha"}, "replica": "paris", "ca": ["cha", "ch"]}
 {"op": "remove", "ts": [469, 468, 468], "args": {"n": "aba660", "p": "aba"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [470, 469, 469], "args": {"n": "aae700", "p": "aae"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [471, 470, 470], "args": {"n": "ajb710", "p": "ajb"}, "replica": "paris", "ca": []}
@@ -485,7 +485,7 @@
 {"op": "upmove", "ts": [485, 484, 484], "args": {"n": "cae", "p": "ca", "np": "cc"}, "replica": "paris", "ca": ["cc"]}
 {"op": "add", "ts": [486, 485, 485], "args": {"n": "agf800", "p": "agf"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [487, 486, 486], "args": {"n": "ahf810", "p": "ahf"}, "replica": "paris", "ca": []}
-{"op": "downmove", "ts": [488, 487, 487], "args": {"n": "cca", "p": "cc", "np": "cba"}, "replica": "paris", "ca": ["cba", "cb"]}
+{"op": "downmove", "ts": [488, 487, 487], "args": {"n": "cca", "p": "cc", "np": "cba"}, "replica": "paris", "ca": ["cb", "cba"]}
 {"op": "remove", "ts": [489, 488, 488], "args": {"n": "aae780", "p": "aae"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [490, 489, 489], "args": {"n": "agd820", "p": "agd"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [491, 490, 490], "args": {"n": "agb830", "p": "agb"}, "replica": "paris", "ca": []}

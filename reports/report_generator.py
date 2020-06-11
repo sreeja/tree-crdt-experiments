@@ -77,12 +77,13 @@ def parse_logs(lc_config, exp, conflict, run):
             data[key]["op"] = {"name":j["op"], "n":j["args"]["n"], "ca":j["ca"]}
           else:
             if j["op"] in ["addskip", "removeskip"]:
-              print("issue: " + j)
+              print("issue: " + str(j))
             else:
               skipmove_count += 1
             data[key]["op"] = {"name":j["op"], "n":None, "ca":None}
           data[key]["origin"] = j["replica"]
   # print([data[x]["ts"][0] for x in data.keys()])
+  print(run, lc_config, exp, conflict)
   for each in range(353,653):
     assert(each in [data[x]["ts"][0] for x in data.keys()])
     assert(each in [data[x]["ts"][1] for x in data.keys()])
@@ -269,7 +270,7 @@ for l in [1, 2, 3]:
       responses[l][c][e] = []
       stabilizations[l][c][e] = []
 
-for run in range(1, 15):
+for run in range(1, 8):
   for i in [1, 2, 3]:
     # print("LATENCY CONFIG " + str(i) + " \n")
     res0, res1 = result(i,run)

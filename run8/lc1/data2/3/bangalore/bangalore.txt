@@ -365,7 +365,7 @@
 {"op": "move", "ts": [364, 365, 364], "args": {"n": "bda", "p": "bd", "np": "be"}, "replica": "bangalore", "ca": ["be"]}
 {"op": "add", "ts": [365, 366, 365], "args": {"n": "bed81", "p": "bed"}, "replica": "bangalore", "ca": []}
 {"op": "add", "ts": [366, 367, 366], "args": {"n": "bdd91", "p": "bdd"}, "replica": "bangalore", "ca": []}
-{"op": "move", "ts": [367, 368, 367], "args": {"n": "baa", "p": "ba", "np": "bb"}, "replica": "bangalore", "ca": ["bb"]}
+{"op": "moveskip", "ts": [368, 368, 368], "args": [], "replica": "bangalore", "ca": []}
 {"op": "remove", "ts": [368, 369, 368], "args": {"n": "bia61", "p": "bia"}, "replica": "bangalore", "ca": []}
 {"op": "add", "ts": [369, 370, 369], "args": {"n": "bbf101", "p": "bbf"}, "replica": "bangalore", "ca": []}
 {"op": "add", "ts": [370, 371, 370], "args": {"n": "bgb111", "p": "bgb"}, "replica": "bangalore", "ca": []}

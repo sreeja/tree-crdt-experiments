@@ -2,11 +2,11 @@
 > log.txt
 for run in $(seq 15)
 do
-  for LC in 2
+  for LC in 1 2 3
   do
     export LC_ENV=$LC
     t=$(expr 20 \* $LC_ENV)
-    for EXP in 0
+    for EXP in 0 1 2 3
       do
         export EXP_ENV=$EXP
 

@@ -375,7 +375,7 @@
 {"op": "moveskip", "ts": [375, 375, 375], "args": [], "replica": "paris", "ca": []}
 {"op": "add", "ts": [376, 375, 375], "args": {"n": "ajd140", "p": "ajd"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [377, 376, 376], "args": {"n": "acd150", "p": "acd"}, "replica": "paris", "ca": []}
-{"op": "moveskip", "ts": [378, 378, 378], "args": [], "replica": "paris", "ca": []}
+{"op": "move", "ts": [378, 377, 377], "args": {"n": "caa", "p": "ca", "np": "cc"}, "replica": "paris", "ca": ["cc"]}
 {"op": "remove", "ts": [379, 378, 378], "args": {"n": "ahc120", "p": "ahc"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [380, 379, 379], "args": {"n": "aia160", "p": "aia"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [381, 380, 380], "args": {"n": "afa170", "p": "afa"}, "replica": "paris", "ca": []}

@@ -379,7 +379,7 @@
 {"op": "remove", "ts": [379, 378, 378], "args": {"n": "ahc120", "p": "ahc"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [380, 379, 379], "args": {"n": "aia160", "p": "aia"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [381, 380, 380], "args": {"n": "afa170", "p": "afa"}, "replica": "paris", "ca": []}
-{"op": "downmove", "ts": [382, 381, 381], "args": {"n": "cca", "p": "cc", "np": "cba"}, "replica": "paris", "ca": ["cba", "cb"]}
+{"op": "downmove", "ts": [382, 381, 381], "args": {"n": "cca", "p": "cc", "np": "cba"}, "replica": "paris", "ca": ["cb", "cba"]}
 {"op": "add", "ts": [383, 382, 382], "args": {"n": "ajf180", "p": "ajf"}, "replica": "paris", "ca": []}
 {"op": "add", "ts": [384, 383, 383], "args": {"n": "afe190", "p": "afe"}, "replica": "paris", "ca": []}
 {"op": "downmove", "ts": [385, 384, 384], "args": {"n": "dba", "p": "d", "np": "db"}, "replica": "paris", "ca": ["db"]}
