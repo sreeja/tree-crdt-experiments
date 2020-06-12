@@ -346,7 +346,7 @@ def move():
                     for each in [r for r in replicas if r != whoami]:
                         message = {"to": each, "msg": msg}
                         write_message(message)
-                    register_op(ts, start_time)
+                    register_op(ts, start_time + (stop_pause - start_pause))
                     log_logtime(ts, log_time)
                     acknowledge(ts, end_time)
                     simulate_latency()
@@ -362,7 +362,7 @@ def move():
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
             write_message(message)
-        register_op(ts, start_time)
+        register_op(ts, start_time + (stop_pause - start_pause))
         log_logtime(ts, log_time)
         acknowledge(ts, end_time)
         return "skipped"
@@ -400,7 +400,7 @@ def move():
                     for each in [r for r in replicas if r != whoami]:
                         message = {"to": each, "msg": msg}
                         write_message(message)
-                    register_op(ts, start_time)
+                    register_op(ts, start_time + (stop_pause - start_pause))
                     log_logtime(ts, log_time)
                     acknowledge(ts, end_time)
                     # simulate_latency(len(locks))
@@ -417,8 +417,8 @@ def move():
         for each in [r for r in replicas if r != whoami]:
             message = {"to": each, "msg": msg}
             write_message(message)
-        register_op(ts, start_time)
-        # register_op(ts, start_time + (stop_pause - start_pause))
+        # register_op(ts, start_time)
+        register_op(ts, start_time + (stop_pause - start_pause))
         log_logtime(ts, log_time)
         acknowledge(ts, end_time)
         return "skipped"
