@@ -208,10 +208,12 @@ def result(lc_config, run):
   # print("Response time")
   # print("=============")
   responses = {}
+  move_responses = {}
   stabilizations = {}
   rl = []
   for j in [0, 2, 10, 20]:
     responses[j] = {}
+    move_responses[j] = {}
     stabilizations[j] = {}
     # print("Conflict %: " + str(j) + " : ")
     row = []
@@ -227,10 +229,11 @@ def result(lc_config, run):
       with open(file_to_write, "w") as f:
         f.write("\n".join([str(r) for r in rt[0]]))
       responses[j][i] = rt[1].total_seconds()*1000
+      move_responses[j][i] = rt[2].total_seconds()*1000
     # rl += [row]
-    file_name = "response"+str(lc_config)+"con"+str(j)+".tex"
-    with open(file_name, "w") as f:
-      f.write("\n".join(row))
+    # file_name = "response"+str(lc_config)+"con"+str(j)+".tex"
+    # with open(file_name, "w") as f:
+    #   f.write("\n".join(row))
   # print("=============")
   # return  average stabilization time per experiment
   # print("Stabilization time")
@@ -251,32 +254,37 @@ def result(lc_config, run):
         f.write("\n".join([str(s) for s in res[0]]))
       stabilizations[j][i] = res[1].total_seconds()*1000
     sl += [experiments[i] + " & " + " & ".join(row)]
-  file_name = "stabilization"+str(lc_config)+".tex"
-  with open(file_name, "w") as f:
-    f.write("\\\\ \n".join(sl) + "\\\\")
+  # file_name = "stabilization"+str(lc_config)+".tex"
+  # with open(file_name, "w") as f:
+  #   f.write("\\\\ \n".join(sl) + "\\\\")
   # print("=============")
-  return responses, stabilizations
+  return responses, stabilizations, move_responses
 
 import random
 responses = {}
 stabilizations = {}
+move_responses = {}
 for l in [1, 2, 3]:
   responses[l] = {}
+  move_responses[l] = {}
   stabilizations[l] = {}
   for c in [0, 2, 10, 20]:
     responses[l][c] = {}
+    move_responses[l][c] = {}
     stabilizations[l][c] = {}
     for e in range(4):
       responses[l][c][e] = []
+      move_responses[l][c][e] = []
       stabilizations[l][c][e] = []
 
-for run in range(1, 8):
+for run in range(15, 16):
   for i in [1, 2, 3]:
     # print("LATENCY CONFIG " + str(i) + " \n")
-    res0, res1 = result(i,run)
+    res0, res1, resm = result(i,run)
     for con in [0, 2, 10, 20]:
       for exp in range(4):
         responses[i][con][exp] += [res0[con][exp]]
+        move_responses[i][con][exp] += [resm[con][exp]]
         stabilizations[i][con][exp] += [res1[con][exp]]
     # for con in [0, 2, 10, 20]:
     #   for e in range(4):
@@ -315,6 +323,34 @@ ax.yaxis.grid(True)
 plt.tight_layout()
 plt.savefig('response_time.png')
 # plt.show()
+
+mresp0 = [np.mean(np.array(move_responses[2][con][0])) for con in move_responses[2]]
+mresperr0 = [np.std(np.array(move_responses[2][con][0])) for con in move_responses[2]]
+mresp1 = [np.mean(np.array(move_responses[2][con][1])) for con in move_responses[2]]
+mresperr1 = [np.std(np.array(move_responses[2][con][1])) for con in move_responses[2]]
+mresp2 = [np.mean(np.array(move_responses[2][con][2])) for con in move_responses[2]]
+mresperr2 = [np.std(np.array(move_responses[2][con][2])) for con in move_responses[2]]
+mresp3 = [np.mean(np.array(move_responses[2][con][3])) for con in move_responses[2]]
+mresperr3 = [np.std(np.array(move_responses[2][con][3])) for con in move_responses[2]]
+
+# Build the plot
+fig, ax = plt.subplots()
+bar0 = ax.bar(x_pos - 1.5*width, mresp0, width, yerr=mresperr0, align='center', alpha=0.5, ecolor='black', capsize=2)
+bar1 = ax.bar(x_pos - width/2, mresp1, width, yerr=mresperr1, align='center', alpha=0.5, ecolor='black', capsize=2)
+bar2 = ax.bar(x_pos + width/2, mresp2, width, yerr=mresperr2, align='center', alpha=0.5, ecolor='black', capsize=2)
+bar3 = ax.bar(x_pos + 1.5*width, mresp3, width, yerr=mresperr3, align='center', alpha=0.5, ecolor='black', capsize=2)
+ax.set_ylabel('Response time in ms')
+ax.set_xticks(x_pos)
+ax.set_xticklabels([0, 2, 10, 20])
+ax.set_title('Response time for varying conflict rates')
+ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('CRDT', 'Opsets', 'global', 'subtree'))
+ax.yaxis.grid(True)
+
+# Save the figure and show
+plt.tight_layout()
+plt.savefig('response_time_moves.png')
+# plt.show()
+
 
 x_pos = np.arange(3)
 stab0 = [np.mean(np.array(stabilizations[l][0][0])) for l in stabilizations]
