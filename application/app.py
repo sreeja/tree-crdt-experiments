@@ -319,6 +319,8 @@ def move():
         ts = get_latest_ts()
         tree = get_tree(ts)
         start_time = datetime.now()
+        start_pause = start_time
+        stop_pause = start_time
         flag = False
         ts[replicaid] += 1
         prep = tree.move_gen(n, p, np)
@@ -327,10 +329,12 @@ def move():
             simulate_latency()
             with lock:
                 simulate_latency()
+                start_pause = datetime.now()
                 ts = get_latest_ts()
                 tree = get_tree(ts)
                 ts[replicaid] += 1
                 prep = tree.move_gen(n, p, np)
+                stop_pause = datetime.now()
                 if prep:
                     msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
                     message = {"to": whoami, "msg": msg}
@@ -347,6 +351,7 @@ def move():
                     acknowledge(ts, end_time)
                     simulate_latency()
                     return "done"
+                simulate_latency()
         msg = prepare_message("moveskip", ts, [], whoami, [])
         message = {"to": whoami, "msg": msg}
         tree = apply_log(msg, tree, ts)
@@ -366,6 +371,8 @@ def move():
         ts = get_latest_ts()
         tree = get_tree(ts)
         start_time = datetime.now()
+        start_pause = start_time
+        stop_pause = start_time
         prep = tree.move_gen(n, p, np)
         ts[replicaid] += 1
         if prep:
@@ -376,10 +383,12 @@ def move():
                 l = [stack.enter_context(lock) for lock in locks]
                 # simulate_latency(len(locks))
                 simulate_latency()
+                start_pause = datetime.now()
                 ts = get_latest_ts()
                 tree = get_tree(ts)
                 prep = tree.move_gen(n, p, np)
                 ts[replicaid] += 1
+                stop_pause = datetime.now()
                 if prep:
                     msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
                     message = {"to": whoami, "msg": msg}
@@ -397,6 +406,7 @@ def move():
                     # simulate_latency(len(locks))
                     simulate_latency()
                     return "done"
+                simulate_latency()
         msg = prepare_message("moveskip", ts, [], whoami, [])
         message = {"to": whoami, "msg": msg}
         tree = apply_log(msg, tree, ts)
@@ -408,6 +418,7 @@ def move():
             message = {"to": each, "msg": msg}
             write_message(message)
         register_op(ts, start_time)
+        # register_op(ts, start_time + (stop_pause - start_pause))
         log_logtime(ts, log_time)
         acknowledge(ts, end_time)
         return "skipped"
