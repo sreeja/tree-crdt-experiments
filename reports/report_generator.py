@@ -371,7 +371,7 @@ ax.set_xticklabels([1, 2, 3])
 ax.set_title('Stabilization time for varying latency configurations')
 ax.legend((bar0[0], bar1[0]), ('CRDT', 'Opsets'))
 ax.yaxis.grid(True)
-
+plt.yscale('log') #logarithmic scale
 # Save the figure and show
 plt.tight_layout()
 plt.savefig('stabilization_time.png')
