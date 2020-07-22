@@ -318,6 +318,7 @@ ax.set_xticklabels([0, 2, 10, 20])
 ax.set_title('Response time for varying conflict rates')
 ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('CRDT', 'Opsets', 'global', 'subtree'))
 ax.yaxis.grid(True)
+plt.yscale('log') #logarithmic scale
 
 # Save the figure and show
 plt.tight_layout()
@@ -345,6 +346,7 @@ ax.set_xticklabels([0, 2, 10, 20])
 ax.set_title('Response time for varying conflict rates')
 ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('CRDT', 'Opsets', 'global', 'subtree'))
 ax.yaxis.grid(True)
+plt.yscale('log') #logarithmic scale
 
 # Save the figure and show
 plt.tight_layout()

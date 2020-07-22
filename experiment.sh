@@ -21,6 +21,7 @@ do
             sleep $t
             sh workload/conflict$con.sh
             sleep $t
+            mkdir -p run$run/lc$LC_ENV/data$con/$EXP_ENV
             cp -r data/ run$run/lc$LC_ENV/data$con/$EXP_ENV
             kill $P_PID
             sleep 45
@@ -36,4 +37,4 @@ done
 for f in $(find data); do > $f; done
 make down
 
-python reports/report_generator.py
+# python reports/report_generator.py
