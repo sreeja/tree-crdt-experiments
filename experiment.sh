@@ -1,8 +1,8 @@
 #!/bin/bash
 > log.txt
-for run in $(seq 15)
+for run in $(seq 5)
 do
-  for LC in 1 2 3
+  for LC in 3 2 1
   do
     export LC_ENV=$LC
     t=$(expr 20 \* $LC_ENV)
