@@ -308,10 +308,10 @@ resperr3 = [np.std(np.array(responses[2][con][3])) for con in responses[2]]
 
 # Build the plot
 fig, ax = plt.subplots()
-bar0 = ax.bar(x_pos - 1.5*width, resp0, width, yerr=resperr0, align='center', alpha=0.5, ecolor='black', capsize=2)
-bar1 = ax.bar(x_pos - width/2, resp1, width, yerr=resperr1, align='center', alpha=0.5, ecolor='black', capsize=2)
-bar2 = ax.bar(x_pos + width/2, resp2, width, yerr=resperr2, align='center', alpha=0.5, ecolor='black', capsize=2)
-bar3 = ax.bar(x_pos + 1.5*width, resp3, width, yerr=resperr3, align='center', alpha=0.5, ecolor='black', capsize=2)
+bar0 = ax.bar(x_pos - 1.5*width, resp0, width, yerr=resperr0, align='center', alpha=0.5, hatch='o', capsize=2)
+bar1 = ax.bar(x_pos - width/2, resp1, width, yerr=resperr1, align='center', alpha=0.5, hatch='.', capsize=2)
+bar2 = ax.bar(x_pos + width/2, resp2, width, yerr=resperr2, align='center', alpha=0.5, hatch='+', capsize=2)
+bar3 = ax.bar(x_pos + 1.5*width, resp3, width, yerr=resperr3, align='center', alpha=0.5, hatch='x', capsize=2)
 ax.set_ylabel('Response time in ms')
 ax.set_xticks(x_pos)
 ax.set_xticklabels([0, 2, 10, 20])
@@ -336,10 +336,14 @@ mresperr3 = [np.std(np.array(move_responses[2][con][3])) for con in move_respons
 
 # Build the plot
 fig, ax = plt.subplots()
-bar0 = ax.bar(x_pos - 1.5*width, mresp0, width, yerr=mresperr0, align='center', alpha=0.5, ecolor='black', capsize=2)
-bar1 = ax.bar(x_pos - width/2, mresp1, width, yerr=mresperr1, align='center', alpha=0.5, ecolor='black', capsize=2)
-bar2 = ax.bar(x_pos + width/2, mresp2, width, yerr=mresperr2, align='center', alpha=0.5, ecolor='black', capsize=2)
-bar3 = ax.bar(x_pos + 1.5*width, mresp3, width, yerr=mresperr3, align='center', alpha=0.5, ecolor='black', capsize=2)
+# bar0 = ax.bar(x_pos - 1.5*width, mresp0, width, yerr=mresperr0, align='center', alpha=0.5, ecolor='black', capsize=2)
+# bar1 = ax.bar(x_pos - width/2, mresp1, width, yerr=mresperr1, align='center', alpha=0.5, ecolor='black', capsize=2)
+# bar2 = ax.bar(x_pos + width/2, mresp2, width, yerr=mresperr2, align='center', alpha=0.5, ecolor='black', capsize=2)
+# bar3 = ax.bar(x_pos + 1.5*width, mresp3, width, yerr=mresperr3, align='center', alpha=0.5, ecolor='black', capsize=2)
+bar0 = ax.bar(x_pos - 1.5*width, mresp0, width, yerr=mresperr0, align='center', alpha=0.5, hatch='o', capsize=2)
+bar1 = ax.bar(x_pos - width/2, mresp1, width, yerr=mresperr1, align='center', alpha=0.5, hatch='.', capsize=2)
+bar2 = ax.bar(x_pos + width/2, mresp2, width, yerr=mresperr2, align='center', alpha=0.5, hatch='+', capsize=2)
+bar3 = ax.bar(x_pos + 1.5*width, mresp3, width, yerr=mresperr3, align='center', alpha=0.5, hatch='x', capsize=2)
 ax.set_ylabel('Response time in ms')
 ax.set_xticks(x_pos)
 ax.set_xticklabels([0, 2, 10, 20])
@@ -365,8 +369,8 @@ staberr1 = [np.std(np.array(stabilizations[l][0][1])) for l in stabilizations]
 
 # Build the plot
 fig, ax = plt.subplots()
-bar0 = ax.bar(x_pos - width/2, stab0, width, yerr=staberr0, align='center', alpha=0.5, ecolor='black', capsize=2)
-bar1 = ax.bar(x_pos + width/2, stab1, width, yerr=staberr1, align='center', alpha=0.5, ecolor='black', capsize=2)
+bar0 = ax.bar(x_pos - width/2, stab0, width, yerr=staberr0, align='center', alpha=0.5, hatch='o', capsize=2)
+bar1 = ax.bar(x_pos + width/2, stab1, width, yerr=staberr1, align='center', alpha=0.5, hatch='.', capsize=2)
 ax.set_ylabel('Stabilization time in ms')
 ax.set_xticks(x_pos)
 ax.set_xticklabels([1, 2, 3])
