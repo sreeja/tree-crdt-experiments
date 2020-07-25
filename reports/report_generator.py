@@ -21,7 +21,7 @@ experiments = ['CRDT Tree', 'Opsets based tree', 'Tree with global lock', 'Tree 
 def parse_logs(lc_config, exp, conflict, run):
   data = {}
   for r in replicas:
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, 'register.txt')
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'final', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), 'data', r, 'register.txt')
     with open(reg_file, 'r') as l:
       lines = l.readlines()
       for each in lines:
@@ -34,7 +34,7 @@ def parse_logs(lc_config, exp, conflict, run):
             data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
           except:
             data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, 'done.txt')
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'final', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), 'data',r, 'done.txt')
     with open(reg_file) as l:
       lines = l.readlines()
       for each in lines:
@@ -49,7 +49,7 @@ def parse_logs(lc_config, exp, conflict, run):
             data[key]["acknowledged"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
     for r1 in replicas:
       file_name = 'time'+r1+'.txt'
-      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, file_name)
+      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'final', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp),'data', r, file_name)
       with open(reg_file, 'r') as l:
         lines = l.readlines()
         for each in lines:
@@ -66,7 +66,7 @@ def parse_logs(lc_config, exp, conflict, run):
   skipmove_count = 0
   for r in replicas:
     file_name = r+'.txt'
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), 'paris', file_name)
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'final', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp),'data', 'paris', file_name)
     with open(reg_file, 'r') as l:
       lines = l.readlines()
       for each in lines:
@@ -98,7 +98,7 @@ def parse_replica_logs(lc_config, exp, conflict, run):
   for r in replicas:
     for r1 in replicas:
       file_name = 'time'+r1+'.txt'
-      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), r, file_name)
+      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'final', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp),'data', r, file_name)
       with open(reg_file, 'r') as l:
         lines = l.readlines()
         for each in lines:
@@ -114,7 +114,7 @@ def parse_replica_logs(lc_config, exp, conflict, run):
             data[key]["ts"] = j["ts"]
   for r in replicas:
     file_name = r+'.txt'
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), 'paris', file_name)
+    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'final', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp),'data', 'paris', file_name)
     with open(reg_file, 'r') as l:
       lines = l.readlines()
       for each in lines:
@@ -225,7 +225,7 @@ def result(lc_config, run):
       # print(experiments[i] + " All: " + str(rt[1].total_seconds()*1000) + " :: Moves: " + str(rt[2].total_seconds()*1000) + " :: Nonmoves: " + str(rt[3].total_seconds()*1000))
       row += [experiments[i] + ' & ' +str(rt[1].total_seconds()*1000) + ' & ' +str(rt[2].total_seconds()*1000) + ' & ' + str(rt[3].total_seconds()*1000) + '\\\\']
       file_name = "response"+str(lc_config)+"con"+str(j)+"exp"+str(i)+".json"
-      file_to_write = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(j), str(i), file_name)
+      file_to_write = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'final', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(j), str(i), file_name)
       with open(file_to_write, "w") as f:
         f.write("\n".join([str(r) for r in rt[0]]))
       responses[j][i] = rt[1].total_seconds()*1000
@@ -249,7 +249,7 @@ def result(lc_config, run):
       # print("Conflict %: " + str(j) + " : " + "All: " + str(res[1].total_seconds()*1000) + " moves: " + str(res[2].total_seconds()*1000) + " other operations: " + str(res[3].total_seconds()*1000))
       row += [str(res[1].total_seconds()*1000)]
       file_name = "stab"+str(lc_config)+"con"+str(j)+"exp"+str(i)+".json"
-      file_to_write = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(j), str(i), file_name)
+      file_to_write = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'final', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(j), str(i), file_name)
       with open(file_to_write, "w") as f:
         f.write("\n".join([str(s) for s in res[0]]))
       stabilizations[j][i] = res[1].total_seconds()*1000
@@ -277,8 +277,8 @@ for l in [1, 2, 3]:
       move_responses[l][c][e] = []
       stabilizations[l][c][e] = []
 
-for run in range(15, 16):
-  for i in [1, 2, 3]:
+for run in range(1, 16):
+  for i in [3, 2, 1]:
     # print("LATENCY CONFIG " + str(i) + " \n")
     res0, res1, resm = result(i,run)
     for con in [0, 2, 10, 20]:
