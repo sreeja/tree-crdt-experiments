@@ -278,7 +278,7 @@ for l in [1, 2, 3]:
       move_responses[l][c][e] = []
       stabilizations[l][c][e] = []
 
-for run in range(1, 2):
+for run in range(1, 16):
   for i in [3, 2, 1]:
     # print("LATENCY CONFIG " + str(i) + " \n")
     res0, res1, resm = result(i,run)
@@ -317,7 +317,7 @@ ax.set_ylabel('Response time in ms')
 ax.set_xticks(x_pos)
 ax.set_xlabel('Conflict rates')
 ax.set_xticklabels([0, 2, 10, 20])
-ax.set_title('Response time for varying conflict rates')
+# ax.set_title('Response time for varying conflict rates')
 ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global locking', 'Subtree Locking'))
 ax.yaxis.grid(True)
 plt.yscale('log') #logarithmic scale
@@ -346,7 +346,7 @@ ax.set_ylabel('Response time in ms')
 ax.set_xticks(x_pos)
 ax.set_xlabel('Conflict rates')
 ax.set_xticklabels([0, 2, 10, 20])
-ax.set_title('Response time for varying conflict rates')
+# ax.set_title('Response time for varying conflict rates')
 ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global locking', 'Subtree Locking'))
 ax.yaxis.grid(True)
 
@@ -378,7 +378,7 @@ ax.set_ylabel('Response time in ms')
 ax.set_xticks(x_pos)
 ax.set_xlabel('Conflict rates')
 ax.set_xticklabels([0, 2, 10, 20])
-ax.set_title('Response time for varying conflict rates')
+# ax.set_title('Response time for varying conflict rates')
 ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global locking', 'Subtree Locking'))
 ax.yaxis.grid(True)
 # plt.yscale('log') #logarithmic scale
@@ -406,7 +406,7 @@ ax.set_ylabel('Stabilization time in ms')
 ax.set_xticks(x_pos)
 ax.set_xlabel('Latency settings')
 ax.set_xticklabels(['Zero', 'Realworld', '10x realworld'])
-ax.set_title('Stabilization time for varying latency configurations')
+# ax.set_title('Stabilization time for varying latency configurations')
 ax.legend((bar0[0], bar1[0]), ('Maram', 'UDR Tree'))
 ax.yaxis.grid(True)
 # Save the figure and show
@@ -431,7 +431,7 @@ ax.set_ylabel('Stabilization time in ms')
 ax.set_xticks(x_pos)
 ax.set_xlabel('Latency settings')
 ax.set_xticklabels(['Zero', 'Realworld', '10x realworld'])
-ax.set_title('Stabilization time for varying latency configurations')
+# ax.set_title('Stabilization time for varying latency configurations')
 ax.legend((bar0[0], bar1[0]), ('Maram', 'UDR Tree'))
 ax.yaxis.grid(True)
 plt.yscale('log') #logarithmic scale
