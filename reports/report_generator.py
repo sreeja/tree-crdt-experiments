@@ -16,7 +16,8 @@ from datetime import datetime, timedelta
 
 replicas = ['paris','bangalore','newyork']
 
-experiments = ['CRDT Tree', 'Opsets based tree', 'Tree with global lock', 'Tree with subtree locks']
+experiments = ['Maram', 'UDR Tree', 'Global locking', 'Subtree Locking'] 
+# 'CRDT Tree', 'Opsets based tree', 'Tree with global lock', 'Tree with subtree locks']
 
 def parse_logs(lc_config, exp, conflict, run):
   data = {}
@@ -277,7 +278,7 @@ for l in [1, 2, 3]:
       move_responses[l][c][e] = []
       stabilizations[l][c][e] = []
 
-for run in range(1, 16):
+for run in range(1, 2):
   for i in [3, 2, 1]:
     # print("LATENCY CONFIG " + str(i) + " \n")
     res0, res1, resm = result(i,run)
@@ -314,11 +315,40 @@ bar2 = ax.bar(x_pos + width/2, resp2, width, yerr=resperr2, align='center', alph
 bar3 = ax.bar(x_pos + 1.5*width, resp3, width, yerr=resperr3, align='center', alpha=0.5, hatch='x', capsize=2)
 ax.set_ylabel('Response time in ms')
 ax.set_xticks(x_pos)
+ax.set_xlabel('Conflict rates')
 ax.set_xticklabels([0, 2, 10, 20])
 ax.set_title('Response time for varying conflict rates')
-ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('CRDT', 'Opsets', 'global', 'subtree'))
+ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global locking', 'Subtree Locking'))
 ax.yaxis.grid(True)
 plt.yscale('log') #logarithmic scale
+
+# Save the figure and show
+plt.tight_layout()
+plt.savefig('response_time_log.png')
+# plt.show()
+
+resp0 = [np.mean(np.array(responses[2][con][0])) for con in responses[2]]
+resperr0 = [np.std(np.array(responses[2][con][0])) for con in responses[2]]
+resp1 = [np.mean(np.array(responses[2][con][1])) for con in responses[2]]
+resperr1 = [np.std(np.array(responses[2][con][1])) for con in responses[2]]
+resp2 = [np.mean(np.array(responses[2][con][2])) for con in responses[2]]
+resperr2 = [np.std(np.array(responses[2][con][2])) for con in responses[2]]
+resp3 = [np.mean(np.array(responses[2][con][3])) for con in responses[2]]
+resperr3 = [np.std(np.array(responses[2][con][3])) for con in responses[2]]
+
+# Build the plot
+fig, ax = plt.subplots()
+bar0 = ax.bar(x_pos - 1.5*width, resp0, width, yerr=resperr0, align='center', alpha=0.5, hatch='o', capsize=2)
+bar1 = ax.bar(x_pos - width/2, resp1, width, yerr=resperr1, align='center', alpha=0.5, hatch='.', capsize=2)
+bar2 = ax.bar(x_pos + width/2, resp2, width, yerr=resperr2, align='center', alpha=0.5, hatch='+', capsize=2)
+bar3 = ax.bar(x_pos + 1.5*width, resp3, width, yerr=resperr3, align='center', alpha=0.5, hatch='x', capsize=2)
+ax.set_ylabel('Response time in ms')
+ax.set_xticks(x_pos)
+ax.set_xlabel('Conflict rates')
+ax.set_xticklabels([0, 2, 10, 20])
+ax.set_title('Response time for varying conflict rates')
+ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global locking', 'Subtree Locking'))
+ax.yaxis.grid(True)
 
 # Save the figure and show
 plt.tight_layout()
@@ -346,11 +376,12 @@ bar2 = ax.bar(x_pos + width/2, mresp2, width, yerr=mresperr2, align='center', al
 bar3 = ax.bar(x_pos + 1.5*width, mresp3, width, yerr=mresperr3, align='center', alpha=0.5, hatch='x', capsize=2)
 ax.set_ylabel('Response time in ms')
 ax.set_xticks(x_pos)
+ax.set_xlabel('Conflict rates')
 ax.set_xticklabels([0, 2, 10, 20])
 ax.set_title('Response time for varying conflict rates')
-ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('CRDT', 'Opsets', 'global', 'subtree'))
+ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global locking', 'Subtree Locking'))
 ax.yaxis.grid(True)
-plt.yscale('log') #logarithmic scale
+# plt.yscale('log') #logarithmic scale
 
 # Save the figure and show
 plt.tight_layout()
@@ -373,12 +404,38 @@ bar0 = ax.bar(x_pos - width/2, stab0, width, yerr=staberr0, align='center', alph
 bar1 = ax.bar(x_pos + width/2, stab1, width, yerr=staberr1, align='center', alpha=0.5, hatch='.', capsize=2)
 ax.set_ylabel('Stabilization time in ms')
 ax.set_xticks(x_pos)
-ax.set_xticklabels([1, 2, 3])
+ax.set_xlabel('Latency settings')
+ax.set_xticklabels(['Zero', 'Realworld', '10x realworld'])
 ax.set_title('Stabilization time for varying latency configurations')
-ax.legend((bar0[0], bar1[0]), ('CRDT', 'Opsets'))
+ax.legend((bar0[0], bar1[0]), ('Maram', 'UDR Tree'))
+ax.yaxis.grid(True)
+# Save the figure and show
+plt.tight_layout()
+plt.savefig('stabilization_time_linear.png')
+# plt.show()
+
+x_pos = np.arange(3)
+stab0 = [np.mean(np.array(stabilizations[l][0][0])) for l in stabilizations]
+staberr0 = [np.std(np.array(stabilizations[l][0][0])) for l in stabilizations]
+stab1 = [np.mean(np.array(stabilizations[l][0][1])) for l in stabilizations]
+staberr1 = [np.std(np.array(stabilizations[l][0][1])) for l in stabilizations]
+
+# print(stab0, staberr0)
+# print(stab1, staberr1)
+
+# Build the plot
+fig, ax = plt.subplots()
+bar0 = ax.bar(x_pos - width/2, stab0, width, yerr=staberr0, align='center', alpha=0.5, hatch='o', capsize=2)
+bar1 = ax.bar(x_pos + width/2, stab1, width, yerr=staberr1, align='center', alpha=0.5, hatch='.', capsize=2)
+ax.set_ylabel('Stabilization time in ms')
+ax.set_xticks(x_pos)
+ax.set_xlabel('Latency settings')
+ax.set_xticklabels(['Zero', 'Realworld', '10x realworld'])
+ax.set_title('Stabilization time for varying latency configurations')
+ax.legend((bar0[0], bar1[0]), ('Maram', 'UDR Tree'))
 ax.yaxis.grid(True)
 plt.yscale('log') #logarithmic scale
 # Save the figure and show
 plt.tight_layout()
-plt.savefig('stabilization_time.png')
+plt.savefig('stabilization_time_log.png')
 # plt.show()
