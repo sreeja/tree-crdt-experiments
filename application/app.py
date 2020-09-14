@@ -9,12 +9,12 @@ from multiprocessing import Process
 
 from datetime import datetime
 
-from kazoo.client import KazooClient
+# from kazoo.client import KazooClient
 from flask_pymemcache import FlaskPyMemcache
 
 from contextlib import ExitStack
 
-from tree import Tree_CRDT, Tree_Opset, Tree_Globalock, Tree_Sublock
+from tree import Tree_CRDT, Tree_Opset, Tree_Globalock, Tree_Sublock, Tree_unsafe
 
 # latency configuration, 1,2,3
 lc = int(os.environ.get("LC"))
@@ -74,9 +74,9 @@ whoami = os.environ.get("WHOAMI")
 ts = [0, 0, 0]
 replicas = ['paris', 'bangalore','newyork']
 
-zk = KazooClient(hosts='zookeeper:2181')
-zk.start()
-chairman = "paris"
+# zk = KazooClient(hosts='zookeeper:2171')
+# zk.start()
+# chairman = "paris"
 
 def get_id(replica):
     return replicas.index(replica)
@@ -324,167 +324,167 @@ def move():
     p = request.args.get('p', '')
     np = request.args.get('np', '')
 
-    if exp == 2:
-        ts = get_latest_ts()
-        tree = get_tree(ts)
-        start_time = datetime.now()
-        start_pause = start_time
-        stop_pause = start_time
-        flag = False
-        ts[replicaid] += 1
-        prep = tree.move_gen(n, p, np)
-        if prep:
-            lock = zk.Lock('/global')
-            simulate_latency()
-            with lock:
-                simulate_latency()
-                start_pause = datetime.now()
-                ts = get_latest_ts()
-                tree = get_tree(ts)
-                ts[replicaid] += 1
-                prep = tree.move_gen(n, p, np)
-                stop_pause = datetime.now()
-                if prep:
-                    msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
-                    message = {"to": whoami, "msg": msg}
-                    tree = apply_log(msg, tree, ts)
-                    log_time = datetime.now()
-                    update_ts_self(ts[replicaid])
-                    end_time = datetime.now()
-                    write_message(message)
-                    for each in [r for r in replicas if r != whoami]:
-                        message = {"to": each, "msg": msg}
-                        write_message(message)
-                    register_op(ts, start_time + (stop_pause - start_pause))
-                    log_logtime(ts, log_time)
-                    acknowledge(ts, end_time)
-                    simulate_latency()
-                    return "done"
-                msg = prepare_message("moveskip", ts, [], whoami, [])
-                message = {"to": whoami, "msg": msg}
-                end_time = datetime.now()
-                log_time = datetime.now()
-                update_ts_self(ts[replicaid])
-                tree = apply_log(msg, tree, ts)
-                write_message(message)
-                for each in [r for r in replicas if r != whoami]:
-                    message = {"to": each, "msg": msg}
-                    write_message(message)
-                simulate_latency()
-                register_op(ts, start_time + (stop_pause - start_pause))
-                log_logtime(ts, log_time)
-                acknowledge(ts, end_time)
-                return "skipped"
-        msg = prepare_message("moveskip", ts, [], whoami, [])
-        message = {"to": whoami, "msg": msg}
-        log_time = datetime.now()
-        end_time = datetime.now()
-        update_ts_self(ts[replicaid])
-        tree = apply_log(msg, tree, ts)
-        write_message(message)
-        for each in [r for r in replicas if r != whoami]:
-            message = {"to": each, "msg": msg}
-            write_message(message)
-        register_op(ts, start_time + (stop_pause - start_pause))
-        log_logtime(ts, log_time)
-        acknowledge(ts, end_time)
-        return "skipped"
+    # if exp == 2:
+    #     ts = get_latest_ts()
+    #     tree = get_tree(ts)
+    #     start_time = datetime.now()
+    #     start_pause = start_time
+    #     stop_pause = start_time
+    #     flag = False
+    #     ts[replicaid] += 1
+    #     prep = tree.move_gen(n, p, np)
+    #     if prep:
+    #         lock = zk.Lock('/global')
+    #         simulate_latency()
+    #         with lock:
+    #             simulate_latency()
+    #             start_pause = datetime.now()
+    #             ts = get_latest_ts()
+    #             tree = get_tree(ts)
+    #             ts[replicaid] += 1
+    #             prep = tree.move_gen(n, p, np)
+    #             stop_pause = datetime.now()
+    #             if prep:
+    #                 msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
+    #                 message = {"to": whoami, "msg": msg}
+    #                 tree = apply_log(msg, tree, ts)
+    #                 log_time = datetime.now()
+    #                 update_ts_self(ts[replicaid])
+    #                 end_time = datetime.now()
+    #                 write_message(message)
+    #                 for each in [r for r in replicas if r != whoami]:
+    #                     message = {"to": each, "msg": msg}
+    #                     write_message(message)
+    #                 register_op(ts, start_time + (stop_pause - start_pause))
+    #                 log_logtime(ts, log_time)
+    #                 acknowledge(ts, end_time)
+    #                 simulate_latency()
+    #                 return "done"
+    #             msg = prepare_message("moveskip", ts, [], whoami, [])
+    #             message = {"to": whoami, "msg": msg}
+    #             end_time = datetime.now()
+    #             log_time = datetime.now()
+    #             update_ts_self(ts[replicaid])
+    #             tree = apply_log(msg, tree, ts)
+    #             write_message(message)
+    #             for each in [r for r in replicas if r != whoami]:
+    #                 message = {"to": each, "msg": msg}
+    #                 write_message(message)
+    #             simulate_latency()
+    #             register_op(ts, start_time + (stop_pause - start_pause))
+    #             log_logtime(ts, log_time)
+    #             acknowledge(ts, end_time)
+    #             return "skipped"
+    #     msg = prepare_message("moveskip", ts, [], whoami, [])
+    #     message = {"to": whoami, "msg": msg}
+    #     log_time = datetime.now()
+    #     end_time = datetime.now()
+    #     update_ts_self(ts[replicaid])
+    #     tree = apply_log(msg, tree, ts)
+    #     write_message(message)
+    #     for each in [r for r in replicas if r != whoami]:
+    #         message = {"to": each, "msg": msg}
+    #         write_message(message)
+    #     register_op(ts, start_time + (stop_pause - start_pause))
+    #     log_logtime(ts, log_time)
+    #     acknowledge(ts, end_time)
+    #     return "skipped"
 
-    elif exp == 3:
-        ts = get_latest_ts()
-        tree = get_tree(ts)
-        start_time = datetime.now()
-        start_pause = start_time
-        stop_pause = start_time
-        prep = tree.move_gen(n, p, np)
-        ts[replicaid] += 1
-        if prep:
-            locks = get_locks(n, prep[2])
-            # simulate_latency(len(locks))
-            simulate_latency()
-            with ExitStack() as stack:
-                l = [stack.enter_context(lock) for lock in locks]
-                # simulate_latency(len(locks))
-                simulate_latency()
-                start_pause = datetime.now()
-                ts = get_latest_ts()
-                tree = get_tree(ts)
-                prep = tree.move_gen(n, p, np)
-                ts[replicaid] += 1
-                stop_pause = datetime.now()
-                if prep:
-                    msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
-                    message = {"to": whoami, "msg": msg}
-                    tree = apply_log(msg, tree, ts)
-                    log_time = datetime.now()
-                    update_ts_self(ts[replicaid])
-                    end_time = datetime.now()
-                    write_message(message)
-                    for each in [r for r in replicas if r != whoami]:
-                        message = {"to": each, "msg": msg}
-                        write_message(message)
-                    register_op(ts, start_time + (stop_pause - start_pause))
-                    log_logtime(ts, log_time)
-                    acknowledge(ts, end_time)
-                    # simulate_latency(len(locks))
-                    simulate_latency()
-                    return "done"
-                msg = prepare_message("moveskip", ts, [], whoami, [])
-                message = {"to": whoami, "msg": msg}
-                log_time = datetime.now()
-                end_time = datetime.now()
-                tree = apply_log(msg, tree, ts)
-                update_ts_self(ts[replicaid])
-                write_message(message)
-                for each in [r for r in replicas if r != whoami]:
-                    message = {"to": each, "msg": msg}
-                    write_message(message)
-                simulate_latency()
-                # register_op(ts, start_time)
-                register_op(ts, start_time + (stop_pause - start_pause))
-                log_logtime(ts, log_time)
-                acknowledge(ts, end_time)
-                return "skipped"
-        msg = prepare_message("moveskip", ts, [], whoami, [])
-        message = {"to": whoami, "msg": msg}
-        log_time = datetime.now()
-        end_time = datetime.now()
-        tree = apply_log(msg, tree, ts)
-        update_ts_self(ts[replicaid])
-        write_message(message)
-        for each in [r for r in replicas if r != whoami]:
-            message = {"to": each, "msg": msg}
-            write_message(message)
-        # register_op(ts, start_time)
-        register_op(ts, start_time + (stop_pause - start_pause))
-        log_logtime(ts, log_time)
-        acknowledge(ts, end_time)
-        return "skipped"
+    # elif exp == 3:
+    #     ts = get_latest_ts()
+    #     tree = get_tree(ts)
+    #     start_time = datetime.now()
+    #     start_pause = start_time
+    #     stop_pause = start_time
+    #     prep = tree.move_gen(n, p, np)
+    #     ts[replicaid] += 1
+    #     if prep:
+    #         locks = get_locks(n, prep[2])
+    #         # simulate_latency(len(locks))
+    #         simulate_latency()
+    #         with ExitStack() as stack:
+    #             l = [stack.enter_context(lock) for lock in locks]
+    #             # simulate_latency(len(locks))
+    #             simulate_latency()
+    #             start_pause = datetime.now()
+    #             ts = get_latest_ts()
+    #             tree = get_tree(ts)
+    #             prep = tree.move_gen(n, p, np)
+    #             ts[replicaid] += 1
+    #             stop_pause = datetime.now()
+    #             if prep:
+    #                 msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
+    #                 message = {"to": whoami, "msg": msg}
+    #                 tree = apply_log(msg, tree, ts)
+    #                 log_time = datetime.now()
+    #                 update_ts_self(ts[replicaid])
+    #                 end_time = datetime.now()
+    #                 write_message(message)
+    #                 for each in [r for r in replicas if r != whoami]:
+    #                     message = {"to": each, "msg": msg}
+    #                     write_message(message)
+    #                 register_op(ts, start_time + (stop_pause - start_pause))
+    #                 log_logtime(ts, log_time)
+    #                 acknowledge(ts, end_time)
+    #                 # simulate_latency(len(locks))
+    #                 simulate_latency()
+    #                 return "done"
+    #             msg = prepare_message("moveskip", ts, [], whoami, [])
+    #             message = {"to": whoami, "msg": msg}
+    #             log_time = datetime.now()
+    #             end_time = datetime.now()
+    #             tree = apply_log(msg, tree, ts)
+    #             update_ts_self(ts[replicaid])
+    #             write_message(message)
+    #             for each in [r for r in replicas if r != whoami]:
+    #                 message = {"to": each, "msg": msg}
+    #                 write_message(message)
+    #             simulate_latency()
+    #             # register_op(ts, start_time)
+    #             register_op(ts, start_time + (stop_pause - start_pause))
+    #             log_logtime(ts, log_time)
+    #             acknowledge(ts, end_time)
+    #             return "skipped"
+    #     msg = prepare_message("moveskip", ts, [], whoami, [])
+    #     message = {"to": whoami, "msg": msg}
+    #     log_time = datetime.now()
+    #     end_time = datetime.now()
+    #     tree = apply_log(msg, tree, ts)
+    #     update_ts_self(ts[replicaid])
+    #     write_message(message)
+    #     for each in [r for r in replicas if r != whoami]:
+    #         message = {"to": each, "msg": msg}
+    #         write_message(message)
+    #     # register_op(ts, start_time)
+    #     register_op(ts, start_time + (stop_pause - start_pause))
+    #     log_logtime(ts, log_time)
+    #     acknowledge(ts, end_time)
+    #     return "skipped"
+    # else:
+    ts = get_latest_ts()
+    tree = get_tree(ts)
+    start_time = datetime.now()
+    prep = tree.move_gen(n, p, np)
+    ts[replicaid] += 1
+    flag = False
+    if prep:
+        msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
     else:
-        ts = get_latest_ts()
-        tree = get_tree(ts)
-        start_time = datetime.now()
-        prep = tree.move_gen(n, p, np)
-        ts[replicaid] += 1
-        flag = False
-        if prep:
-            msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
-        else:
-            flag = True
-            msg = prepare_message("moveskip", ts, [], whoami, [])    
-        message = {"to": whoami, "msg": msg}
-        tree = apply_log(msg, tree, ts)
-        log_time = datetime.now()
-        update_ts_self(ts[replicaid])
-        end_time = datetime.now()
+        flag = True
+        msg = prepare_message("moveskip", ts, [], whoami, [])    
+    message = {"to": whoami, "msg": msg}
+    tree = apply_log(msg, tree, ts)
+    log_time = datetime.now()
+    update_ts_self(ts[replicaid])
+    end_time = datetime.now()
+    write_message(message)
+    for each in [r for r in replicas if r != whoami]:
+        message = {"to": each, "msg": msg}
         write_message(message)
-        for each in [r for r in replicas if r != whoami]:
-            message = {"to": each, "msg": msg}
-            write_message(message)
-        register_op(ts, start_time)
-        log_logtime(ts, log_time)
-        acknowledge(ts, end_time)
-        if flag:
-                return "skipped"
-        else:
-            return "done"
+    register_op(ts, start_time)
+    log_logtime(ts, log_time)
+    acknowledge(ts, end_time)
+    if flag:
+            return "skipped"
+    else:
+        return "done"

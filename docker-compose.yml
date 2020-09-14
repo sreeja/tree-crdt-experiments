@@ -14,13 +14,6 @@ services:
   cache:
     image: memcached
 
-  zookeeper:
-    image: zookeeper
-    restart: always
-    hostname: zoo1
-    ports:
-      - 2181:2181
-
   paris:
     build:
       context: ./application
@@ -38,11 +31,9 @@ services:
       - EXP=${EXP_ENV}
     depends_on:
       - messenger
-      - zookeeper
       - cache
     links:
       - messenger
-      - zookeeper
       - cache
     ports:
       - 6001:6000
@@ -84,11 +75,9 @@ services:
       - EXP=${EXP_ENV}
     depends_on:
       - messenger
-      - zookeeper
       - cache
     links:
       - messenger
-      - zookeeper
       - cache
     ports:
       - 6002:6000
@@ -130,11 +119,9 @@ services:
       - EXP=${EXP_ENV}
     depends_on:
       - messenger
-      - zookeeper
       - cache
     links:
       - messenger
-      - zookeeper
       - cache
     ports:
       - 6003:6000
