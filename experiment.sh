@@ -4,12 +4,12 @@ for LC in 3 2 1
 do
   export LC_ENV=$LC
   t=$(expr 3 \* $LC_ENV)
-  for EXP in 0 1 2 3
+  for EXP in 5
   do
     export EXP_ENV=$EXP
     for con in 0 2 10 20
     do
-      for run in $(seq 10)
+      for run in $(seq 15)
       do
         for f in $(find data); do > $f; done
         make down

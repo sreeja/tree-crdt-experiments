@@ -423,3 +423,89 @@ class Tree_Sublock:
     for each in string['nodes']:
       tree.nodes[each] = Node.deserialize(string['nodes'][each])
     return tree
+
+
+
+#########################################################################################################
+# Unsafe tree
+class Tree_unsafe:
+  def __init__(self):
+    self.root = Node('root', None)
+    self.nodes = {}
+    self.nodes['root'] = self.root
+
+  def get_ancestors(self, id):
+    node = self.nodes[id]
+    a = set()
+    while node != self.root:
+      parent = node.parent
+      node = self.nodes[parent]
+      a.add(node.id)
+    return a
+
+  def add_eff(self, n, p):
+    node = Node(n, p)
+    self.nodes[n] = node
+
+  def remove_eff(self, n):
+    removed_node = self.nodes[n]
+    removed_node.tombstone = True
+
+  def move_eff(self, n, p, np):
+    node = self.nodes[n]
+    node.parent = np
+
+  def add_gen(self, n, p):
+    if p in self.nodes and not n in self.nodes: # precondition assertion
+      op = 'add'
+      args = {'n':n, 'p':p}
+      ca = []
+      return (op, args, ca)
+
+  def remove_gen(self, n, p):
+    op = 'remove'
+    args = {'n':n, 'p':p}
+    ca = []
+    return (op, args, ca)
+
+  def move_gen(self, n, p, np):
+    if p in self.nodes and np in self.nodes and n in self.nodes:
+      node = self.nodes[n]
+      if node.parent == p:
+        if not n in self.get_ancestors(np):
+          op = 'move'
+          args = {'n':n, 'p':p, 'np':np}
+          ca = []
+          return (op, args, ca)  
+
+  @classmethod
+  def construct_tree(cls, logs, tree = None):
+    if tree == None:
+      tree = Tree_unsafe()
+    for l in logs:
+      if l['op'] == 'add':
+        tree.add_eff(l['args']['n'], l['args']['p'])
+      elif l['op'] == 'remove':
+        tree.remove_eff(l['args']['n'])
+      elif l['op'] == 'move':
+        tree.move_eff(l['args']['n'], l['args']['p'], l['args']['np'])
+      elif l['op'] in ['moveskip', 'addskip', 'removeskip']:
+        pass
+      else:
+        Exception('Unknown operation')
+    return tree
+
+  @classmethod
+  def serialize(cls, tree):
+    node_list = {}
+    for each in tree.nodes:
+      node_list[each] = Node.serialize(tree.nodes[each])
+    result = {'root':Node.serialize(tree.root), 'nodes':node_list}
+    return result
+
+  @classmethod
+  def deserialize(cls, string):
+    tree = Tree_unsafe()
+    for each in string['nodes']:
+      tree.nodes[each] = Node.deserialize(string['nodes'][each])
+    return tree

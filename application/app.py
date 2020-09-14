@@ -18,7 +18,8 @@ from tree import Tree_CRDT, Tree_Opset, Tree_Globalock, Tree_Sublock
 
 # latency configuration, 1,2,3
 lc = int(os.environ.get("LC"))
-# 0 for crdt, 1 for opsets, 2 for global lock, 3 for rw lock
+# 0 for crdt, 1 for opsets, 2 for global lock, 3 for rw lock, 5 for baseline unsafe tree
+
 exp = int(os.environ.get("EXP"))
 
 memcache = FlaskPyMemcache()
@@ -177,9 +178,12 @@ def rebuild_tree(logs, ts, tree):
     elif exp == 2:
         # build tree with single lock
         tree = Tree_Globalock.construct_tree(filtered_logs, tree)
-    else:
+    elif exp == 3:
         # build tree with subtree locking
         tree = Tree_Sublock.construct_tree(filtered_logs, tree)
+    else:
+        # build the unsafe base version tree
+        tree = Tree_unsafe.construct_tree(filtered_logs, tree)
     return tree, last_ts
 
 def equals(ts1, ts2):
@@ -209,8 +213,10 @@ def get_tree(ts):
                 tree = Tree_Opset.deserialize(stree['tree'])
             elif exp == 2:
                 tree = Tree_Globalock.deserialize(stree['tree'])
-            else:
+            elif exp == 3:
                 tree = Tree_Sublock.deserialize(stree['tree'])
+            else:
+                tree = Tree_unsafe.deserialize(stree['tree'])
             return tree
     logs = get_logs()
     tree, last_ts = rebuild_tree(logs, ts, None)
@@ -226,9 +232,12 @@ def apply_log(log, tree, ts):
     elif exp == 2:
         tree = Tree_Globalock.construct_tree([log], tree)
         memcache.client.set(whoami+'-tree', json.dumps({'ts':ts, 'tree':Tree_Globalock.serialize(tree)}))
-    else:
+    elif exp == 3:
         tree = Tree_Sublock.construct_tree([log], tree)
         memcache.client.set(whoami+'-tree', json.dumps({'ts':ts, 'tree':Tree_Sublock.serialize(tree)}))
+    else:
+        tree = Tree_unsafe.construct_tree([log], tree)
+        memcache.client.set(whoami+'-tree', json.dumps({'ts':ts, 'tree':Tree_unsafe.serialize(tree)}))
     return tree
 
 @app.route('/')
