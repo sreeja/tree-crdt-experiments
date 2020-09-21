@@ -16,13 +16,15 @@ from datetime import datetime, timedelta
 
 replicas = ['paris','bangalore','newyork']
 
-experiments = ['Maram', 'UDR Tree', 'Global locking', 'Subtree Locking'] 
+experiments = ['Maram', 'UDR Tree', 'Global locking', 'Subtree Locking', 'Unsafe'] 
 # 'CRDT Tree', 'Opsets based tree', 'Tree with global lock', 'Tree with subtree locks']
+
+folder = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'baseline_final')
 
 def parse_logs(lc_config, exp, conflict, run):
   data = {}
   for r in replicas:
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'final', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), 'data', r, 'register.txt')
+    reg_file = os.path.join(folder, 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), 'data', r, 'register.txt')
     with open(reg_file, 'r') as l:
       lines = l.readlines()
       for each in lines:
@@ -35,7 +37,7 @@ def parse_logs(lc_config, exp, conflict, run):
             data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S.%f')
           except:
             data[key]["requested_time"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'final', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), 'data',r, 'done.txt')
+    reg_file = os.path.join(folder, 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp), 'data',r, 'done.txt')
     with open(reg_file) as l:
       lines = l.readlines()
       for each in lines:
@@ -50,7 +52,7 @@ def parse_logs(lc_config, exp, conflict, run):
             data[key]["acknowledged"] = datetime.strptime(j["time"], '%Y-%m-%d %H:%M:%S')
     for r1 in replicas:
       file_name = 'time'+r1+'.txt'
-      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'final', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp),'data', r, file_name)
+      reg_file = os.path.join(folder, 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp),'data', r, file_name)
       with open(reg_file, 'r') as l:
         lines = l.readlines()
         for each in lines:
@@ -67,7 +69,7 @@ def parse_logs(lc_config, exp, conflict, run):
   skipmove_count = 0
   for r in replicas:
     file_name = r+'.txt'
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'final', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp),'data', 'paris', file_name)
+    reg_file = os.path.join(folder, 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp),'data', 'paris', file_name)
     with open(reg_file, 'r') as l:
       lines = l.readlines()
       for each in lines:
@@ -99,7 +101,7 @@ def parse_replica_logs(lc_config, exp, conflict, run):
   for r in replicas:
     for r1 in replicas:
       file_name = 'time'+r1+'.txt'
-      reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'final', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp),'data', r, file_name)
+      reg_file = os.path.join(folder, 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp),'data', r, file_name)
       with open(reg_file, 'r') as l:
         lines = l.readlines()
         for each in lines:
@@ -115,7 +117,7 @@ def parse_replica_logs(lc_config, exp, conflict, run):
             data[key]["ts"] = j["ts"]
   for r in replicas:
     file_name = r+'.txt'
-    reg_file = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'final', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp),'data', 'paris', file_name)
+    reg_file = os.path.join(folder, 'run'+str(run), 'lc'+str(lc_config), 'data'+str(conflict), str(exp),'data', 'paris', file_name)
     with open(reg_file, 'r') as l:
       lines = l.readlines()
       for each in lines:
@@ -226,7 +228,7 @@ def result(lc_config, run):
       # print(experiments[i] + " All: " + str(rt[1].total_seconds()*1000) + " :: Moves: " + str(rt[2].total_seconds()*1000) + " :: Nonmoves: " + str(rt[3].total_seconds()*1000))
       row += [experiments[i] + ' & ' +str(rt[1].total_seconds()*1000) + ' & ' +str(rt[2].total_seconds()*1000) + ' & ' + str(rt[3].total_seconds()*1000) + '\\\\']
       file_name = "response"+str(lc_config)+"con"+str(j)+"exp"+str(i)+".json"
-      file_to_write = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'final', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(j), str(i), file_name)
+      file_to_write = os.path.join(folder, 'run'+str(run), 'lc'+str(lc_config), 'data'+str(j), str(i), file_name)
       with open(file_to_write, "w") as f:
         f.write("\n".join([str(r) for r in rt[0]]))
       responses[j][i] = rt[1].total_seconds()*1000
@@ -235,6 +237,20 @@ def result(lc_config, run):
     # file_name = "response"+str(lc_config)+"con"+str(j)+".tex"
     # with open(file_name, "w") as f:
     #   f.write("\n".join(row))
+
+
+#####################################################
+  overhead = {}
+  data = parse_logs(lc_config, 5, 0, run)
+  rt = response_time(data)
+  row += [experiments[4] + ' & ' +str(rt[1].total_seconds()*1000) + ' & ' +str(rt[2].total_seconds()*1000) + ' & ' + str(rt[3].total_seconds()*1000) + '\\\\']
+  file_name = "response"+str(lc_config)+"con"+str(0)+"exp"+str(5)+".json"
+  file_to_write = os.path.join(folder, 'run'+str(run), 'lc'+str(lc_config), 'data'+str(0), str(5), file_name)
+  with open(file_to_write, "w") as f:
+    f.write("\n".join([str(r) for r in rt[0]]))
+  responses[0][5] = rt[1].total_seconds()*1000
+  ######################################
+
   # print("=============")
   # return  average stabilization time per experiment
   # print("Stabilization time")
@@ -250,7 +266,7 @@ def result(lc_config, run):
       # print("Conflict %: " + str(j) + " : " + "All: " + str(res[1].total_seconds()*1000) + " moves: " + str(res[2].total_seconds()*1000) + " other operations: " + str(res[3].total_seconds()*1000))
       row += [str(res[1].total_seconds()*1000)]
       file_name = "stab"+str(lc_config)+"con"+str(j)+"exp"+str(i)+".json"
-      file_to_write = os.path.join('/', 'Users', 'snair', 'works', 'tree-crdt-experiments', 'cluster_results', 'final', 'run'+str(run), 'lc'+str(lc_config), 'data'+str(j), str(i), file_name)
+      file_to_write = os.path.join(folder, 'run'+str(run), 'lc'+str(lc_config), 'data'+str(j), str(i), file_name)
       with open(file_to_write, "w") as f:
         f.write("\n".join([str(s) for s in res[0]]))
       stabilizations[j][i] = res[1].total_seconds()*1000
@@ -259,6 +275,8 @@ def result(lc_config, run):
   # with open(file_name, "w") as f:
   #   f.write("\\\\ \n".join(sl) + "\\\\")
   # print("=============")
+
+
   return responses, stabilizations, move_responses
 
 import random
@@ -273,7 +291,7 @@ for l in [1, 2, 3]:
     responses[l][c] = {}
     move_responses[l][c] = {}
     stabilizations[l][c] = {}
-    for e in range(4):
+    for e in [0,1,2,3,5]:
       responses[l][c][e] = []
       move_responses[l][c][e] = []
       stabilizations[l][c][e] = []
@@ -283,10 +301,13 @@ for run in range(1, 16):
     # print("LATENCY CONFIG " + str(i) + " \n")
     res0, res1, resm = result(i,run)
     for con in [0, 2, 10, 20]:
-      for exp in range(4):
+      for exp in [0,1,2,3]:
         responses[i][con][exp] += [res0[con][exp]]
         move_responses[i][con][exp] += [resm[con][exp]]
         stabilizations[i][con][exp] += [res1[con][exp]]
+    responses[i][0][5] += [res0[0][5]]
+
+
     # for con in [0, 2, 10, 20]:
     #   for e in range(4):
     #     responses[con][e] += [random.randint(0,5)]
@@ -318,12 +339,12 @@ ax.set_xticks(x_pos)
 ax.set_xlabel('Conflict rates')
 ax.set_xticklabels([0, 2, 10, 20])
 # ax.set_title('Response time for varying conflict rates')
-ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global locking', 'Subtree Locking'))
+ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR', 'Global_l', 'Subtree_l'), bbox_to_anchor=(0., 1.02, 1., .5), loc='lower right', borderaxespad=0., mode="expand", ncol=4)
 ax.yaxis.grid(True)
 plt.yscale('log') #logarithmic scale
 
 # Save the figure and show
-plt.tight_layout()
+# plt.tight_layout()
 plt.savefig('response_time_log.png')
 # plt.show()
 
@@ -347,11 +368,11 @@ ax.set_xticks(x_pos)
 ax.set_xlabel('Conflict rates')
 ax.set_xticklabels([0, 2, 10, 20])
 # ax.set_title('Response time for varying conflict rates')
-ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global locking', 'Subtree Locking'))
+ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR', 'Global_l', 'Subtree_l'), bbox_to_anchor=(0., 1.02, 1., .5), loc='lower right', borderaxespad=0., mode="expand", ncol=4)
 ax.yaxis.grid(True)
 
 # Save the figure and show
-plt.tight_layout()
+# plt.tight_layout()
 plt.savefig('response_time.png')
 # plt.show()
 
@@ -379,15 +400,40 @@ ax.set_xticks(x_pos)
 ax.set_xlabel('Conflict rates')
 ax.set_xticklabels([0, 2, 10, 20])
 # ax.set_title('Response time for varying conflict rates')
-ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global locking', 'Subtree Locking'))
+ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR', 'Global_l', 'Subtree_l'), bbox_to_anchor=(0., 1.02, 1., .5), loc='lower right', borderaxespad=0., mode="expand", ncol=4)
 ax.yaxis.grid(True)
 # plt.yscale('log') #logarithmic scale
 
 # Save the figure and show
-plt.tight_layout()
+# plt.tight_layout()
 plt.savefig('response_time_moves.png')
 # plt.show()
 
+over0 = [np.mean(np.array(responses[l][0][0])) for l in responses]
+overerr0 = [np.std(np.array(responses[l][0][0])) for l in responses]
+over5 = [np.mean(np.array(responses[l][0][5])) for l in responses]
+overerr5 = [np.std(np.array(responses[l][0][5])) for l in responses]
+
+# Build the plot
+x2_pos = np.arange(3)
+fig, ax = plt.subplots()
+obar0 = ax.bar(x2_pos - width/2, over0, width, yerr=overerr0, align='center', alpha=0.5, hatch='o', capsize=2)
+obar1 = ax.bar(x2_pos + width/2, over5, width, yerr=overerr5, align='center', alpha=0.5, hatch='.', capsize=2)
+ax.set_ylabel('Response time in ms')
+ax.set_xticks(x2_pos)
+ax.set_xlabel('Latency settings')
+ax.set_xticklabels(['Zero', 'Realworld', '10x realworld'])
+# ax.set_title('Response time for varying conflict rates')
+ax.legend((obar0[0], obar1[0]), ('Maram', 'Unsafe Tree'), bbox_to_anchor=(0., 1.02, 1., .102), loc='lower right', borderaxespad=0., mode="expand", ncol=2)
+ax.yaxis.grid(True)
+# plt.yscale('log') #logarithmic scale
+
+# Save the figure and show
+# ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left',
+          #  ncol=2, mode="expand", borderaxespad=0.)
+# plt.tight_layout()
+plt.savefig('overhead.png')
+# plt.show()
 
 x_pos = np.arange(3)
 stab0 = [np.mean(np.array(stabilizations[l][0][0])) for l in stabilizations]
@@ -407,10 +453,10 @@ ax.set_xticks(x_pos)
 ax.set_xlabel('Latency settings')
 ax.set_xticklabels(['Zero', 'Realworld', '10x realworld'])
 # ax.set_title('Stabilization time for varying latency configurations')
-ax.legend((bar0[0], bar1[0]), ('Maram', 'UDR Tree'))
+ax.legend((bar0[0], bar1[0]), ('Maram', 'UDR Tree'), bbox_to_anchor=(0., 1.02, 1., .102), loc='lower right', borderaxespad=0., mode="expand", ncol=2)
 ax.yaxis.grid(True)
 # Save the figure and show
-plt.tight_layout()
+# plt.tight_layout()
 plt.savefig('stabilization_time_linear.png')
 # plt.show()
 
@@ -432,10 +478,10 @@ ax.set_xticks(x_pos)
 ax.set_xlabel('Latency settings')
 ax.set_xticklabels(['Zero', 'Realworld', '10x realworld'])
 # ax.set_title('Stabilization time for varying latency configurations')
-ax.legend((bar0[0], bar1[0]), ('Maram', 'UDR Tree'))
+ax.legend((bar0[0], bar1[0]), ('Maram', 'UDR Tree'), bbox_to_anchor=(0., 1.02, 1., .102), loc='lower right', borderaxespad=0., mode="expand", ncol=2)
 ax.yaxis.grid(True)
 plt.yscale('log') #logarithmic scale
 # Save the figure and show
-plt.tight_layout()
+# plt.tight_layout()
 plt.savefig('stabilization_time_log.png')
 # plt.show()
