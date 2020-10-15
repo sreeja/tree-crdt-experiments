@@ -330,16 +330,16 @@ resperr3 = [np.std(np.array(responses[2][con][3])) for con in responses[2]]
 
 # Build the plot
 fig, ax = plt.subplots()
-bar0 = ax.bar(x_pos - 1.5*width, resp0, width, yerr=resperr0, align='center', alpha=0.5, hatch='o', capsize=2)
-bar1 = ax.bar(x_pos - width/2, resp1, width, yerr=resperr1, align='center', alpha=0.5, hatch='.', capsize=2)
-bar2 = ax.bar(x_pos + width/2, resp2, width, yerr=resperr2, align='center', alpha=0.5, hatch='+', capsize=2)
-bar3 = ax.bar(x_pos + 1.5*width, resp3, width, yerr=resperr3, align='center', alpha=0.5, hatch='x', capsize=2)
+bar0 = ax.bar(x_pos - 1.5*width, resp0, width, yerr=resperr0, align='center', alpha=0.5, color='green', edgecolor='black', hatch='', capsize=2)
+bar1 = ax.bar(x_pos - width/2, resp1, width, yerr=resperr1, align='center', alpha=0.5, color='red', edgecolor='black', hatch='///', capsize=2)
+bar2 = ax.bar(x_pos + width/2, resp2, width, yerr=resperr2, align='center', alpha=0.5, color='yellow', edgecolor='black', hatch='xxx', capsize=2)
+bar3 = ax.bar(x_pos + 1.5*width, resp3, width, yerr=resperr3, align='center', alpha=0.5, color='blue', edgecolor='black', hatch='---', capsize=2)
 ax.set_ylabel('Response time in ms')
 ax.set_xticks(x_pos)
 ax.set_xlabel('Conflict rates')
 ax.set_xticklabels([0, 2, 10, 20])
 # ax.set_title('Response time for varying conflict rates')
-ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR', 'Global_l', 'Subtree_l'), bbox_to_anchor=(0., 1.02, 1., .5), loc='lower right', borderaxespad=0., mode="expand", ncol=4)
+ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global_l', 'Subtree_l'), bbox_to_anchor=(0., 1.02, 1., .5), loc='lower right', borderaxespad=0., mode="expand", ncol=4)
 ax.yaxis.grid(True)
 plt.yscale('log') #logarithmic scale
 
@@ -359,16 +359,16 @@ resperr3 = [np.std(np.array(responses[2][con][3])) for con in responses[2]]
 
 # Build the plot
 fig, ax = plt.subplots()
-bar0 = ax.bar(x_pos - 1.5*width, resp0, width, yerr=resperr0, align='center', alpha=0.5, hatch='o', capsize=2)
-bar1 = ax.bar(x_pos - width/2, resp1, width, yerr=resperr1, align='center', alpha=0.5, hatch='.', capsize=2)
-bar2 = ax.bar(x_pos + width/2, resp2, width, yerr=resperr2, align='center', alpha=0.5, hatch='+', capsize=2)
-bar3 = ax.bar(x_pos + 1.5*width, resp3, width, yerr=resperr3, align='center', alpha=0.5, hatch='x', capsize=2)
+bar0 = ax.bar(x_pos - 1.5*width, resp0, width, yerr=resperr0, align='center', alpha=0.5, color='green', edgecolor='black', hatch='', capsize=2)
+bar1 = ax.bar(x_pos - width/2, resp1, width, yerr=resperr1, align='center', alpha=0.5, color='red', edgecolor='black', hatch='///', capsize=2)
+bar2 = ax.bar(x_pos + width/2, resp2, width, yerr=resperr2, align='center', alpha=0.5, color='yellow', edgecolor='black', hatch='xxx', capsize=2)
+bar3 = ax.bar(x_pos + 1.5*width, resp3, width, yerr=resperr3, align='center', alpha=0.5, color='blue', edgecolor='black', hatch='---', capsize=2)
 ax.set_ylabel('Response time in ms')
 ax.set_xticks(x_pos)
 ax.set_xlabel('Conflict rates')
 ax.set_xticklabels([0, 2, 10, 20])
 # ax.set_title('Response time for varying conflict rates')
-ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR', 'Global_l', 'Subtree_l'), bbox_to_anchor=(0., 1.02, 1., .5), loc='lower right', borderaxespad=0., mode="expand", ncol=4)
+ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global_l', 'Subtree_l'), bbox_to_anchor=(0., 1.02, 1., .5), loc='lower right', borderaxespad=0., mode="expand", ncol=4)
 ax.yaxis.grid(True)
 
 # Save the figure and show
@@ -391,16 +391,16 @@ fig, ax = plt.subplots()
 # bar1 = ax.bar(x_pos - width/2, mresp1, width, yerr=mresperr1, align='center', alpha=0.5, ecolor='black', capsize=2)
 # bar2 = ax.bar(x_pos + width/2, mresp2, width, yerr=mresperr2, align='center', alpha=0.5, ecolor='black', capsize=2)
 # bar3 = ax.bar(x_pos + 1.5*width, mresp3, width, yerr=mresperr3, align='center', alpha=0.5, ecolor='black', capsize=2)
-bar0 = ax.bar(x_pos - 1.5*width, mresp0, width, yerr=mresperr0, align='center', alpha=0.5, hatch='o', capsize=2)
-bar1 = ax.bar(x_pos - width/2, mresp1, width, yerr=mresperr1, align='center', alpha=0.5, hatch='.', capsize=2)
-bar2 = ax.bar(x_pos + width/2, mresp2, width, yerr=mresperr2, align='center', alpha=0.5, hatch='+', capsize=2)
-bar3 = ax.bar(x_pos + 1.5*width, mresp3, width, yerr=mresperr3, align='center', alpha=0.5, hatch='x', capsize=2)
+bar0 = ax.bar(x_pos - 1.5*width, mresp0, width, yerr=mresperr0, align='center', alpha=0.5, color='green', edgecolor='black', hatch='', capsize=2)
+bar1 = ax.bar(x_pos - width/2, mresp1, width, yerr=mresperr1, align='center', alpha=0.5, color='red', edgecolor='black', hatch='///', capsize=2)
+bar2 = ax.bar(x_pos + width/2, mresp2, width, yerr=mresperr2, align='center', alpha=0.5, color='yellow', edgecolor='black', hatch='xxx', capsize=2)
+bar3 = ax.bar(x_pos + 1.5*width, mresp3, width, yerr=mresperr3, align='center', alpha=0.5, color='blue', edgecolor='black', hatch='---', capsize=2)
 ax.set_ylabel('Response time in ms')
 ax.set_xticks(x_pos)
 ax.set_xlabel('Conflict rates')
 ax.set_xticklabels([0, 2, 10, 20])
 # ax.set_title('Response time for varying conflict rates')
-ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR', 'Global_l', 'Subtree_l'), bbox_to_anchor=(0., 1.02, 1., .5), loc='lower right', borderaxespad=0., mode="expand", ncol=4)
+ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global_l', 'Subtree_l'), bbox_to_anchor=(0., 1.02, 1., .5), loc='lower right', borderaxespad=0., mode="expand", ncol=4)
 ax.yaxis.grid(True)
 # plt.yscale('log') #logarithmic scale
 
@@ -417,8 +417,8 @@ overerr5 = [np.std(np.array(responses[l][0][5])) for l in responses]
 # Build the plot
 x2_pos = np.arange(3)
 fig, ax = plt.subplots()
-obar0 = ax.bar(x2_pos - width/2, over0, width, yerr=overerr0, align='center', alpha=0.5, hatch='o', capsize=2)
-obar1 = ax.bar(x2_pos + width/2, over5, width, yerr=overerr5, align='center', alpha=0.5, hatch='.', capsize=2)
+obar0 = ax.bar(x2_pos - width/2, over0, width, yerr=overerr0, align='center', alpha=0.5, color='green', edgecolor='black', hatch='', capsize=2)
+obar1 = ax.bar(x2_pos + width/2, over5, width, yerr=overerr5, align='center', alpha=0.5, color='magenta', edgecolor='black', hatch='|||', capsize=2)
 ax.set_ylabel('Response time in ms')
 ax.set_xticks(x2_pos)
 ax.set_xlabel('Latency settings')
@@ -446,8 +446,8 @@ staberr1 = [np.std(np.array(stabilizations[l][0][1])) for l in stabilizations]
 
 # Build the plot
 fig, ax = plt.subplots()
-bar0 = ax.bar(x_pos - width/2, stab0, width, yerr=staberr0, align='center', alpha=0.5, hatch='o', capsize=2)
-bar1 = ax.bar(x_pos + width/2, stab1, width, yerr=staberr1, align='center', alpha=0.5, hatch='.', capsize=2)
+bar0 = ax.bar(x_pos - width/2, stab0, width, yerr=staberr0, align='center', alpha=0.5, color='green', edgecolor='black', hatch='', capsize=2)
+bar1 = ax.bar(x_pos + width/2, stab1, width, yerr=staberr1, align='center', alpha=0.5, color='red', edgecolor='black', hatch='///', capsize=2)
 ax.set_ylabel('Stabilization time in ms')
 ax.set_xticks(x_pos)
 ax.set_xlabel('Latency settings')
@@ -471,8 +471,8 @@ staberr1 = [np.std(np.array(stabilizations[l][0][1])) for l in stabilizations]
 
 # Build the plot
 fig, ax = plt.subplots()
-bar0 = ax.bar(x_pos - width/2, stab0, width, yerr=staberr0, align='center', alpha=0.5, hatch='o', capsize=2)
-bar1 = ax.bar(x_pos + width/2, stab1, width, yerr=staberr1, align='center', alpha=0.5, hatch='.', capsize=2)
+bar0 = ax.bar(x_pos - width/2, stab0, width, yerr=staberr0, align='center', alpha=0.5, color='green', edgecolor='black', hatch='', capsize=2)
+bar1 = ax.bar(x_pos + width/2, stab1, width, yerr=staberr1, align='center', alpha=0.5, color='red', edgecolor='black', hatch='///', capsize=2)
 ax.set_ylabel('Stabilization time in ms')
 ax.set_xticks(x_pos)
 ax.set_xlabel('Latency settings')
