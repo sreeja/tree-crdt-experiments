@@ -57,12 +57,13 @@ class Tree_CRDT:
   def get_all_descendants(self):
     d = {}
     for n in self.nodes:
-      d[n] = []
+      d[self.nodes[n]] = []
     for n in self.nodes:
-      while n and n != self.root:
-        parent = n.parent
-        d[parent] += [n]
-        n = parent
+      node = self.nodes[n]
+      while node != self.root:
+        parent = node.parent
+        d[parent] += [node]
+        node = parent
     return d
 
   def get_descendants(self, id):
