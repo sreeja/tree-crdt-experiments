@@ -14,7 +14,7 @@ from flask_pymemcache import FlaskPyMemcache
 
 from contextlib import ExitStack
 
-from tree import Tree_CRDT, Tree_Opset, Tree_Globalock, Tree_Sublock, Tree_unsafe
+from tree import Tree_CRDT, Tree_Opset, Tree_Globalock, Tree_Sublock
 
 # latency configuration, 1,2,3
 lc = int(os.environ.get("LC"))

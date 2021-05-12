@@ -319,33 +319,34 @@ import matplotlib.pyplot as plt
 
 x_pos = np.arange(4)
 width = 0.2
-resp0 = [np.mean(np.array(responses[2][con][0])) for con in responses[2]]
-resperr0 = [np.std(np.array(responses[2][con][0])) for con in responses[2]]
-resp1 = [np.mean(np.array(responses[2][con][1])) for con in responses[2]]
-resperr1 = [np.std(np.array(responses[2][con][1])) for con in responses[2]]
-resp2 = [np.mean(np.array(responses[2][con][2])) for con in responses[2]]
-resperr2 = [np.std(np.array(responses[2][con][2])) for con in responses[2]]
-resp3 = [np.mean(np.array(responses[2][con][3])) for con in responses[2]]
-resperr3 = [np.std(np.array(responses[2][con][3])) for con in responses[2]]
+# resp0 = [np.mean(np.array(responses[2][con][0])) for con in responses[2]]
+# resperr0 = [np.std(np.array(responses[2][con][0])) for con in responses[2]]
+# resp1 = [np.mean(np.array(responses[2][con][1])) for con in responses[2]]
+# resperr1 = [np.std(np.array(responses[2][con][1])) for con in responses[2]]
+# resp2 = [np.mean(np.array(responses[2][con][2])) for con in responses[2]]
+# resperr2 = [np.std(np.array(responses[2][con][2])) for con in responses[2]]
+# resp3 = [np.mean(np.array(responses[2][con][3])) for con in responses[2]]
+# resperr3 = [np.std(np.array(responses[2][con][3])) for con in responses[2]]
 
 # Build the plot
-fig, ax = plt.subplots()
-bar0 = ax.bar(x_pos - 1.5*width, resp0, width, yerr=resperr0, align='center', alpha=0.5, color='green', edgecolor='black', hatch='', capsize=2)
-bar1 = ax.bar(x_pos - width/2, resp1, width, yerr=resperr1, align='center', alpha=0.5, color='red', edgecolor='black', hatch='///', capsize=2)
-bar2 = ax.bar(x_pos + width/2, resp2, width, yerr=resperr2, align='center', alpha=0.5, color='yellow', edgecolor='black', hatch='xxx', capsize=2)
-bar3 = ax.bar(x_pos + 1.5*width, resp3, width, yerr=resperr3, align='center', alpha=0.5, color='blue', edgecolor='black', hatch='---', capsize=2)
-ax.set_ylabel('Response time in ms')
-ax.set_xticks(x_pos)
-ax.set_xlabel('Conflict rates')
-ax.set_xticklabels([0, 2, 10, 20])
-# ax.set_title('Response time for varying conflict rates')
-ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global_l', 'Subtree_l'), bbox_to_anchor=(0., 1.02, 1., .5), loc='lower right', borderaxespad=0., mode="expand", ncol=4)
-ax.yaxis.grid(True)
-plt.yscale('log') #logarithmic scale
+# fig, ax = plt.subplots(figsize=(8,6))
+# bar0 = ax.bar(x_pos - 1.5*width, resp0, width, yerr=resperr0, align='center', alpha=0.5, color='green', edgecolor='black', hatch='', capsize=2)
+# bar1 = ax.bar(x_pos - width/2, resp1, width, yerr=resperr1, align='center', alpha=0.5, color='red', edgecolor='black', hatch='///', capsize=2)
+# bar2 = ax.bar(x_pos + width/2, resp2, width, yerr=resperr2, align='center', alpha=0.5, color='yellow', edgecolor='black', hatch='xxx', capsize=2)
+# bar3 = ax.bar(x_pos + 1.5*width, resp3, width, yerr=resperr3, align='center', alpha=0.5, color='blue', edgecolor='black', hatch='---', capsize=2)
+# ax.set_ylabel('Response time in ms')
+# ax.set_xticks(x_pos)
+# ax.set_xlabel('Conflict rates')
+# ax.set_xticklabels([0, 2, 10, 20])
+# # ax.set_title('Response time for varying conflict rates')
+# ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global_l', 'Subtree_l'), bbox_to_anchor=(0., 1.02, 1., .5), loc='lower right', borderaxespad=0., mode="expand", ncol=4)
+# ax.yaxis.grid(True)
+# plt.yscale('log') #logarithmic scale
 
-# Save the figure and show
-# plt.tight_layout()
-plt.savefig('response_time_log.png')
+# # Save the figure and show
+# # plt.tight_layout()
+# plt.savefig('response_time_log.png')
+# plt.savefig('response_time_log.eps', format='eps')
 # plt.show()
 
 resp0 = [np.mean(np.array(responses[2][con][0])) for con in responses[2]]
@@ -358,70 +359,77 @@ resp3 = [np.mean(np.array(responses[2][con][3])) for con in responses[2]]
 resperr3 = [np.std(np.array(responses[2][con][3])) for con in responses[2]]
 
 # Build the plot
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(6,3))
+# fig, ax = plt.subplots(figsize=(6.67,4))
+# fig, ax = plt.subplots(figsize=(5,3))
 bar0 = ax.bar(x_pos - 1.5*width, resp0, width, yerr=resperr0, align='center', alpha=0.5, color='green', edgecolor='black', hatch='', capsize=2)
 bar1 = ax.bar(x_pos - width/2, resp1, width, yerr=resperr1, align='center', alpha=0.5, color='red', edgecolor='black', hatch='///', capsize=2)
 bar2 = ax.bar(x_pos + width/2, resp2, width, yerr=resperr2, align='center', alpha=0.5, color='yellow', edgecolor='black', hatch='xxx', capsize=2)
 bar3 = ax.bar(x_pos + 1.5*width, resp3, width, yerr=resperr3, align='center', alpha=0.5, color='blue', edgecolor='black', hatch='---', capsize=2)
 ax.set_ylabel('Response time in ms')
 ax.set_xticks(x_pos)
-ax.set_xlabel('Conflict rates')
+# ax.set_xlabel('Conflict rates')
 ax.set_xticklabels([0, 2, 10, 20])
 # ax.set_title('Response time for varying conflict rates')
-ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global_l', 'Subtree_l'), bbox_to_anchor=(0., 1.02, 1., .5), loc='lower right', borderaxespad=0., mode="expand", ncol=4)
+ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global', 'Najafzadeh'), bbox_to_anchor=(0., 1.02, 1., .5), loc='lower right', borderaxespad=0., mode="expand", ncol=4)
 ax.yaxis.grid(True)
 
 # Save the figure and show
 # plt.tight_layout()
 plt.savefig('response_time.png')
+plt.savefig('response_time.eps', format='eps', bbox_inches='tight')
 # plt.show()
 
-mresp0 = [np.mean(np.array(move_responses[2][con][0])) for con in move_responses[2]]
-mresperr0 = [np.std(np.array(move_responses[2][con][0])) for con in move_responses[2]]
-mresp1 = [np.mean(np.array(move_responses[2][con][1])) for con in move_responses[2]]
-mresperr1 = [np.std(np.array(move_responses[2][con][1])) for con in move_responses[2]]
-mresp2 = [np.mean(np.array(move_responses[2][con][2])) for con in move_responses[2]]
-mresperr2 = [np.std(np.array(move_responses[2][con][2])) for con in move_responses[2]]
-mresp3 = [np.mean(np.array(move_responses[2][con][3])) for con in move_responses[2]]
-mresperr3 = [np.std(np.array(move_responses[2][con][3])) for con in move_responses[2]]
+# mresp0 = [np.mean(np.array(move_responses[2][con][0])) for con in move_responses[2]]
+# mresperr0 = [np.std(np.array(move_responses[2][con][0])) for con in move_responses[2]]
+# mresp1 = [np.mean(np.array(move_responses[2][con][1])) for con in move_responses[2]]
+# mresperr1 = [np.std(np.array(move_responses[2][con][1])) for con in move_responses[2]]
+# mresp2 = [np.mean(np.array(move_responses[2][con][2])) for con in move_responses[2]]
+# mresperr2 = [np.std(np.array(move_responses[2][con][2])) for con in move_responses[2]]
+# mresp3 = [np.mean(np.array(move_responses[2][con][3])) for con in move_responses[2]]
+# mresperr3 = [np.std(np.array(move_responses[2][con][3])) for con in move_responses[2]]
 
-# Build the plot
-fig, ax = plt.subplots()
-# bar0 = ax.bar(x_pos - 1.5*width, mresp0, width, yerr=mresperr0, align='center', alpha=0.5, ecolor='black', capsize=2)
-# bar1 = ax.bar(x_pos - width/2, mresp1, width, yerr=mresperr1, align='center', alpha=0.5, ecolor='black', capsize=2)
-# bar2 = ax.bar(x_pos + width/2, mresp2, width, yerr=mresperr2, align='center', alpha=0.5, ecolor='black', capsize=2)
-# bar3 = ax.bar(x_pos + 1.5*width, mresp3, width, yerr=mresperr3, align='center', alpha=0.5, ecolor='black', capsize=2)
-bar0 = ax.bar(x_pos - 1.5*width, mresp0, width, yerr=mresperr0, align='center', alpha=0.5, color='green', edgecolor='black', hatch='', capsize=2)
-bar1 = ax.bar(x_pos - width/2, mresp1, width, yerr=mresperr1, align='center', alpha=0.5, color='red', edgecolor='black', hatch='///', capsize=2)
-bar2 = ax.bar(x_pos + width/2, mresp2, width, yerr=mresperr2, align='center', alpha=0.5, color='yellow', edgecolor='black', hatch='xxx', capsize=2)
-bar3 = ax.bar(x_pos + 1.5*width, mresp3, width, yerr=mresperr3, align='center', alpha=0.5, color='blue', edgecolor='black', hatch='---', capsize=2)
-ax.set_ylabel('Response time in ms')
-ax.set_xticks(x_pos)
-ax.set_xlabel('Conflict rates')
-ax.set_xticklabels([0, 2, 10, 20])
-# ax.set_title('Response time for varying conflict rates')
-ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global_l', 'Subtree_l'), bbox_to_anchor=(0., 1.02, 1., .5), loc='lower right', borderaxespad=0., mode="expand", ncol=4)
-ax.yaxis.grid(True)
-# plt.yscale('log') #logarithmic scale
-
-# Save the figure and show
-# plt.tight_layout()
-plt.savefig('response_time_moves.png')
-# plt.show()
+# # Build the plot
+# fig, ax = plt.subplots(figsize=(8,6))
+# # bar0 = ax.bar(x_pos - 1.5*width, mresp0, width, yerr=mresperr0, align='center', alpha=0.5, ecolor='black', capsize=2)
+# # bar1 = ax.bar(x_pos - width/2, mresp1, width, yerr=mresperr1, align='center', alpha=0.5, ecolor='black', capsize=2)
+# # bar2 = ax.bar(x_pos + width/2, mresp2, width, yerr=mresperr2, align='center', alpha=0.5, ecolor='black', capsize=2)
+# # bar3 = ax.bar(x_pos + 1.5*width, mresp3, width, yerr=mresperr3, align='center', alpha=0.5, ecolor='black', capsize=2)
+# bar0 = ax.bar(x_pos - 1.5*width, mresp0, width, yerr=mresperr0, align='center', alpha=0.5, color='green', edgecolor='black', hatch='', capsize=2)
+# bar1 = ax.bar(x_pos - width/2, mresp1, width, yerr=mresperr1, align='center', alpha=0.5, color='red', edgecolor='black', hatch='///', capsize=2)
+# bar2 = ax.bar(x_pos + width/2, mresp2, width, yerr=mresperr2, align='center', alpha=0.5, color='yellow', edgecolor='black', hatch='xxx', capsize=2)
+# bar3 = ax.bar(x_pos + 1.5*width, mresp3, width, yerr=mresperr3, align='center', alpha=0.5, color='blue', edgecolor='black', hatch='---', capsize=2)
+# ax.set_ylabel('Response time in ms')
+# ax.set_xticks(x_pos)
+# ax.set_xlabel('Conflict rates')
+# ax.set_xticklabels([0, 2, 10, 20])
+# # ax.set_title('Response time for varying conflict rates')
+# ax.legend((bar0[0], bar1[0], bar2[0], bar3[0]), ('Maram', 'UDR Tree', 'Global_l', 'Subtree_l'), bbox_to_anchor=(0., 1.02, 1., .5), loc='lower right', borderaxespad=0., mode="expand", ncol=4)
+# ax.yaxis.grid(True)
+# # plt.yscale('log') #logarithmic scale
+# 
+# # Save the figure and show
+# # plt.tight_layout()
+# plt.savefig('response_time_moves.png')
+# plt.savefig('response_time_moves.eps', format='eps')
+# # plt.show()
 
 over0 = [np.mean(np.array(responses[l][0][0])) for l in responses]
 overerr0 = [np.std(np.array(responses[l][0][0])) for l in responses]
 over5 = [np.mean(np.array(responses[l][0][5])) for l in responses]
 overerr5 = [np.std(np.array(responses[l][0][5])) for l in responses]
 
+# width = width/2
 # Build the plot
 x2_pos = np.arange(3)
-fig, ax = plt.subplots()
+# fig, ax = plt.subplots(figsize=(2.5,3))
+# fig, ax = plt.subplots(figsize=(3.33,4))
+fig, ax = plt.subplots(figsize=(3,3))
 obar0 = ax.bar(x2_pos - width/2, over0, width, yerr=overerr0, align='center', alpha=0.5, color='green', edgecolor='black', hatch='', capsize=2)
 obar1 = ax.bar(x2_pos + width/2, over5, width, yerr=overerr5, align='center', alpha=0.5, color='magenta', edgecolor='black', hatch='|||', capsize=2)
 ax.set_ylabel('Response time in ms')
 ax.set_xticks(x2_pos)
-ax.set_xlabel('Latency settings')
+# ax.set_xlabel('Latency settings')
 ax.set_xticklabels(['Zero', 'Realworld', '10x realworld'])
 # ax.set_title('Response time for varying conflict rates')
 ax.legend((obar0[0], obar1[0]), ('Maram', 'Unsafe Tree'), bbox_to_anchor=(0., 1.02, 1., .102), loc='lower right', borderaxespad=0., mode="expand", ncol=2)
@@ -433,7 +441,34 @@ ax.yaxis.grid(True)
           #  ncol=2, mode="expand", borderaxespad=0.)
 # plt.tight_layout()
 plt.savefig('overhead.png')
+plt.savefig('overhead.eps', format='eps', bbox_inches='tight')
 # plt.show()
+
+# x_pos = np.arange(3)
+# stab0 = [np.mean(np.array(stabilizations[l][0][0])) for l in stabilizations]
+# staberr0 = [np.std(np.array(stabilizations[l][0][0])) for l in stabilizations]
+# stab1 = [np.mean(np.array(stabilizations[l][0][1])) for l in stabilizations]
+# staberr1 = [np.std(np.array(stabilizations[l][0][1])) for l in stabilizations]
+
+# # print(stab0, staberr0)
+# # print(stab1, staberr1)
+
+# # Build the plot
+# fig, ax = plt.subplots(figsize=(10,6))
+# bar0 = ax.bar(x_pos - width/2, stab0, width, yerr=staberr0, align='center', alpha=0.5, color='green', edgecolor='black', hatch='', capsize=2)
+# bar1 = ax.bar(x_pos + width/2, stab1, width, yerr=staberr1, align='center', alpha=0.5, color='red', edgecolor='black', hatch='///', capsize=2)
+# ax.set_ylabel('Stabilization time in ms')
+# ax.set_xticks(x_pos)
+# ax.set_xlabel('Latency settings')
+# ax.set_xticklabels(['Zero', 'Realworld', '10x realworld'])
+# # ax.set_title('Stabilization time for varying latency configurations')
+# ax.legend((bar0[0], bar1[0]), ('Maram', 'UDR Tree'), bbox_to_anchor=(0., 1.02, 1., .102), loc='lower right', borderaxespad=0., mode="expand", ncol=2)
+# ax.yaxis.grid(True)
+# # Save the figure and show
+# # plt.tight_layout()
+# plt.savefig('stabilization_time_linear.png')
+# plt.savefig('stabilization_time_linear.eps', format='eps')
+# # plt.show()
 
 x_pos = np.arange(3)
 stab0 = [np.mean(np.array(stabilizations[l][0][0])) for l in stabilizations]
@@ -445,37 +480,14 @@ staberr1 = [np.std(np.array(stabilizations[l][0][1])) for l in stabilizations]
 # print(stab1, staberr1)
 
 # Build the plot
-fig, ax = plt.subplots()
+# fig, ax = plt.subplots(figsize=(2.5,3))
+# fig, ax = plt.subplots(figsize=(3.33,4))
+fig, ax = plt.subplots(figsize=(3,3))
 bar0 = ax.bar(x_pos - width/2, stab0, width, yerr=staberr0, align='center', alpha=0.5, color='green', edgecolor='black', hatch='', capsize=2)
 bar1 = ax.bar(x_pos + width/2, stab1, width, yerr=staberr1, align='center', alpha=0.5, color='red', edgecolor='black', hatch='///', capsize=2)
-ax.set_ylabel('Stabilization time in ms')
+ax.set_ylabel('Stabilization time in ms (log)')
 ax.set_xticks(x_pos)
-ax.set_xlabel('Latency settings')
-ax.set_xticklabels(['Zero', 'Realworld', '10x realworld'])
-# ax.set_title('Stabilization time for varying latency configurations')
-ax.legend((bar0[0], bar1[0]), ('Maram', 'UDR Tree'), bbox_to_anchor=(0., 1.02, 1., .102), loc='lower right', borderaxespad=0., mode="expand", ncol=2)
-ax.yaxis.grid(True)
-# Save the figure and show
-# plt.tight_layout()
-plt.savefig('stabilization_time_linear.png')
-# plt.show()
-
-x_pos = np.arange(3)
-stab0 = [np.mean(np.array(stabilizations[l][0][0])) for l in stabilizations]
-staberr0 = [np.std(np.array(stabilizations[l][0][0])) for l in stabilizations]
-stab1 = [np.mean(np.array(stabilizations[l][0][1])) for l in stabilizations]
-staberr1 = [np.std(np.array(stabilizations[l][0][1])) for l in stabilizations]
-
-# print(stab0, staberr0)
-# print(stab1, staberr1)
-
-# Build the plot
-fig, ax = plt.subplots()
-bar0 = ax.bar(x_pos - width/2, stab0, width, yerr=staberr0, align='center', alpha=0.5, color='green', edgecolor='black', hatch='', capsize=2)
-bar1 = ax.bar(x_pos + width/2, stab1, width, yerr=staberr1, align='center', alpha=0.5, color='red', edgecolor='black', hatch='///', capsize=2)
-ax.set_ylabel('Stabilization time in ms')
-ax.set_xticks(x_pos)
-ax.set_xlabel('Latency settings')
+# ax.set_xlabel('Latency settings')
 ax.set_xticklabels(['Zero', 'Realworld', '10x realworld'])
 # ax.set_title('Stabilization time for varying latency configurations')
 ax.legend((bar0[0], bar1[0]), ('Maram', 'UDR Tree'), bbox_to_anchor=(0., 1.02, 1., .102), loc='lower right', borderaxespad=0., mode="expand", ncol=2)
@@ -484,4 +496,5 @@ plt.yscale('log') #logarithmic scale
 # Save the figure and show
 # plt.tight_layout()
 plt.savefig('stabilization_time_log.png')
+plt.savefig('stabilization_time_log.eps', format='eps', bbox_inches='tight')
 # plt.show()
