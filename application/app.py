@@ -98,8 +98,8 @@ def register_op(ts, timestamp):
     with open(log_file, "a") as l:
         l.write(f"{reg}\n")
 
-def prepare_message(op, ts, args, replica, ca = []):
-    return {"op": op, "ts":ts, "args": args, "replica": replica, "ca":ca}
+def prepare_message(op, ts, args, replica, ca = [], d =[]):
+    return {"op": op, "ts":ts, "args": args, "replica": replica, "ca":ca, "d":d}
 
 # def log_message(message):
 #     msg = json.dumps(message.get("msg", ""))
@@ -468,10 +468,10 @@ def move():
     ts[replicaid] += 1
     flag = False
     if prep:
-        msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2])
+        msg = prepare_message(prep[0], ts, prep[1], whoami, prep[2], prep[3])
     else:
         flag = True
-        msg = prepare_message("moveskip", ts, [], whoami, [])    
+        msg = prepare_message("moveskip", ts, [], whoami, [], [])    
     message = {"to": whoami, "msg": msg}
     tree = apply_log(msg, tree, ts)
     log_time = datetime.now()

@@ -4,7 +4,7 @@ for LC in 3 2 1
 do
   export LC_ENV=$LC
   t=$(expr 3 \* $LC_ENV)
-  for EXP in 5
+  for EXP in 0
   do
     export EXP_ENV=$EXP
     for con in 0 2 10 20

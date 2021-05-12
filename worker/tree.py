@@ -54,6 +54,22 @@ class Tree_CRDT:
     ca = destination_ancestors.union({destination}) - source_ancestors
     return ca
 
+  def get_all_descendants(self):
+    d = {}
+    for n in self.nodes:
+      d[n] = []
+    for n in self.nodes:
+      while n != self.root:
+        parent = n.parent
+        d[parent] += [n]
+        n = parent
+    return d
+
+  def get_descendants(self, id):
+    node = self.nodes[id]
+    d = self.get_all_descendants()
+    return d[node]
+
   def rank(self, node): 
     if node == self.root.id:
       return 0
@@ -64,13 +80,13 @@ class Tree_CRDT:
       op = 'add'
       args = {'n':n, 'p':p}
       ca = []
-      return (op, args, ca)
+      return (op, args, ca, [])
 
   def remove_gen(self, n, p):
     op = 'remove'
     args = {'n':n, 'p':p}
     ca = []
-    return (op, args, ca)
+    return (op, args, ca, [])
 
   def move_gen(self, n, p, np):
     if p in self.nodes and np in self.nodes and n in self.nodes:
@@ -83,7 +99,8 @@ class Tree_CRDT:
             op = 'downmove'
           args = {'n':n, 'p':p, 'np':np}
           ca = list(self.get_critical_ancestors(n, np))
-          return (op, args, ca)  
+          desc = self.get_descendants(n)
+          return (op, args, ca, desc)  
 
   @classmethod
   def is_greater(cls, ts1, ts2):
@@ -109,6 +126,14 @@ class Tree_CRDT:
     return False
 
   @classmethod
+  def get_historical_moves(cls, moves, ts):
+    hms = []
+    for m in moves:
+      if cls.is_greater(ts, moves[m]['ts']):
+        hms += [m]
+    return hms
+
+  @classmethod
   def construct_tree(cls, logs, tree = None):
     if tree == None:
       tree = Tree_CRDT()
@@ -119,30 +144,52 @@ class Tree_CRDT:
       elif l['op'] == 'remove':
         tree.remove_eff(l['args']['n'])
       elif l['op'] in ['upmove', 'downmove']:
-        moves[str(l['ts'])] = {'type':l['op'], 'n':l['args']['n'], 'p':l['args']['p'], 'np':l['args']['np'], 'ca':l['ca'], 'replica':l['replica'], 'ts':l['ts']}
-      elif l['op'] == 'skip':
+        moves[str(l['ts'])] = {'type':l['op'], 'n':l['args']['n'], 'p':l['args']['p'], 'np':l['args']['np'], 'ca':l['ca'], 'd':l['d'], 'replica':l['replica'], 'ts':l['ts']}
+      elif l['op'] in ['moveskip', 'addskip', 'removeskip']:
         pass
       else:
         Exception('Unknown operation')
 
+    skipped_moves = {}
     for m in moves:
       cms = cls.get_concurrent_moves(moves, moves[m]['ts'])
-      flag = False
+      hms = cls.get_historical_moves(moves, moves[m]['ts'])
+      skip = False
       if moves[m]['type'] == 'upmove':
         for cm in cms:
           if moves[cm]['type'] == 'upmove':
             if cls.higher_priority(moves[cm], moves[m]):
-              flag = True
+              skip = True
+        for hm in hms:
+          if hm in skipped_moves:
+            #  dependency condition
+            if moves[hm]['type'] == 'upmove':
+              if moves[m]['np'] in moves[hm]['d']:
+                skip = True
+            else:
+              if ((moves[hm]['n'] in moves[m]['d']) and (moves[m]['np'] in moves[hm]['d'])) or (moves[m]['n'] in moves[hm]['d']):
+                skip = True
       else:
         for cm in cms:
           if moves[m]['n'] in moves[cm]['ca'] or moves[cm]['n'] in moves[m]['ca']:
             if moves[cm]['type'] == 'upmove':
-              flag = True
+              skip = True
             else:
               if cls.higher_priority(moves[cm], moves[m]):
-                flag = True
-      if not flag:
+                skip = True
+        for hm in hms:
+          if hm in skipped_moves:
+            #  dependency condition
+            if moves[hm]['type'] == 'upmove':
+              if ((moves[hm]['n'] in moves[m]['d']) and (moves[m]['np'] in moves[hm]['d'])) or (moves[m]['n'] in moves[hm]['d']):
+                skip = True
+            else:
+              if moves[m]['np'] in moves[hm]['d']:
+                skip = True
+      if not skip:
         tree.move_eff(moves[m]['n'], moves[m]['p'], moves[m]['np'])
+      else:
+        skipped_moves.add(m)
     return tree
 
   @classmethod
@@ -228,7 +275,7 @@ class Tree_Opset:
         tree.remove_eff(l['args']['n'])
       elif l['op'] == 'move':
         tree.move_eff(l['args']['n'], l['args']['p'], l['args']['np'])
-      elif l['op'] == 'skip':
+      elif l['op'] in ['moveskip', 'addskip', 'removeskip']:
         pass
       else:
         Exception('Unknown operation')
@@ -312,7 +359,7 @@ class Tree_Globalock:
         tree.remove_eff(l['args']['n'])
       elif l['op'] == 'move':
         tree.move_eff(l['args']['n'], l['args']['p'], l['args']['np'])
-      elif l['op'] == 'skip':
+      elif l['op'] in ['moveskip', 'addskip', 'removeskip']:
         pass
       else:
         Exception('Unknown operation')
@@ -403,7 +450,7 @@ class Tree_Sublock:
         tree.remove_eff(l['args']['n'])
       elif l['op'] == 'move':
         tree.move_eff(l['args']['n'], l['args']['p'], l['args']['np'])
-      elif l['op'] == 'skip':
+      elif l['op'] in ['moveskip', 'addskip', 'removeskip']:
         pass
       else:
         Exception('Unknown operation')
