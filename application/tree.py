@@ -57,19 +57,19 @@ class Tree_CRDT:
   def get_all_descendants(self):
     d = {}
     for n in self.nodes:
-      d[self.nodes[n]] = []
+      d[n] = []
     for n in self.nodes:
       node = self.nodes[n]
       while node != self.root:
         parent = node.parent
         d[parent] += [node]
-        node = parent
+        node = self.nodes[parent]
     return d
 
   def get_descendants(self, id):
-    node = self.nodes[id]
+    # node = self.nodes[id]
     d = self.get_all_descendants()
-    return d[node]
+    return d[id]
 
   def rank(self, node): 
     if node == self.root.id:
@@ -151,7 +151,7 @@ class Tree_CRDT:
       else:
         Exception('Unknown operation')
 
-    skipped_moves = {}
+    skipped_moves = set()
     for m in moves:
       cms = cls.get_concurrent_moves(moves, moves[m]['ts'])
       hms = cls.get_historical_moves(moves, moves[m]['ts'])
