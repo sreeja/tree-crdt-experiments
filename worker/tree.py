@@ -59,7 +59,7 @@ class Tree_CRDT:
     for n in self.nodes:
       d[n] = []
     for n in self.nodes:
-      while n != self.root:
+      while n and n != self.root:
         parent = n.parent
         d[parent] += [n]
         n = parent
